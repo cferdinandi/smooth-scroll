@@ -9,15 +9,12 @@ A simple jQuery script to animate scrolling to anchor links. Script by [Charlie 
 For browsers that don't support JavaScript, anchor links work as they normally would. For supporting browsers, they'll get an animated scroll.
 
     <a class="scroll" href="#bazinga">Anchor Link</a>
-
     ...
 
     <h3 id="bazinga">Bazinga!</h3>
-
     ...
 
     <script src="smooth-scroll.js"></script>
-
 
 ## Changelog
 * 1/24/2013
