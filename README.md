@@ -5,6 +5,8 @@ A simple jQuery script to animate scrolling to anchor links. Script by [Charlie 
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
 
 ## Changelog
+* v1.1 (June 7, 2013)
+  * Switched to MIT license.
 * v1.1 (May 18, 2013)
   * Added jQuery noConflict mode.
   * Updated tutorial.
@@ -12,4 +14,4 @@ Getting started with Smooth Scroll is really easy. [View the online tutorial](ht
   * Initial release.
 
 ## License
-Smooth Scroll is licensed under [WTFPL](http://www.wtfpl.net/).
+Smooth Scroll is free to use under the [MIT License](http://gomakethings.com/mit/).
