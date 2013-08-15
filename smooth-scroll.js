@@ -1,7 +1,7 @@
 /* =============================================================
 
     Smooth Scroll 2.0
-    Animates scrolling to anchor links, by Chris Ferdinandi.
+    Animate scrolling to anchor links, by Chris Ferdinandi.
     http://gomakethings.com
 
     Free to use under the MIT License.
