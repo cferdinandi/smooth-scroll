@@ -1,6 +1,6 @@
 /* =============================================================
 
-    Smooth Scroll 2.0
+    Smooth Scroll 2.1
     Animate scrolling to anchor links, by Chris Ferdinandi.
     http://gomakethings.com
 
@@ -19,7 +19,7 @@ if ( 'querySelector' in document && 'addEventListener' in window && Array.protot
         var startLocation = window.pageYOffset;
         var endLocation = anchor.offsetTop;
         var distance = endLocation - startLocation;
-        var increments = distance/(duration/20);
+        var increments = distance/(duration/16);
 
         // Scroll the page by an increment, and check if it's time to stop
         var animateScroll = function () {
@@ -27,16 +27,29 @@ if ( 'querySelector' in document && 'addEventListener' in window && Array.protot
             stopAnimation();
         }
 
-        // If you've reached the anchor or the end of the page, stop scrolling
-        var stopAnimation = function () {
-            var travelled = window.pageYOffset;
-            if ( (travelled >= (endLocation - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
-                clearInterval(runAnimation);
+        // Calculate when to stop scrolling
+        if ( increments >= 0 ) {
+            var stopAnimation = function () {
+                var travelled = window.pageYOffset;
+                if ( (travelled >= (endLocation - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
+                    clearInterval(runAnimation);
+                }
+            }
+        }
+        else {
+            var stopAnimation = function () {
+                var travelled = window.pageYOffset;
+                if ( travelled <= (endLocation || 0) ) {
+                    clearInterval(runAnimation);
+                }
             }
         }
 
+
+
         // Loop the animation function
-        var runAnimation = setInterval(animateScroll, 20);
+        var runAnimation = setInterval(animateScroll, 16);
+        console.log(increments);
    
     }
 
