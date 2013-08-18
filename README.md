@@ -5,6 +5,8 @@ A simple jQuery script to animate scrolling to anchor links.
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
 
 ## Changelog
+* v2.2 (August 17, 2013)
+  * Now you can set the animation speed with the `data-speed` attribute. (ex. `data-speed="400"`)
 * v2.1 (August 17, 2013)
   * Improvement animation function interval for smoother animation.
   * Updated to allow for scrolling up the page.
