@@ -8,6 +8,8 @@ Getting started with Smooth Scroll is really easy. [View the online tutorial](ht
 * v2.3 (August 27, 2013)
   * Added missing semicolons.
   * Defined `animationStop` variable once, add values later.
+  * Activated strict mode.
+  * Wrapped in IIFE.
 * v2.2 (August 17, 2013)
   * Now you can set the animation speed with the `data-speed` attribute. (ex. `data-speed="400"`)
 * v2.1 (August 17, 2013)
