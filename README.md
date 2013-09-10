@@ -1,5 +1,5 @@
 # Smooth Scroll
-A simple jQuery script to animate scrolling to anchor links.
+A simple script to animate scrolling to anchor links.
 
 ## How It Works
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
