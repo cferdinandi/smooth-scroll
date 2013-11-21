@@ -5,6 +5,8 @@ A simple script to animate scrolling to anchor links.
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
 
 ## Changelog
+* v2.4 (November 21, 2013)
+  * Added easing support with contributions from [Willem Liu](https://github.com/willemliu) and code from [Gaëtan Renaudeau](https://gist.github.com/gre/1650294).
 * v2.3 (August 27, 2013)
   * Added missing semicolons.
   * Defined `animationStop` variable once, add values later.
