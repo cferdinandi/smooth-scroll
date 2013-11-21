@@ -15,9 +15,36 @@
 	<section style="width: 88%; max-width: 40em; margin-left: auto; margin-right: auto;">
 
 		<h1 style="text-align: center; font-size: 3em;">Smooth Scroll</h1>
-		<p style="text-align: center; font-size: 1.5em;">A simple vanilla JS script to animate scrolling to anchor links.</p>
+		<p style="text-align: center; font-size: 1.5em;">A lightweight script to animate scrolling to anchor links.</p>
 
-		<p><a class="scroll" data-speed="2000" href="#bazinga">Bazinga</a> <a class="scroll" href="#booya">Booya</a></p>
+		<p>
+			<strong>Linear</strong><br>
+			<a class="scroll" data-speed="2000" data-easing="linear" href="#bazinga">Linear (no other options)</a><br>
+		</p>
+
+		<p>
+			<strong>Ease-In</strong><br>
+			<a class="scroll" data-speed="2000" data-easing="easeInGentle" href="#bazinga">Gentle</a><br>
+			<a class="scroll" data-speed="2000" data-easing="easeInNormal" href="#bazinga">Normal</a><br>
+			<a class="scroll" data-speed="2000" data-easing="easeInIntense" href="#bazinga">Intense</a><br>
+			<a class="scroll" data-speed="2000" data-easing="easeInExtreme" href="#bazinga">Extreme</a>
+		</p>
+
+		<p>
+			<strong>Ease-In-Out</strong><br>
+			<a class="scroll" data-speed="2000" data-easing="easeInOutGentle" href="#bazinga">Gentle</a><br>
+			<a class="scroll" data-speed="2000" data-easing="easeInOutNormal" href="#bazinga">Normal</a><br>
+			<a class="scroll" data-speed="2000" data-easing="easeInOutIntense" href="#bazinga">Intense</a><br>
+			<a class="scroll" data-speed="2000" data-easing="easeInOutExtreme" href="#bazinga">Extreme</a>
+		</p>
+
+		<p>
+			<strong>Ease-Out</strong><br>
+			<a class="scroll" data-speed="2000" data-easing="easeOutGentle" href="#bazinga">Gentle</a><br>
+			<a class="scroll" data-speed="2000" data-easing="easeOutNormal" href="#bazinga">Normal</a><br>
+			<a class="scroll" data-speed="2000" data-easing="easeOutIntense" href="#bazinga">Intense</a><br>
+			<a class="scroll" data-speed="2000" data-easing="easeOutExtreme" href="#bazinga">Extreme</a>
+		</p>
 
 		<p>
 			.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
@@ -33,9 +60,7 @@
 			.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
 		</p>
 
-		<p id="booya">Booya!</p>
-
-		<p><a class="scroll" data-speed="400" href="#top">Back to the top</a></p>
+		<p><a class="scroll" data-speed="400" data-easing="easeOutGentle" href="#top">Back to the top</a></p>
 
 	</section>
 
