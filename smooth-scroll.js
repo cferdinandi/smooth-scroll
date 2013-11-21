@@ -6,8 +6,7 @@
 
   21-11-2013 Willem Liu (WL): Added support for easing 
                               (https://gist.github.com/gre/1650294).
-                              Defaults to linear. Toned down
-                              animation interval to 20ms.
+                              Defaults to linear.
   
   Free to use under the MIT License.
   http://gomakethings.com/mit/
@@ -22,10 +21,10 @@
   if ( 'querySelector' in document && 'addEventListener' in window && Array.prototype.forEach ) {
 
     // Function to animate the scroll
-    var smoothScroll = function (anchor, duration, easing='linear') {
+    var smoothScroll = function (anchor, duration, easing) {
 
       // Calculate how far and how fast to scroll
-      var interval = 20; // WL: set update interval
+      var interval = 16; // WL: set update interval
       var startLocation = window.pageYOffset;
       var endLocation = anchor.offsetTop;
       var distance = endLocation - startLocation;
