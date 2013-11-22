@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.4
+	Smooth Scroll 2.5
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -103,7 +103,7 @@
 				// If the anchor exists
 				if (dataTarget) {
 					// Scroll to the anchor
-					smoothScroll(dataTarget, dataSpeed || 500, dataEasing || 'linear');
+					smoothScroll(dataTarget, dataSpeed || 500, dataEasing || 'easeInOutNormal');
 				}
 
 			}, false);
