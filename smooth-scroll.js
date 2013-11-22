@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.5
+	Smooth Scroll 2.6
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
