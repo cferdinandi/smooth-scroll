@@ -43,7 +43,7 @@
 				if ( type == 'easeOutNormal' ) return (--timing) * timing * timing + 1; // decelerating to zero velocity
 				if ( type == 'easeInOutNormal' ) return timing < 0.5 ? 4 * timing * timing * timing : (timing - 1) * (2 * timing - 2) * (2 * timing - 2) + 1; // acceleration until halfway, then deceleration
 				if ( type == 'easeInIntense' ) return timing * timing * timing * timing; // accelerating from zero velocity
-				if ( type == 'easeOutInense' ) return 1 - (--timing) * timing * timing * timing; // decelerating to zero velocity
+				if ( type == 'easeOutIntense' ) return 1 - (--timing) * timing * timing * timing; // decelerating to zero velocity
 				if ( type == 'easeInOutIntense' ) return timing < 0.5 ? 8 * timing * timing * timing * timing : 1 - 8 * (--timing) * timing * timing * timing; // acceleration until halfway, then deceleration
 				if ( type == 'easeInExtreme' ) return timing * timing * timing * timing * timing; // accelerating from zero velocity
 				if ( type == 'easeOutExtreme' ) return 1 + (--timing) * timing * timing * timing * timing; // decelerating to zero velocity
