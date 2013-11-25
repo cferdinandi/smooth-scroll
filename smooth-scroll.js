@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.6
+	Smooth Scroll 2.7
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -34,20 +34,20 @@
 			var percentage, position, stopAnimation;
 
 			// Functions to control easing
-			var easingPattern = function (type, timing) {
-				if ( type == 'linear' ) return timing; // no easing, no acceleration
-				if ( type == 'easeInGentle' ) return timing * timing; // accelerating from zero velocity
-				if ( type == 'easeOutGentle' ) return timing * (2 - timing); // decelerating to zero velocity
-				if ( type == 'easeInOutGentle' ) return timing < 0.5 ? 2 * timing * timing : -1 + (4 - 2 * timing) * timing; // acceleration until halfway, then deceleration
-				if ( type == 'easeInNormal' ) return timing * timing * timing; // accelerating from zero velocity
-				if ( type == 'easeOutNormal' ) return (--timing) * timing * timing + 1; // decelerating to zero velocity
-				if ( type == 'easeInOutNormal' ) return timing < 0.5 ? 4 * timing * timing * timing : (timing - 1) * (2 * timing - 2) * (2 * timing - 2) + 1; // acceleration until halfway, then deceleration
-				if ( type == 'easeInIntense' ) return timing * timing * timing * timing; // accelerating from zero velocity
-				if ( type == 'easeOutIntense' ) return 1 - (--timing) * timing * timing * timing; // decelerating to zero velocity
-				if ( type == 'easeInOutIntense' ) return timing < 0.5 ? 8 * timing * timing * timing * timing : 1 - 8 * (--timing) * timing * timing * timing; // acceleration until halfway, then deceleration
-				if ( type == 'easeInExtreme' ) return timing * timing * timing * timing * timing; // accelerating from zero velocity
-				if ( type == 'easeOutExtreme' ) return 1 + (--timing) * timing * timing * timing * timing; // decelerating to zero velocity
-				if ( type == 'easeInOutExtreme' ) return timing < 0.5 ? 16 * timing * timing * timing * timing * timing : 1 + 16 * (--timing) * timing * timing * timing * timing; // acceleration until halfway, then deceleration
+			var easingPattern = function (type, time) {
+				if ( type == 'linear' ) return time; // no easing, no acceleration
+				if ( type == 'easeInQuad' ) return time * time; // accelerating from zero velocity
+				if ( type == 'easeOutQuad' ) return time * (2 - time); // decelerating to zero velocity
+				if ( type == 'easeInOutQuad' ) return time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
+				if ( type == 'easeInCubic' ) return time * time * time; // accelerating from zero velocity
+				if ( type == 'easeOutCubic' ) return (--time) * time * time + 1; // decelerating to zero velocity
+				if ( type == 'easeInOutCubic' ) return time < 0.5 ? 4 * time * time * time : (time - 1) * (2 * time - 2) * (2 * time - 2) + 1; // acceleration until halfway, then deceleration
+				if ( type == 'easeInQuart' ) return time * time * time * time; // accelerating from zero velocity
+				if ( type == 'easeOutQuart' ) return 1 - (--time) * time * time * time; // decelerating to zero velocity
+				if ( type == 'easeInOutQuart' ) return time < 0.5 ? 8 * time * time * time * time : 1 - 8 * (--time) * time * time * time; // acceleration until halfway, then deceleration
+				if ( type == 'easeInQuint' ) return time * time * time * time * time; // accelerating from zero velocity
+				if ( type == 'easeOutQuint' ) return 1 + (--time) * time * time * time * time; // decelerating to zero velocity
+				if ( type == 'easeInOutQuint' ) return time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
 			};
 
 			// Scroll the page by an increment, and check if it's time to stop
@@ -103,7 +103,7 @@
 				// If the anchor exists
 				if (dataTarget) {
 					// Scroll to the anchor
-					smoothScroll(dataTarget, dataSpeed || 500, dataEasing || 'easeInOutNormal');
+					smoothScroll(dataTarget, dataSpeed || 500, dataEasing || 'easeInOutCubic');
 				}
 
 			}, false);

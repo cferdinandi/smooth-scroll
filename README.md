@@ -5,6 +5,8 @@ A simple script to animate scrolling to anchor links. Easing support contributed
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
 
 ## Changelog
+* v2.7 (November 25, 2013)
+  * Converted naming conventions back to mathmatical roots (ex. `easeInCubic`) to remain consistent with development community language.
 * v2.6 (November 26, 2013)
   * Missing character was causing certain easing functions to break.
 * v2.5 (November 22, 2013)
