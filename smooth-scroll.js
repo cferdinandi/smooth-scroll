@@ -25,17 +25,8 @@
 		// Function to animate the scroll
 		var smoothScroll = function (anchor, duration, easing) {
 
-			// Calculate how far and how fast to scroll
-			var startLocation = window.pageYOffset;
-			var endLocation = anchor.offsetTop;
-			var distance = endLocation - startLocation;
-			var increments = distance / (duration / 16);
-			var timeLapsed = 0;
-			var percentage, position, stopAnimation;
-
 			// Functions to control easing
 			var easingPattern = function (type, time) {
-				if ( type == 'linear' ) return time; // no easing, no acceleration
 				if ( type == 'easeInQuad' ) return time * time; // accelerating from zero velocity
 				if ( type == 'easeOutQuad' ) return time * (2 - time); // decelerating to zero velocity
 				if ( type == 'easeInOutQuad' ) return time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
@@ -48,7 +39,26 @@
 				if ( type == 'easeInQuint' ) return time * time * time * time * time; // accelerating from zero velocity
 				if ( type == 'easeOutQuint' ) return 1 + (--time) * time * time * time * time; // decelerating to zero velocity
 				if ( type == 'easeInOutQuint' ) return time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
+				return time; // no easing, no acceleration
 			};
+
+			// Calculate how far and how fast to scroll
+			// http://www.quirksmode.org/blog/archives/2008/01/using_the_assig.html
+			var startLocation = window.pageYOffset;
+			var endLocation = function (anchor) {
+				var distance = 0;
+				if (anchor.offsetParent) {
+					do {
+						distance += anchor.offsetTop;
+						anchor = anchor.offsetParent;
+					} while (anchor);
+				}
+				return distance;
+			};
+			var distance = endLocation(anchor) - startLocation;
+			var increments = distance / (duration / 16);
+			var timeLapsed = 0;
+			var percentage, position, stopAnimation;
 
 			// Scroll the page by an increment, and check if it's time to stop
 			var animateScroll = function () {
@@ -65,7 +75,7 @@
 				// Stop animation when you reach the anchor OR the bottom of the page
 				stopAnimation = function () {
 					var travelled = window.pageYOffset;
-					if ( (travelled >= (endLocation - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
+					if ( (travelled >= (endLocation(anchor) - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
 						clearInterval(runAnimation);
 					}
 				};
@@ -73,7 +83,7 @@
 				// Stop animation when you reach the anchor OR the top of the page
 				stopAnimation = function () {
 					var travelled = window.pageYOffset;
-					if ( travelled <= (endLocation || 0) ) {
+					if ( travelled <= (endLocation(anchor) || 0) ) {
 						clearInterval(runAnimation);
 					}
 				};
