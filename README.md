@@ -5,6 +5,8 @@ A simple script to animate scrolling to anchor links. Easing support contributed
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
 
 ## Changelog
+* v2.9 (December 9, 2013)
+  * [Added fixed for infinite loop when scrolling up.](https://github.com/cferdinandi/smooth-scroll/issues/13)
 * v2.8 (December 3, 2013)
   * [Fixed false distance reading.](https://github.com/cferdinandi/smooth-scroll/issues/11)
   * Added linear easing as fallback when easing pattern not recognized to prevent script from failing.

@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.8
+	Smooth Scroll 2.9
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -83,7 +83,7 @@
 				// Stop animation when you reach the anchor OR the top of the page
 				stopAnimation = function () {
 					var travelled = window.pageYOffset;
-					if ( travelled <= (endLocation(anchor) || 0) ) {
+					if ( travelled <= endLocation(anchor) || travelled <= 0 ) {
 						clearInterval(runAnimation);
 					}
 				};
