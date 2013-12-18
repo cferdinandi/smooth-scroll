@@ -77,6 +77,7 @@
 					var travelled = window.pageYOffset;
 					if ( (travelled >= (endLocation(anchor) - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
 						clearInterval(runAnimation);
+						window.scrollTo(0, endLocation(anchor));
 					}
 				};
 			} else { // If scrolling up
@@ -85,6 +86,7 @@
 					var travelled = window.pageYOffset;
 					if ( travelled <= endLocation(anchor) || travelled <= 0 ) {
 						clearInterval(runAnimation);
+						window.scrollTo(0, endLocation(anchor));
 					}
 				};
 			}
