@@ -75,9 +75,8 @@
 				// Stop animation when you reach the anchor OR the bottom of the page
 				stopAnimation = function () {
 					var travelled = window.pageYOffset;
-					if ( (travelled >= (endLocation(anchor) - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
+					if ( (travelled >= endLocation(anchor)) || ((window.innerHeight + travelled) >= document.body.scrollHeight) ) {
 						clearInterval(runAnimation);
-						window.scrollTo(0, endLocation(anchor));
 					}
 				};
 			} else { // If scrolling up
@@ -86,7 +85,6 @@
 					var travelled = window.pageYOffset;
 					if ( travelled <= endLocation(anchor) || travelled <= 0 ) {
 						clearInterval(runAnimation);
-						window.scrollTo(0, endLocation(anchor));
 					}
 				};
 			}
