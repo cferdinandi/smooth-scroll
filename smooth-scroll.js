@@ -75,7 +75,7 @@
 				// Stop animation when you reach the anchor OR the bottom of the page
 				stopAnimation = function () {
 					var travelled = window.pageYOffset;
-					if ( (travelled >= (endLocation(anchor) - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
+					if ( (travelled >= endLocation(anchor) - 1) || ((window.innerHeight + travelled) >= document.body.scrollHeight) ) {
 						clearInterval(runAnimation);
 					}
 				};
@@ -83,7 +83,7 @@
 				// Stop animation when you reach the anchor OR the top of the page
 				stopAnimation = function () {
 					var travelled = window.pageYOffset;
-					if ( travelled <= endLocation(anchor) || travelled <= 0 ) {
+					if ( travelled <= endLocation(anchor) + 1 || travelled <= 0 ) {
 						clearInterval(runAnimation);
 					}
 				};
