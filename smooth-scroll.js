@@ -126,7 +126,7 @@
 				// If the anchor exists
 				if (dataTarget) {
 					// Scroll to the anchor
-					smoothScroll(dataTarget, dataSpeed || 500, dataEasing || 'easeInOutCubic', dataURL || 'true');
+					smoothScroll(dataTarget, dataSpeed || 500, dataEasing || 'easeInOutCubic', dataURL || 'false');
 				}
 
 			}, false);
