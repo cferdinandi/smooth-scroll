@@ -48,7 +48,7 @@
 			// Function to update URL
 			var updateURL = function (url, anchor) {
 				if ( url === 'true' && history.pushState ) {
-					history.pushState(null, null, '#' + anchor.id);
+					history.pushState({pos:anchor.id}, "", '#' + anchor.id);
 				}
 			};
 
@@ -134,5 +134,12 @@
 		});
 
 	}
+
+	window.onpopstate = function(event) {
+		// Make back button return to top when used after clicking the first smooth scroll link.
+		if (event.state === null && window.location.hash === "") {
+			window.scrollTo(0,0);
+		}
+    };
 
 })();
