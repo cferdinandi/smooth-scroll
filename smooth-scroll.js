@@ -140,6 +140,6 @@
 		if (event.state === null && window.location.hash === "") {
 			window.scrollTo(0,0);
 		}
-    };
+	};
 
 })();
