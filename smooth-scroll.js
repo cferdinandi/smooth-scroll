@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.9
+	Smooth Scroll 2.10
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -9,6 +9,9 @@
 
 	Easing functions forked from Gaëtan Renaudeau.
 	https://gist.github.com/gre/1650294
+
+	URL history support contributed by Robert Pate.
+	https://github.com/robertpateii
 
 	Free to use under the MIT License.
 	http://gomakethings.com/mit/
@@ -23,7 +26,7 @@
 	if ( 'querySelector' in document && 'addEventListener' in window && Array.prototype.forEach ) {
 
 		// Function to animate the scroll
-		var smoothScroll = function (anchor, duration, easing) {
+		var smoothScroll = function (anchor, duration, easing, url) {
 
 			// Functions to control easing
 			var easingPattern = function (type, time) {
@@ -40,6 +43,13 @@
 				if ( type == 'easeOutQuint' ) return 1 + (--time) * time * time * time * time; // decelerating to zero velocity
 				if ( type == 'easeInOutQuint' ) return time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
 				return time; // no easing, no acceleration
+			};
+
+			// Function to update URL
+			var updateURL = function (url, anchor) {
+				if ( url === 'true' && history.pushState ) {
+					history.pushState(null, null, '#' + anchor.id);
+				}
 			};
 
 			// Calculate how far and how fast to scroll
@@ -77,6 +87,7 @@
 					var travelled = window.pageYOffset;
 					if ( (travelled >= (endLocation(anchor) - increments)) || ((window.innerHeight + travelled) >= document.body.offsetHeight) ) {
 						clearInterval(runAnimation);
+						updateURL(url, anchor);
 					}
 				};
 			} else { // If scrolling up
@@ -85,6 +96,7 @@
 					var travelled = window.pageYOffset;
 					if ( travelled <= endLocation(anchor) || travelled <= 0 ) {
 						clearInterval(runAnimation);
+						updateURL(url, anchor);
 					}
 				};
 			}
@@ -108,12 +120,13 @@
 				var dataID = toggle.getAttribute('href');
 				var dataTarget = document.querySelector(dataID);
 				var dataSpeed = toggle.getAttribute('data-speed');
-				var dataEasing = toggle.getAttribute('data-easing'); // WL: Added easing attribute support.
+				var dataEasing = toggle.getAttribute('data-easing');
+				var dataURL = toggle.getAttribute('data-url');
 
 				// If the anchor exists
 				if (dataTarget) {
 					// Scroll to the anchor
-					smoothScroll(dataTarget, dataSpeed || 500, dataEasing || 'easeInOutCubic');
+					smoothScroll(dataTarget, dataSpeed || 500, dataEasing || 'easeInOutCubic', dataURL || 'true');
 				}
 
 			}, false);
