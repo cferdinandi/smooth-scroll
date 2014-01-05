@@ -63,7 +63,10 @@
 						anchor = anchor.offsetParent;
 					} while (anchor);
 				}
-				return distance;
+				// optional fixed header offset
+				var scrollHeader = document.querySelector( '.scroll-header' );
+				var headerHeight = scrollHeader === null ? 0 : scrollHeader.offsetHeight;
+				return distance - headerHeight;
 			};
 			var distance = endLocation(anchor) - startLocation;
 			var increments = distance / (duration / 16);
