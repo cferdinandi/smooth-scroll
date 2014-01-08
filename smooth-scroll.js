@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.11
+	Smooth Scroll 2.12
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -12,6 +12,9 @@
 
 	URL history support contributed by Robert Pate.
 	https://github.com/robertpateii
+
+	Fixed header support contributed by Arndt von Lucadou.
+	https://github.com/a-v-l
 
 	Free to use under the MIT License.
 	http://gomakethings.com/mit/
@@ -57,15 +60,15 @@
 			var startLocation = window.pageYOffset;
 			var endLocation = function (anchor) {
 				var distance = 0;
+				// If a fixed header is used, get its height
+				var scrollHeader = document.querySelector( '.scroll-header' );
+				var headerHeight = scrollHeader === null ? 0 : scrollHeader.offsetHeight;
 				if (anchor.offsetParent) {
 					do {
 						distance += anchor.offsetTop;
 						anchor = anchor.offsetParent;
 					} while (anchor);
 				}
-				// optional fixed header offset
-				var scrollHeader = document.querySelector( '.scroll-header' );
-				var headerHeight = scrollHeader === null ? 0 : scrollHeader.offsetHeight;
 				return distance - headerHeight;
 			};
 			var distance = endLocation(anchor) - startLocation;
