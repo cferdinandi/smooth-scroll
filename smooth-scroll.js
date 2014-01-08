@@ -58,11 +58,10 @@
 			// Calculate how far and how fast to scroll
 			// http://www.quirksmode.org/blog/archives/2008/01/using_the_assig.html
 			var startLocation = window.pageYOffset;
+			var scrollHeader = document.querySelector( '.scroll-header' );
+			var headerHeight = scrollHeader === null ? 0 : scrollHeader.offsetHeight;
 			var endLocation = function (anchor) {
 				var distance = 0;
-				// If a fixed header is used, get its height
-				var scrollHeader = document.querySelector( '.scroll-header' );
-				var headerHeight = scrollHeader === null ? 0 : scrollHeader.offsetHeight;
 				if (anchor.offsetParent) {
 					do {
 						distance += anchor.offsetTop;
