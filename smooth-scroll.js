@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.12
+	Smooth Scroll 2.14
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -55,12 +55,13 @@
 				}
 			};
 
-			// Calculate how far and how fast to scroll
-			// http://www.quirksmode.org/blog/archives/2008/01/using_the_assig.html
-			var startLocation = window.pageYOffset;
-			var scrollHeader = document.querySelector( '.scroll-header' );
+			// Get the height of a fixed header if one exists
+			var scrollHeader = document.querySelector('.scroll-header');
 			var headerHeight = scrollHeader === null ? 0 : scrollHeader.offsetHeight;
-			var endLocation = function (anchor) {
+
+			// Calculate how far to scroll
+			var startLocation = window.pageYOffset;
+			var getEndLocation = function (anchor) {
 				var distance = 0;
 				if (anchor.offsetParent) {
 					do {
@@ -70,10 +71,22 @@
 				}
 				return distance - headerHeight;
 			};
-			var distance = endLocation(anchor) - startLocation;
-			var increments = distance / (duration / 16);
+			var endLocation = getEndLocation(anchor);
+			var distance = endLocation - startLocation;
+
+			// Function to stop the scrolling animation
+			var stopAnimation = function () {
+				var currentLocation = window.pageYOffset;
+				// var there = endLocation(anchor);
+				if ( currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
+					clearInterval(runAnimation);
+					updateURL(url, anchor);
+				}
+			};
+
+			// Set the animation variables to 0/undefined.
 			var timeLapsed = 0;
-			var percentage, position, stopAnimation;
+			var percentage, position;
 
 			// Scroll the page by an increment, and check if it's time to stop
 			var animateScroll = function () {
@@ -81,30 +94,9 @@
 				percentage = ( timeLapsed / duration );
 				percentage = ( percentage > 1 ) ? 1 : percentage;
 				position = startLocation + ( distance * easingPattern(easing, percentage) );
-				window.scrollTo(0, position);
+				window.scrollTo( 0, position );
 				stopAnimation();
 			};
-
-			// Stop the animation
-			if ( increments >= 0 ) { // If scrolling down
-				// Stop animation when you reach the anchor OR the bottom of the page
-				stopAnimation = function () {
-					var travelled = window.pageYOffset;
-					if ( (travelled >= (endLocation(anchor) - increments)) || ((window.innerHeight + travelled) >= document.body.scrollHeight) ) {
-						clearInterval(runAnimation);
-						updateURL(url, anchor);
-					}
-				};
-			} else { // If scrolling up
-				// Stop animation when you reach the anchor OR the top of the page
-				stopAnimation = function () {
-					var travelled = window.pageYOffset;
-					if ( travelled <= endLocation(anchor) || travelled <= 0 ) {
-						clearInterval(runAnimation);
-						updateURL(url, anchor);
-					}
-				};
-			}
 
 			// Loop the animation function
 			var runAnimation = setInterval(animateScroll, 16);
@@ -128,10 +120,9 @@
 				var dataEasing = toggle.getAttribute('data-easing');
 				var dataURL = toggle.getAttribute('data-url');
 
-				// If the anchor exists
+				// If the anchor exists, scroll to it
 				if (dataTarget) {
-					// Scroll to the anchor
-					smoothScroll(dataTarget, dataSpeed || 500, dataEasing || 'easeInOutCubic', dataURL || 'false');
+					smoothScroll( dataTarget, dataSpeed || 500, dataEasing || 'easeInOutCubic', dataURL || 'false' );
 				}
 
 			}, false);
