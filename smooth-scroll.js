@@ -72,12 +72,12 @@
 				return distance - headerHeight;
 			};
 			var endLocation = getEndLocation(anchor);
+			endLocation = endLocation < 0 ? 0 : endLocation;
 			var distance = endLocation - startLocation;
 
 			// Function to stop the scrolling animation
 			var stopAnimation = function () {
 				var currentLocation = window.pageYOffset;
-				// var there = endLocation(anchor);
 				if ( currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
 					clearInterval(runAnimation);
 					updateURL(url, anchor);
