@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.15
+	Smooth Scroll 2.16
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -62,14 +62,19 @@
 			// Calculate how far to scroll
 			var startLocation = window.pageYOffset;
 			var getEndLocation = function (anchor) {
-				var distance = 0;
+				var location = 0;
 				if (anchor.offsetParent) {
 					do {
-						distance += anchor.offsetTop;
+						location += anchor.offsetTop;
 						anchor = anchor.offsetParent;
 					} while (anchor);
 				}
-				return distance - headerHeight;
+				location = location - headerHeight;
+				if ( location >= 0 ) {
+					return location;
+				} else {
+					return 0;
+				}
 			};
 			var endLocation = getEndLocation(anchor);
 			var distance = endLocation - startLocation;
@@ -77,16 +82,9 @@
 			// Function to stop the scrolling animation
 			var stopAnimation = function () {
 				var currentLocation = window.pageYOffset;
-				if ( distance >= 0 ) { // If scrolling down
-					if ( currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
-						clearInterval(runAnimation);
-						updateURL(url, anchor);
-					}
-				} else { // If scrolling up
-					if ( currentLocation == endLocation || currentLocation === 0 ) {
-						clearInterval(runAnimation);
-						updateURL(url, anchor);
-					}
+				if ( currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
+					clearInterval(runAnimation);
+					updateURL(url, anchor);
 				}
 			};
 
