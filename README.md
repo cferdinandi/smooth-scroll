@@ -5,7 +5,9 @@ A simple script to animate scrolling to anchor links. Easing support contributed
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
 
 ## Changelog
-* v2.16 (Junuary 16, 2014)
+* v2.17 (January 17, 2014)
+  * [Fixed back button behavior when using `data-url` feature.](https://github.com/cferdinandi/smooth-scroll/pull/18)
+* v2.16 (January 16, 2014)
   * [Updated variables for more accurate easing math when scrolling to top of page.](https://github.com/cferdinandi/smooth-scroll/pull/25#issuecomment-32566729)
 * v2.15 (January 16, 2014)
   * [Fixed bug that caused "scroll-to-top" animation to create endless loop.](https://github.com/cferdinandi/smooth-scroll/issues/24)
