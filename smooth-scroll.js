@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.16
+	Smooth Scroll 2.17
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -51,7 +51,7 @@
 			// Function to update URL
 			var updateURL = function (url, anchor) {
 				if ( url === 'true' && history.pushState ) {
-					history.pushState(null, null, '#' + anchor.id);
+					window.location.hash = '#' + anchor.id;
 				}
 			};
 
