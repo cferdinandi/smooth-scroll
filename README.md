@@ -5,6 +5,8 @@ A simple script to animate scrolling to anchor links. Easing support contributed
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
 
 ## Changelog
+* v2.19 (January 23, 2014)
+  * [Fix back button behavior in Chrome.](https://github.com/cferdinandi/smooth-scroll/issues/26#issuecomment-33172325)
 * v2.18 (January 23, 2014)
   * [Update URL before animation.](https://github.com/cferdinandi/smooth-scroll/pull/27)
   * [Fix back button behavior in Firefox.](https://github.com/cferdinandi/smooth-scroll/issues/26)

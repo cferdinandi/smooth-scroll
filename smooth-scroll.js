@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.18
+	Smooth Scroll 2.19
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -132,6 +132,13 @@
 			}, false);
 
 		});
+
+		// Return to the top of the page when back button is clicked and no hash is set
+		window.onpopstate = function (event) {
+			if ( event.state === null && window.location.hash === '' ) {
+				window.scrollTo( 0, 0 );
+			}
+		};
 
 	}
 
