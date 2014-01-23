@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.17
+	Smooth Scroll 2.18
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -51,7 +51,7 @@
 			// Function to update URL
 			var updateURL = function (url, anchor) {
 				if ( url === 'true' && history.pushState ) {
-					window.location.hash = '#' + anchor.id;
+					history.pushState( {pos:anchor.id}, '', '#' + anchor.id );
 				}
 			};
 
@@ -84,7 +84,6 @@
 				var currentLocation = window.pageYOffset;
 				if ( currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
 					clearInterval(runAnimation);
-					updateURL(url, anchor);
 				}
 			};
 
@@ -102,7 +101,8 @@
 				stopAnimation();
 			};
 
-			// Loop the animation function
+			// Update the URL and loop the animation function
+			updateURL(url, anchor);
 			var runAnimation = setInterval(animateScroll, 16);
 
 		};
