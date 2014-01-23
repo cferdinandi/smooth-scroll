@@ -51,7 +51,7 @@
 			// Function to update URL
 			var updateURL = function (url, anchor) {
 				if ( url === 'true' && history.pushState ) {
-					window.location.hash = '#' + anchor.id;
+					history.pushState(null, null, '#' + anchor.id);
 				}
 			};
 
