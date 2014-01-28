@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 2.19
+	Smooth Scroll 3.0
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -21,17 +21,39 @@
 
  * ============================================================= */
 
-(function (window, document, undefined) {
+window.smoothScroll = (function (window, document, undefined) {
 
 	'use strict';
 
 	// Feature Test
 	if ( 'querySelector' in document && 'addEventListener' in window && Array.prototype.forEach ) {
 
-		// Function to animate the scroll
-		var smoothScroll = function (anchor, duration, easing, url) {
+		// SELECTORS
 
-			// Functions to control easing
+		var scrollToggles = document.querySelectorAll('[data-scroll]');
+
+
+		// METHODS
+
+		// Run the smooth scroll animation
+		var runSmoothScroll = function (anchor, duration, easing, url) {
+
+			// SELECTORS
+
+			var startLocation = window.pageYOffset;
+
+			// Get the height of a fixed header if one exists
+			var scrollHeader = document.querySelector('.scroll-header');
+			var headerHeight = scrollHeader === null ? 0 : scrollHeader.offsetHeight;
+
+			// Set the animation variables to 0/undefined.
+			var timeLapsed = 0;
+			var percentage, position;
+
+
+			// METHODS
+
+			// Calculate the easing pattern
 			var easingPattern = function (type, time) {
 				if ( type == 'easeInQuad' ) return time * time; // accelerating from zero velocity
 				if ( type == 'easeOutQuad' ) return time * (2 - time); // decelerating to zero velocity
@@ -48,19 +70,14 @@
 				return time; // no easing, no acceleration
 			};
 
-			// Function to update URL
+			// Update the URL
 			var updateURL = function (url, anchor) {
 				if ( url === 'true' && history.pushState ) {
 					history.pushState( {pos:anchor.id}, '', '#' + anchor.id );
 				}
 			};
 
-			// Get the height of a fixed header if one exists
-			var scrollHeader = document.querySelector('.scroll-header');
-			var headerHeight = scrollHeader === null ? 0 : scrollHeader.offsetHeight;
-
 			// Calculate how far to scroll
-			var startLocation = window.pageYOffset;
 			var getEndLocation = function (anchor) {
 				var location = 0;
 				if (anchor.offsetParent) {
@@ -79,17 +96,13 @@
 			var endLocation = getEndLocation(anchor);
 			var distance = endLocation - startLocation;
 
-			// Function to stop the scrolling animation
+			// Stop the scrolling animation when the anchor is reached (or at the top/bottom of the page)
 			var stopAnimation = function () {
 				var currentLocation = window.pageYOffset;
 				if ( currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
 					clearInterval(runAnimation);
 				}
 			};
-
-			// Set the animation variables to 0/undefined.
-			var timeLapsed = 0;
-			var percentage, position;
 
 			// Scroll the page by an increment, and check if it's time to stop
 			var animateScroll = function () {
@@ -101,37 +114,44 @@
 				stopAnimation();
 			};
 
-			// Update the URL and loop the animation function
+
+			// EVENTS, LISTENERS, AND INITS
+
 			updateURL(url, anchor);
 			var runAnimation = setInterval(animateScroll, 16);
 
 		};
 
-		// For each smooth scroll link
-		var scrollToggle = document.querySelectorAll('.scroll');
-		[].forEach.call(scrollToggle, function (toggle) {
+		// Check that anchor exists and run scroll animation
+		var handleToggleClick = function (event) {
 
-			// When the smooth scroll link is clicked
-			toggle.addEventListener('click', function(e) {
+			// SELECTORS
 
-				// Prevent the default link behavior
-				e.preventDefault();
+			// Get anchor link and calculate distance from the top
+			var dataID = this.getAttribute('href');
+			var dataTarget = document.querySelector(dataID);
+			var dataSpeed = this.getAttribute('data-speed');
+			var dataEasing = this.getAttribute('data-easing');
+			var dataURL = this.getAttribute('data-url');
 
-				// Get anchor link and calculate distance from the top
-				var dataID = toggle.getAttribute('href');
-				var dataTarget = document.querySelector(dataID);
-				var dataSpeed = toggle.getAttribute('data-speed');
-				var dataEasing = toggle.getAttribute('data-easing');
-				var dataURL = toggle.getAttribute('data-url');
 
-				// If the anchor exists, scroll to it
-				if (dataTarget) {
-					smoothScroll( dataTarget, dataSpeed || 500, dataEasing || 'easeInOutCubic', dataURL || 'false' );
-				}
+			// EVENTS, LISTENERS, AND INITS
 
-			}, false);
+			event.preventDefault();
+			if (dataTarget) {
+				runSmoothScroll( dataTarget, dataSpeed || 500, dataEasing || 'easeInOutCubic', dataURL || 'false' );
+			}
 
-		});
+		};
+
+
+		// EVENTS, LISTENERS, AND INITS
+
+		// When a toggle is clicked, run the click handler
+		for (var i = scrollToggles.length; i--;) {
+			var toggle = scrollToggles[i];
+			toggle.addEventListener('click', handleToggleClick, false);
+		}
 
 		// Return to the top of the page when back button is clicked and no hash is set
 		window.onpopstate = function (event) {
