@@ -5,7 +5,9 @@ A simple script to animate scrolling to anchor links. Easing support contributed
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
 
 ## Changelog
-* v2.0 (January 28, 2014)
+* v3.1 (February 4, 2014)
+  * Reverted to `Array.protype.foreach` loops.
+* v3.0 (January 28, 2014)
   * Switched to a data attribute for the toggle selector.
   * Added namespacing to IIFE.
   * Updated looping method and event listener.

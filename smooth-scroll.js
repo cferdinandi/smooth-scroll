@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 3.0
+	Smooth Scroll 3.1
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -148,10 +148,9 @@ window.smoothScroll = (function (window, document, undefined) {
 		// EVENTS, LISTENERS, AND INITS
 
 		// When a toggle is clicked, run the click handler
-		for (var i = scrollToggles.length; i--;) {
-			var toggle = scrollToggles[i];
+		Array.prototype.forEach.call(scrollToggles, function (toggle, index) {
 			toggle.addEventListener('click', handleToggleClick, false);
-		}
+		});
 
 		// Return to the top of the page when back button is clicked and no hash is set
 		window.onpopstate = function (event) {
