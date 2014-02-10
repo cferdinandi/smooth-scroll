@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll 3.1
+	Smooth Scroll 3.2
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -15,6 +15,9 @@
 
 	Fixed header support contributed by Arndt von Lucadou.
 	https://github.com/a-v-l
+
+	Infinite loop bugs in iOS and Chrome (when zoomed) by Alex Guzman.
+	https://github.com/alexguzman
 
 	Free to use under the MIT License.
 	http://gomakethings.com/mit/
