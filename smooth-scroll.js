@@ -99,7 +99,7 @@ window.smoothScroll = (function (window, document, undefined) {
 			// Stop the scrolling animation when the anchor is reached (or at the top/bottom of the page)
 			var stopAnimation = function () {
 				var currentLocation = window.pageYOffset;
-				if ( currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
+				if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
 					clearInterval(runAnimation);
 				}
 			};
