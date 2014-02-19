@@ -47,7 +47,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 			// Get the height of a fixed header if one exists
 			var scrollHeader = document.querySelector('[data-scroll-header]');
-			var headerHeight = scrollHeader === null ? 0 : scrollHeader.offsetHeight;
+			var headerHeight = scrollHeader === null ? 0 : (scrollHeader.offsetHeight + scrollHeader.offsetTop);
 
 			// Set the animation variables to 0/undefined.
 			var timeLapsed = 0;
