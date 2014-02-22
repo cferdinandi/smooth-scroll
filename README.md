@@ -5,6 +5,11 @@ A simple script to animate scrolling to anchor links. Easing support contributed
 Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
 
 ## Changelog
+* v4.0 (February 21, 2014)
+  * Better public/private method namespacing.
+  * Require `init()` call to run.
+  * Better documentation (noting what's returned on functions).
+  * Switched data attribute overrides to single `data-options` attribute.
 * v3.3 (February 19, 2014)
   * [Add `offsettTop` to `offsetHeigh`t for `scrollHeader`. Allows for multiple fixed headers, or a fixed header that sits slightly below the top of the page.](https://github.com/cferdinandi/smooth-scroll/pull/36)
 * v3.2 (February 10, 2014)

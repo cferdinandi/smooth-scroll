@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll v3.3
+	Smooth Scroll v4.0
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -31,7 +31,7 @@ window.smoothScroll = (function (window, document, undefined) {
 	// Calculate the easing pattern
 	// Private method
 	// Returns a decimal number
-	var _easingPattern = function (type, time) {
+	var _easingPattern = function ( type, time ) {
 		if ( type == 'easeInQuad' ) return time * time; // accelerating from zero velocity
 		if ( type == 'easeOutQuad' ) return time * (2 - time); // decelerating to zero velocity
 		if ( type == 'easeInOutQuad' ) return time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
@@ -50,7 +50,7 @@ window.smoothScroll = (function (window, document, undefined) {
 	// Calculate how far to scroll
 	// Private method
 	// Returns an integer
-	var _getEndLocation = function (anchor, headerHeight) {
+	var _getEndLocation = function ( anchor, headerHeight ) {
 		var location = 0;
 		if (anchor.offsetParent) {
 			do {
@@ -93,9 +93,13 @@ window.smoothScroll = (function (window, document, undefined) {
 
 	// Start/stop the scrolling animation
 	// Private method
-	var _runAnimateScroll = function ( startLocation, endLocation, duration, easing ) {
+	var _runAnimateScroll = function ( anchor, duration, easing, fixedHeader ) {
 
 		// Selectors and variables
+		fixedHeader = document.querySelector(fixedHeader); // Get the fixed header
+		var headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
+		var startLocation = window.pageYOffset; // Current location on the page
+		var endLocation = _getEndLocation(anchor, headerHeight); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
 		var timeLapsed = 0;
@@ -134,46 +138,29 @@ window.smoothScroll = (function (window, document, undefined) {
 
 	// Update the URL
 	// Private method
-	var _updateURL = function (url, anchor) {
+	var _updateURL = function ( url, anchor ) {
 		if ( (url === true || url === 'true') && history.pushState ) {
 			history.pushState( {pos:anchor.id}, '', '#' + anchor.id );
 		}
 	};
 
-	// Run the smooth scroll animation
+	// Run smooth scroll on a clicked link
 	// Private method
-	var _runSmoothScroll = function (anchor, duration, easing, url) {
-
-		// Get the height of a fixed header if one exists
-		var scrollHeader = document.querySelector('[data-scroll-header]');
-		var headerHeight = scrollHeader === null ? 0 : (scrollHeader.offsetHeight + scrollHeader.offsetTop);
-
-		// Get start and end locations
-		var startLocation = window.pageYOffset;
-		var endLocation = _getEndLocation(anchor, headerHeight);
-
-		// Run animation and update URL
-		_updateURL(url, anchor);
-		_runAnimateScroll( startLocation, endLocation, duration, easing );
-
-	};
-
-	// Check that anchor exists and run scroll animation
-	// Private method
-	var _handleToggleClick = function (options, event) {
+	var _runSmoothScroll = function ( options, event ) {
 
 		// Selectors and variables
 		var overrides = _getDataOptions( this.getAttribute('data-options') );
 		var anchor = document.querySelector(this.getAttribute('href'));
+		var fixedHeader = options.fixedHeader || '[data-scroll-header]';
 		var speed = overrides.speed || options.speed || 500;
 		var easing = overrides.easing || options.easing || 'easeInOutCubic';
 		var updateURL = overrides.updateURL || options.updateURL || false;
 
-		// If an anchor exists, run Smooth Scroll
+		// If an anchor exists, update URL and animate scroll
 		if ( anchor ) {
 			event.preventDefault();
-			// _runSmoothScroll( dataTarget, dataSpeed, dataEasing, dataURL );
-			_runSmoothScroll( anchor, speed, easing, updateURL );
+			_updateURL(updateURL, anchor);
+			_runAnimateScroll( anchor, speed, easing, fixedHeader );
 		}
 
 	};
@@ -191,7 +178,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 			// When a toggle is clicked, run the click handler
 			Array.prototype.forEach.call(toggles, function (toggle, index) {
-				toggle.addEventListener('click', _handleToggleClick.bind( toggle, options ), false);
+				toggle.addEventListener('click', _runSmoothScroll.bind( toggle, options ), false);
 			});
 
 		}
