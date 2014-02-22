@@ -68,7 +68,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 	// Convert data-options attribute into an object of key/value pairs
 	// Private method
-	// Returns {object}
+	// Returns an {object}
 	var _getDataOptions = function ( options ) {
 
 		if ( options === null || options === undefined  ) {
@@ -93,6 +93,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 	// Start/stop the scrolling animation
 	// Public method
+	// Runs functions
 	var animateScroll = function ( anchor, duration, easing, fixedHeader ) {
 
 		// Selectors and variables
@@ -138,6 +139,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 	// Update the URL
 	// Private method
+	// Runs functions
 	var _updateURL = function ( anchor, url ) {
 		if ( (url === true || url === 'true') && history.pushState ) {
 			history.pushState( {pos:anchor.id}, '', '#' + anchor.id );
@@ -166,6 +168,8 @@ window.smoothScroll = (function (window, document, undefined) {
 	};
 
 	// Initialize Smooth Scroll
+	// Public method
+	// Runs functions
 	var init = function ( options ) {
 
 		// Feature test before initializing
