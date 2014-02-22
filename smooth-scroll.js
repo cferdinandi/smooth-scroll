@@ -92,8 +92,8 @@ window.smoothScroll = (function (window, document, undefined) {
 	};
 
 	// Start/stop the scrolling animation
-	// Private method
-	var _runAnimateScroll = function ( anchor, duration, easing, fixedHeader ) {
+	// Public method
+	var animateScroll = function ( anchor, duration, easing, fixedHeader ) {
 
 		// Selectors and variables
 		fixedHeader = document.querySelector(fixedHeader); // Get the fixed header
@@ -116,7 +116,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 		// Loop scrolling animation
 		// Private method
-		var _animateScroll = function () {
+		var _loopAnimateScroll = function () {
 			timeLapsed += 16;
 			percentage = ( timeLapsed / duration );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
@@ -128,7 +128,7 @@ window.smoothScroll = (function (window, document, undefined) {
 		// Set interval timer
 		// Private method
 		var _startAnimateScroll = function () {
-			animationInterval = setInterval(_animateScroll, 16);
+			animationInterval = setInterval(_loopAnimateScroll, 16);
 		};
 
 		// Start scrolling animation
@@ -138,7 +138,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 	// Update the URL
 	// Private method
-	var _updateURL = function ( url, anchor ) {
+	var _updateURL = function ( anchor, url ) {
 		if ( (url === true || url === 'true') && history.pushState ) {
 			history.pushState( {pos:anchor.id}, '', '#' + anchor.id );
 		}
@@ -159,8 +159,8 @@ window.smoothScroll = (function (window, document, undefined) {
 		// If an anchor exists, update URL and animate scroll
 		if ( anchor ) {
 			event.preventDefault();
-			_updateURL(updateURL, anchor);
-			_runAnimateScroll( anchor, speed, easing, fixedHeader );
+			_updateURL(anchor, updateURL);
+			animateScroll( anchor, speed, easing, fixedHeader );
 		}
 
 	};
@@ -187,7 +187,8 @@ window.smoothScroll = (function (window, document, undefined) {
 
 	// Return public methods
 	return {
-		init: init
+		init: init,
+		animateScroll: animateScroll
 	};
 
 })(window, document);
