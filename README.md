@@ -8,8 +8,8 @@ Getting started with Smooth Scroll is really easy. [View the online tutorial](ht
 * v4.0 (February 21, 2014)
   * Better public/private method namespacing.
   * Require `init()` call to run.
-  * Better documentation (noting what's returned on functions).
-  * Switched data attribute overrides to single `data-options` attribute.
+  * New API exposes additional methods for use in your own scripts.
+  * Better documentation.
 * v3.3 (February 19, 2014)
   * [Add `offsettTop` to `offsetHeigh`t for `scrollHeader`. Allows for multiple fixed headers, or a fixed header that sits slightly below the top of the page.](https://github.com/cferdinandi/smooth-scroll/pull/36)
 * v3.2 (February 10, 2014)

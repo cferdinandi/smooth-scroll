@@ -69,11 +69,11 @@
 	<script src='smooth-scroll.js'></script>
 	<script>
 		smoothScroll.init({
-			scrollToggle: '[data-scroll]',
-			fixedHead: '[data-scroll-header]',
 			speed: 500,
 			easing: 'easeInOutCubic',
-			updateURL: true
+			updateURL: false,
+			callbackBefore: function () {},
+			callbackAfter: function () {}
 		});
 	</script>
 

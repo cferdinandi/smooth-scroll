@@ -28,6 +28,29 @@ window.smoothScroll = (function (window, document, undefined) {
 
 	'use strict';
 
+	// Default settings
+	// Private method
+	// Returns an {object}
+	var _defaults = function () {
+		return {
+			speed: 500,
+			easing: 'easeInOutCubic',
+			updateURL: false,
+			callbackBefore: function () {},
+			callbackAfter: function () {}
+		};
+	};
+
+	// Merge default settings with user options
+	// Private method
+	// Returns an {object}
+	var _mergeObjects = function ( original, updates ) {
+		for (var key in updates) {
+			original[key] = updates[key];
+		}
+		return original;
+	};
+
 	// Calculate the easing pattern
 	// Private method
 	// Returns a decimal number
@@ -91,20 +114,44 @@ window.smoothScroll = (function (window, document, undefined) {
 
 	};
 
+	// Update the URL
+	// Private method
+	// Runs functions
+	var _updateURL = function ( anchor, url ) {
+		if ( (url === true || url === 'true') && history.pushState ) {
+			history.pushState( {pos:anchor.id}, '', anchor );
+		}
+	};
+
 	// Start/stop the scrolling animation
 	// Public method
 	// Runs functions
-	var animateScroll = function ( anchor, duration, easing, fixedHeader ) {
+	var animateScroll = function ( toggle, anchor, options, event ) {
+
+		// Options and overrides
+		options = _mergeObjects( _defaults(), options || {} ); // Merge user options with defaults
+		var overrides = _getDataOptions( toggle.getAttribute('data-options') );
+		var speed = overrides.speed || options.speed;
+		var easing = overrides.easing || options.easing;
+		var updateURL = overrides.updateURL || options.updateURL;
 
 		// Selectors and variables
-		fixedHeader = document.querySelector(fixedHeader); // Get the fixed header
+		var fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
 		var headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
 		var startLocation = window.pageYOffset; // Current location on the page
-		var endLocation = _getEndLocation(anchor, headerHeight); // Scroll to location
+		var endLocation = _getEndLocation( document.querySelector(anchor), headerHeight ); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
 		var timeLapsed = 0;
 		var percentage, position;
+
+		// Prevent default click event
+		if ( toggle && toggle.tagName === 'A' && event ) {
+			event.preventDefault();
+		}
+
+		// Update URL
+		_updateURL(anchor, updateURL);
 
 		// Stop the scroll animation when it reaches its target (or the bottom/top of page)
 		// Private method
@@ -112,6 +159,7 @@ window.smoothScroll = (function (window, document, undefined) {
 			var currentLocation = window.pageYOffset;
 			if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
 				clearInterval(animationInterval);
+				options.callbackAfter(); // Run callbacks after animation complete
 			}
 		};
 
@@ -119,7 +167,7 @@ window.smoothScroll = (function (window, document, undefined) {
 		// Private method
 		var _loopAnimateScroll = function () {
 			timeLapsed += 16;
-			percentage = ( timeLapsed / duration );
+			percentage = ( timeLapsed / speed );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
 			position = startLocation + ( distance * _easingPattern(easing, percentage) );
 			window.scrollTo( 0, position );
@@ -129,41 +177,12 @@ window.smoothScroll = (function (window, document, undefined) {
 		// Set interval timer
 		// Private method
 		var _startAnimateScroll = function () {
+			options.callbackBefore(); // Run callbacks before animating scroll
 			animationInterval = setInterval(_loopAnimateScroll, 16);
 		};
 
 		// Start scrolling animation
 		_startAnimateScroll();
-
-	};
-
-	// Update the URL
-	// Private method
-	// Runs functions
-	var _updateURL = function ( anchor, url ) {
-		if ( (url === true || url === 'true') && history.pushState ) {
-			history.pushState( {pos:anchor.id}, '', '#' + anchor.id );
-		}
-	};
-
-	// Run smooth scroll on a clicked link
-	// Private method
-	var _runSmoothScroll = function ( options, event ) {
-
-		// Selectors and variables
-		var overrides = _getDataOptions( this.getAttribute('data-options') );
-		var anchor = document.querySelector(this.getAttribute('href'));
-		var fixedHeader = options.fixedHeader || '[data-scroll-header]';
-		var speed = overrides.speed || options.speed || 500;
-		var easing = overrides.easing || options.easing || 'easeInOutCubic';
-		var updateURL = overrides.updateURL || options.updateURL || false;
-
-		// If an anchor exists, update URL and animate scroll
-		if ( anchor ) {
-			event.preventDefault();
-			_updateURL(anchor, updateURL);
-			animateScroll( anchor, speed, easing, fixedHeader );
-		}
 
 	};
 
@@ -176,13 +195,12 @@ window.smoothScroll = (function (window, document, undefined) {
 		if ( 'querySelector' in document && 'addEventListener' in window && Array.prototype.forEach ) {
 
 			// Selectors and variables
-			options = options || {};
-			var scrollToggle = options.scrollToggle || '[data-scroll]';
-			var toggles = document.querySelectorAll(scrollToggle); // Get smooth scroll toggles
+			options = _mergeObjects( _defaults(), options || {} ); // Merge user options with defaults
+			var toggles = document.querySelectorAll('[data-scroll]'); // Get smooth scroll toggles
 
 			// When a toggle is clicked, run the click handler
 			Array.prototype.forEach.call(toggles, function (toggle, index) {
-				toggle.addEventListener('click', _runSmoothScroll.bind( toggle, options ), false);
+				toggle.addEventListener('click', animateScroll.bind( null, toggle, toggle.getAttribute('href'), options ), false);
 			});
 
 		}
