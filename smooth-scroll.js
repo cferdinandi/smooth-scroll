@@ -155,6 +155,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 		// Stop the scroll animation when it reaches its target (or the bottom/top of page)
 		// Private method
+		// Runs functions
 		var _stopAnimateScroll = function () {
 			var currentLocation = window.pageYOffset;
 			if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
@@ -165,6 +166,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 		// Loop scrolling animation
 		// Private method
+		// Runs functions
 		var _loopAnimateScroll = function () {
 			timeLapsed += 16;
 			percentage = ( timeLapsed / speed );
@@ -176,6 +178,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 		// Set interval timer
 		// Private method
+		// Runs functions
 		var _startAnimateScroll = function () {
 			options.callbackBefore(); // Run callbacks before animating scroll
 			animationInterval = setInterval(_loopAnimateScroll, 16);
