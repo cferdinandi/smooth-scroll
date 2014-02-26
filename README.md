@@ -1,5 +1,7 @@
 # Smooth Scroll
-A lightweight script to animate scrolling to anchor links, by [Chris Ferdinandi](http://gomakethings.com). [View the Demo](http://cferdinandi.github.io/smooth-scroll/)
+A lightweight script to animate scrolling to anchor links. [View the demo](http://cferdinandi.github.io/smooth-scroll/).
+
+**In This Documentation**
 
 1. [Getting Started](#getting-started)
 2. [Options & Settings](#options-and-settings)
@@ -148,6 +150,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 * [Gaëtan Renaudeau](https://gist.github.com/gre/1650294)
 * [Robert Pate](https://github.com/robertpateii)
 * [Arndt von Lucadou](https://github.com/a-v-l)
+* [Alex Guzman](https://github.com/alexguzman)
 * [Luke Siedle](https://github.com/luke-siedle)
 
 

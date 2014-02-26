@@ -4,20 +4,8 @@
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
-	Easing support contributed by Willem Liu.
-	https://github.com/willemliu
-
-	Easing functions forked from Gaëtan Renaudeau.
-	https://gist.github.com/gre/1650294
-
-	URL history support contributed by Robert Pate.
-	https://github.com/robertpateii
-
-	Fixed header support contributed by Arndt von Lucadou.
-	https://github.com/a-v-l
-
-	Infinite loop bugs in iOS and Chrome (when zoomed) by Alex Guzman.
-	https://github.com/alexguzman
+	Additional contributors:
+	https://github.com/cferdinandi/smooth-scroll#contributors
 
 	Free to use under the MIT License.
 	http://gomakethings.com/mit/
