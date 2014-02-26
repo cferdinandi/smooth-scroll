@@ -204,6 +204,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 * [Gaëtan Renaudeau](https://gist.github.com/gre/1650294)
 * [Robert Pate](https://github.com/robertpateii)
 * [Arndt von Lucadou](https://github.com/a-v-l)
+* [Luke Siedle](https://github.com/luke-siedle)
 
 
 ## License
