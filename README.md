@@ -66,34 +66,34 @@ smoothScroll.init({
 **Linear**
 *Moves at the same speed from start to finish.*
 
-* Linear
+* `Linear`
 
 
 **Ease-In**
 *Gradually increases in speed.*
 
-* easeInQuad
-* easeInCubic
-* easeInQuart
-* easeInQuint
+* `easeInQuad`
+* `easeInCubic`
+* `easeInQuart`
+* `easeInQuint`
 
 
 **Ease-In-Out**
 *Gradually increases in speed, peaks, and then gradually slows down.*
 
-* easeInOutQuad
-* easeInOutCubic
-* easeInOutQuart
-* easeInOutQuint
+* `easeInOutQuad`
+* `easeInOutCubic`
+* `easeInOutQuart`
+* `easeInOutQuint`
 
 
 **Ease-Out**
 *Gradually decreases in speed.*
 
-* easeOutQuad
-* easeOutCubic
-* easeOutQuart
-* easeOutQuint
+* `easeOutQuad`
+* `easeOutCubic`
+* `easeOutQuart`
+* `easeOutQuint`
 
 
 Learn more about the different easing patterns and what they do at [easings.net](http://easings.net/).
