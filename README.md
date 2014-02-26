@@ -1,8 +1,131 @@
 # Smooth Scroll
-A simple script to animate scrolling to anchor links. Easing support contributed by [Willem Liu](https://github.com/willemliu) with code from [Gaëtan Renaudeau](https://gist.github.com/gre/1650294).
+A lightweight script to animate scrolling to anchor links, by [Chris Ferdinandi](http://gomakethings.com). [View the Demo](http://cferdinandi.github.io/smooth-scroll/)
 
-## How It Works
-Getting started with Smooth Scroll is really easy. [View the online tutorial](http://cferdinandi.github.com/smooth-scroll/) or dig through the `index.html` file.
+1. [Getting Started](#getting-started)
+2. [Browser Compatability](#browser-compatability)
+3. [Options & Settings](#options-and-settings)
+4. [Changelog](#changelog)
+5. [License](#license)
+6. [Older Docs](#older-docs)
+
+
+
+## Getting Started
+
+### 1. Include Smooth Scroll on your site.
+
+	<script src="js/smooth-scroll.js"></script>
+
+### 2. Add the markup to your HTML.
+
+	<a data-scroll href="#bazinga">Anchor Link</a>
+	...
+	<span id="bazinga">Bazinga!</span>
+
+Turn anchor links into Smooth Scroll links by adding the `[data-scroll]` data attribute. Give the anchor location an ID just like you normally would.
+
+### 3. Initialize Smooth Scroll.
+
+	<script>
+		smoothScroll.init();
+	</script>
+
+In the footer of your page, after the content, initialize Smooth Scroll. And that's it, you're done. Nice work!
+
+
+
+## Options and Settings
+
+Smooth Scroll includes smart defaults and works right out of the box. But if you want to customize things, it also has a robust API that provides multiple ways for you to adjust the default options and settings.
+
+### Global Settings
+
+You can pass options and callbacks into Smooth Scroll through the `init()` function:
+
+	smoothScroll.init({
+		speed: 500, // How fast to complete the scroll in milliseconds
+		easing: 'easeInOutCubic', // Easing pattern to use
+		updateURL: false, // Boolean. Whether or not to update the URL with the anchor hash on scroll
+		callbackBefore: function () {}, // Function to run before scrolling
+		callbackAfter: function () {} // Function to run after scrolling
+	});
+
+#### Easing Options
+
+**Linear**
+*Moves at the same speed from start to finish.*
+
+* Linear
+
+
+**Ease-In**
+*Gradually increases in speed.*
+
+* easeInQuad
+* easeInCubic
+* easeInQuart
+* easeInQuint
+
+
+**Ease-In-Out**
+*Gradually increases in speed, peaks, and then gradually slows down.*
+
+* easeInOutQuad
+* easeInOutCubic
+* easeInOutQuart
+* easeInOutQuint
+
+
+**Ease-Out**
+*Gradually decreases in speed.*
+
+* easeOutQuad
+* easeOutCubic
+* easeOutQuart
+* easeOutQuint
+
+
+Learn more about the different easing patterns and what they do at [easings.net](http://easings.net/).
+
+### Override settings with data attributes
+
+Smooth Scroll also lets you override global settings on a link-by-link basis using the `[data-options]` data attribute:
+
+	<a data-scroll
+	   data-options="speed: 500;
+	                 easing: easeInOutCubic;
+	                 updateURL: false
+    ">
+    	Anchor Link
+	</a>
+
+### Use Smooth Scroll events in your own scripts
+
+You can also call Smooth Scroll's scroll animation events in your own scripts:
+
+	smoothScroll.animateScroll(
+		toggle, // Node that toggles the animation. ex. document.querySelector('#toggle')
+		anchor, // ID of the anchor to scroll to. ex. '#bazinga'
+		options, // Classes and callbacks. Same options as those passed into the init() function.
+		event // Optional, if a DOM event was triggered.
+	);
+
+### Fixed Headers
+
+Add a `[data-scroll-header]` data attribute to fixed headers. Smooth Scroll will automatically offset scroll distances by the header height. If you have multiple fixed headers, add `[data-scroll-header]` to the last one in the markup.
+
+<nav data-scroll-header>
+	...
+</nav>
+
+
+## Browser Compatability
+
+Smooth Scroll works in all modern browsers, and IE 9 and above.
+
+Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhancement. If the JavaScript file fails to load, or if your site is viewed on older and less capable browsers, anchor links will jump the way they normally would. If you need to smooth scrolling for older browsers, [download the jQuery version of Smooth Scroll on GitHub](https://github.com/cferdinandi/smooth-scroll/tree/archive-v1).
+
+
 
 ## Changelog
 * v4.0 (February 21, 2014)
@@ -73,5 +196,22 @@ Getting started with Smooth Scroll is really easy. [View the online tutorial](ht
 * v1.0 (January 24, 2013)
   * Initial release.
 
+
+
+## Contributors
+
+* [Willem Liu](https://github.com/willemliu)
+* [Gaëtan Renaudeau](https://gist.github.com/gre/1650294)
+* [Robert Pate](https://github.com/robertpateii)
+* [Arndt von Lucadou](https://github.com/a-v-l)
+
+
 ## License
-Smooth Scroll is free to use under the [MIT License](http://gomakethings.com/mit/).
+Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
+
+
+
+## Older Docs
+
+* [Version 3](http://cferdinandi.github.io/smooth-scroll/archive/v3/)
+* [Version 1](https://github.com/cferdinandi/smooth-scroll/tree/archive-v1)

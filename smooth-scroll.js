@@ -172,7 +172,7 @@ window.smoothScroll = (function (window, document, undefined) {
 			percentage = ( timeLapsed / speed );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
 			position = startLocation + ( distance * _easingPattern(easing, percentage) );
-			window.scrollTo( 0, position );
+			window.scrollTo( 0, Math.floor(position) );
 			_stopAnimateScroll(position, endLocation, animationInterval);
 		};
 
