@@ -146,12 +146,12 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 
 ## Contributors
 
-* [Willem Liu](https://github.com/willemliu)
-* [Gaëtan Renaudeau](https://gist.github.com/gre/1650294)
-* [Robert Pate](https://github.com/robertpateii)
-* [Arndt von Lucadou](https://github.com/a-v-l)
-* [Alex Guzman](https://github.com/alexguzman)
-* [Luke Siedle](https://github.com/luke-siedle)
+* Easing support contributed by [Willem Liu](https://github.com/willemliu)
+* Easing functions forked from [Gaëtan Renaudeau](https://gist.github.com/gre/1650294)
+* URL history support contributed by [Robert Pate](https://github.com/robertpateii)
+* Fixed header support contributed by [Arndt von Lucadou](https://github.com/a-v-l)
+* Infinite loop bugs in iOS and Chrome (when zoomed) by [Alex Guzman](https://github.com/alexguzman)
+* IE10 rounding error fixed by [Luke Siedle](https://github.com/luke-siedle)
 
 
 
