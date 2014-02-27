@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll v4.0
+	Smooth Scroll v4.1
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -17,16 +17,13 @@ window.smoothScroll = (function (window, document, undefined) {
 	'use strict';
 
 	// Default settings
-	// Private method
-	// Returns an {object}
-	var _defaults = function () {
-		return {
-			speed: 500,
-			easing: 'easeInOutCubic',
-			updateURL: false,
-			callbackBefore: function () {},
-			callbackAfter: function () {}
-		};
+	// Private {object} variable
+	var _defaults = {
+		speed: 500,
+		easing: 'easeInOutCubic',
+		updateURL: false,
+		callbackBefore: function () {},
+		callbackAfter: function () {}
 	};
 
 	// Merge default settings with user options
@@ -117,7 +114,7 @@ window.smoothScroll = (function (window, document, undefined) {
 	var animateScroll = function ( toggle, anchor, options, event ) {
 
 		// Options and overrides
-		options = _mergeObjects( _defaults(), options || {} ); // Merge user options with defaults
+		options = _mergeObjects( _defaults, options || {} ); // Merge user options with defaults
 		var overrides = _getDataOptions( toggle.getAttribute('data-options') );
 		var speed = overrides.speed || options.speed;
 		var easing = overrides.easing || options.easing;
@@ -186,7 +183,7 @@ window.smoothScroll = (function (window, document, undefined) {
 		if ( 'querySelector' in document && 'addEventListener' in window && Array.prototype.forEach ) {
 
 			// Selectors and variables
-			options = _mergeObjects( _defaults(), options || {} ); // Merge user options with defaults
+			options = _mergeObjects( _defaults, options || {} ); // Merge user options with defaults
 			var toggles = document.querySelectorAll('[data-scroll]'); // Get smooth scroll toggles
 
 			// When a toggle is clicked, run the click handler
