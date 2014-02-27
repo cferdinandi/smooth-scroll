@@ -125,6 +125,20 @@ smoothScroll.animateScroll(
 );
 ```
 
+**Example 1**
+
+```javascript
+smoothScroll.animateScroll( null, '#bazinga' );
+```
+
+**Example 2**
+
+```javascript
+var toggle = document.querySelector('#toggle');
+var options = { speed: 1000, easing: 'easeOutCubic' };
+smoothScroll.animateScroll( toggle, '#bazinga', options );
+```
+
 ### Fixed Headers
 
 Add a `[data-scroll-header]` data attribute to fixed headers. Smooth Scroll will automatically offset scroll distances by the header height. If you have multiple fixed headers, add `[data-scroll-header]` to the last one in the markup.
