@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll v4.1
+	Smooth Scroll v4.2
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -115,7 +115,7 @@ window.smoothScroll = (function (window, document, undefined) {
 
 		// Options and overrides
 		options = _mergeObjects( _defaults, options || {} ); // Merge user options with defaults
-		var overrides = _getDataOptions( toggle.getAttribute('data-options') );
+		var overrides = _getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
 		var speed = overrides.speed || options.speed;
 		var easing = overrides.easing || options.easing;
 		var updateURL = overrides.updateURL || options.updateURL;
