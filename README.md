@@ -175,6 +175,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 
 ## Changelog
+* v4.2 - February 27, 2014
+	* Fixed error for null `toggle` argument in `animateScroll` function ([43](https://github.com/cferdinandi/smooth-scroll/issues/43)).
 * v4.1 - February 27, 2014
 	* Converted `_defaults` to a literal object
 * v4.0 - February 21, 2014
