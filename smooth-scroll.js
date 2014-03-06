@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll v4.2
+	Smooth Scroll v4.3
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -145,7 +145,7 @@ window.smoothScroll = (function (window, document, undefined) {
 			var currentLocation = window.pageYOffset;
 			if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
 				clearInterval(animationInterval);
-				options.callbackAfter(toggle); // Run callbacks after animation complete
+				options.callbackAfter( toggle, anchor ); // Run callbacks after animation complete
 			}
 		};
 
@@ -165,7 +165,7 @@ window.smoothScroll = (function (window, document, undefined) {
 		// Private method
 		// Runs functions
 		var _startAnimateScroll = function () {
-			options.callbackBefore(toggle); // Run callbacks before animating scroll
+			options.callbackBefore( toggle, anchor ); // Run callbacks before animating scroll
 			animationInterval = setInterval(_loopAnimateScroll, 16);
 		};
 

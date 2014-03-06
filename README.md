@@ -56,8 +56,8 @@ smoothScroll.init({
 	speed: 500, // How fast to complete the scroll in milliseconds
 	easing: 'easeInOutCubic', // Easing pattern to use
 	updateURL: false, // Boolean. Whether or not to update the URL with the anchor hash on scroll
-	callbackBefore: function () {}, // Function to run before scrolling
-	callbackAfter: function () {} // Function to run after scrolling
+	callbackBefore: function ( toggle, anchor ) {}, // Function to run before scrolling
+	callbackAfter: function ( toggle, anchor ) {} // Function to run after scrolling
 });
 ```
 
@@ -166,6 +166,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 * Fixed header support contributed by [Arndt von Lucadou](https://github.com/a-v-l).
 * Infinite loop bugs in iOS and Chrome (when zoomed) by [Alex Guzman](https://github.com/alexguzman).
 * IE10 rounding error fixed by [Luke Siedle](https://github.com/luke-siedle).
+* Enhanced callback functions by [Constant Meiring](https://github.com/constantm).
 
 
 
@@ -175,6 +176,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 
 ## Changelog
+* v4.3 - March 5, 2014
+	* Added arguments to callback functions for greater versatility. [44](https://github.com/cferdinandi/smooth-scroll/pull/44)
 * v4.2 - February 27, 2014
 	* Fixed error for null `toggle` argument in `animateScroll` function ([43](https://github.com/cferdinandi/smooth-scroll/issues/43)).
 * v4.1 - February 27, 2014
