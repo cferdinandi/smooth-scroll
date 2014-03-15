@@ -176,6 +176,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 
 ## Changelog
+* v4.4 - March 15, 2014
+	* [Fixed iOS scroll-to-top bug](https://github.com/cferdinandi/smooth-scroll/issues/45).
 * v4.3 - March 5, 2014
 	* Added arguments to callback functions for greater versatility. [44](https://github.com/cferdinandi/smooth-scroll/pull/44)
 * v4.2 - February 27, 2014
