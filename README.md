@@ -7,9 +7,10 @@ A lightweight script to animate scrolling to anchor links. [View the demo](http:
 2. [Options & Settings](#options-and-settings)
 3. [Browser Compatibility](#browser-compatibility)
 4. [Contributors](#contributors)
-5. [License](#license)
-6. [Changelog](#changelog)
-7. [Older Docs](#older-docs)
+5. [How to Contribute](#how-to-contribute)
+6. [License](#license)
+7. [Changelog](#changelog)
+8. [Older Docs](#older-docs)
 
 
 
@@ -167,6 +168,12 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 * Infinite loop bugs in iOS and Chrome (when zoomed) by [Alex Guzman](https://github.com/alexguzman).
 * IE10 rounding error fixed by [Luke Siedle](https://github.com/luke-siedle).
 * Enhanced callback functions by [Constant Meiring](https://github.com/constantm).
+
+
+
+## How to Contribute
+
+In lieu of a formal style guide, take care to maintain the existing coding style. Don't forget to update the version number, the changelog (in the `readme.md` file), and when applicable, the documentation.
 
 
 
