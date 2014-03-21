@@ -109,6 +109,17 @@ window.smoothScroll = (function (window, document, undefined) {
 		}
 	};
 
+    // Determine the document's height (cross-browser)
+    // Fix for issue 49 (https://github.com/cferdinandi/smooth-scroll/issues/49)
+    // Private method
+    var _getDocumentHeight = function () {
+        return Math.max(
+            document.body.scrollHeight, document.documentElement.scrollHeight,
+            document.body.offsetHeight, document.documentElement.offsetHeight,
+            document.body.clientHeight, document.documentElement.clientHeight
+        );
+    };
+
 	// Start/stop the scrolling animation
 	// Public method
 	// Runs functions
@@ -145,7 +156,7 @@ window.smoothScroll = (function (window, document, undefined) {
 		// Runs functions
 		var _stopAnimateScroll = function (position, endLocation, animationInterval) {
 			var currentLocation = window.pageYOffset;
-			if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= document.body.scrollHeight ) ) {
+			if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= _getDocumentHeight() ) ) {
 				clearInterval(animationInterval);
 				options.callbackAfter( toggle, anchor ); // Run callbacks after animation complete
 			}
