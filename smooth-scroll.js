@@ -59,7 +59,7 @@ window.smoothScroll = (function (window, document, undefined) {
 	// Calculate how far to scroll
 	// Private method
 	// Returns an integer
-	var _getEndLocation = function ( anchor, headerHeight ) {
+	var _getEndLocation = function ( anchor, headerHeight, offset ) {
 		var location = 0;
 		if (anchor.offsetParent) {
 			do {
@@ -67,7 +67,7 @@ window.smoothScroll = (function (window, document, undefined) {
 				anchor = anchor.offsetParent;
 			} while (anchor);
 		}
-		location = location - headerHeight;
+		location = location - headerHeight - offset;
 		if ( location >= 0 ) {
 			return location;
 		} else {
@@ -126,7 +126,7 @@ window.smoothScroll = (function (window, document, undefined) {
 		var fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
 		var headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
 		var startLocation = window.pageYOffset; // Current location on the page
-		var endLocation = _getEndLocation( document.querySelector(anchor), headerHeight + offset ); // Scroll to location
+		var endLocation = _getEndLocation( document.querySelector(anchor), headerHeight, offset ); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
 		var timeLapsed = 0;
