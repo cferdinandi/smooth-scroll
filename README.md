@@ -185,6 +185,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 
 ## Changelog
+* v4.6 - March 21, 2014
+	* [Fixed scroll-to-top bug for links at the bottom of the page](https://github.com/cferdinandi/smooth-scroll/issues/49).
 * v4.5 - March 20, 2014
 	* Added `offset` to `options`
 * v4.4 - March 15, 2014
