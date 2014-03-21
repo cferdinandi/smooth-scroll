@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll v4.4
+	Smooth Scroll v4.5
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -21,6 +21,7 @@ window.smoothScroll = (function (window, document, undefined) {
 	var _defaults = {
 		speed: 500,
 		easing: 'easeInOutCubic',
+		offset: 0,
 		updateURL: false,
 		callbackBefore: function () {},
 		callbackAfter: function () {}
@@ -116,15 +117,16 @@ window.smoothScroll = (function (window, document, undefined) {
 		// Options and overrides
 		options = _mergeObjects( _defaults, options || {} ); // Merge user options with defaults
 		var overrides = _getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
-		var speed = overrides.speed || options.speed;
+		var speed = parseInt(overrides.speed || options.speed, 10);
 		var easing = overrides.easing || options.easing;
+		var offset = parseInt(overrides.offset || options.offset, 10);
 		var updateURL = overrides.updateURL || options.updateURL;
 
 		// Selectors and variables
 		var fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
 		var headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
 		var startLocation = window.pageYOffset; // Current location on the page
-		var endLocation = _getEndLocation( document.querySelector(anchor), headerHeight ); // Scroll to location
+		var endLocation = _getEndLocation( document.querySelector(anchor), headerHeight + offset ); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
 		var timeLapsed = 0;
