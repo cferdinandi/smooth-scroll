@@ -75,6 +75,17 @@ window.smoothScroll = (function (window, document, undefined) {
 		}
 	};
 
+	// Determine the document's height
+	// Private method
+	// Returns an integer
+	var _getDocumentHeight = function () {
+		return Math.max(
+			document.body.scrollHeight, document.documentElement.scrollHeight,
+			document.body.offsetHeight, document.documentElement.offsetHeight,
+			document.body.clientHeight, document.documentElement.clientHeight
+		);
+	};
+
 	// Convert data-options attribute into an object of key/value pairs
 	// Private method
 	// Returns an {object}
@@ -109,17 +120,6 @@ window.smoothScroll = (function (window, document, undefined) {
 		}
 	};
 
-    // Determine the document's height (cross-browser)
-    // Fix for issue 49 (https://github.com/cferdinandi/smooth-scroll/issues/49)
-    // Private method
-    var _getDocumentHeight = function () {
-        return Math.max(
-            document.body.scrollHeight, document.documentElement.scrollHeight,
-            document.body.offsetHeight, document.documentElement.offsetHeight,
-            document.body.clientHeight, document.documentElement.clientHeight
-        );
-    };
-
 	// Start/stop the scrolling animation
 	// Public method
 	// Runs functions
@@ -140,6 +140,7 @@ window.smoothScroll = (function (window, document, undefined) {
 		var endLocation = _getEndLocation( document.querySelector(anchor), headerHeight + offset ); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
+		var documentHeight = _getDocumentHeight();
 		var timeLapsed = 0;
 		var percentage, position;
 
@@ -156,7 +157,7 @@ window.smoothScroll = (function (window, document, undefined) {
 		// Runs functions
 		var _stopAnimateScroll = function (position, endLocation, animationInterval) {
 			var currentLocation = window.pageYOffset;
-			if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= _getDocumentHeight() ) ) {
+			if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= documentHeight ) ) {
 				clearInterval(animationInterval);
 				options.callbackAfter( toggle, anchor ); // Run callbacks after animation complete
 			}
