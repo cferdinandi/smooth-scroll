@@ -170,6 +170,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 * Infinite loop bugs in iOS and Chrome (when zoomed) by [Alex Guzman](https://github.com/alexguzman).
 * IE10 rounding error fixed by [Luke Siedle](https://github.com/luke-siedle).
 * Enhanced callback functions by [Constant Meiring](https://github.com/constantm).
+* Scroll-to-top bug for links at the bottom of the page by [Jonas Havers](https://github.com/JonasHavers).
 
 
 
