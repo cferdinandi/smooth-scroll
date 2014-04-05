@@ -1,5 +1,7 @@
 # Smooth Scroll
-A lightweight script to animate scrolling to anchor links. [View the demo](http://cferdinandi.github.io/smooth-scroll/).
+A lightweight script to animate scrolling to anchor links.
+
+[Download Smooth Scroll 4](https://github.com/cferdinandi/smooth-scroll/archive/master.zip) / [View the demo](http://cferdinandi.github.io/smooth-scroll/)
 
 **In This Documentation**
 
