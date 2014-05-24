@@ -26,6 +26,15 @@ window.smoothScroll = (function (window, document, undefined) {
 		callbackBefore: function () {},
 		callbackAfter: function () {}
 	};
+	
+	// Options used for initialization
+	var _lastOptions = {};
+	
+	// Index of next bound link (used for keeping track of click listeners)
+	var _linkCounter = 0;
+	
+	// array of all attached click listeners, by link index
+	var _linkClickListeners = [];
 
 	// Merge default settings with user options
 	// Private method
@@ -198,26 +207,58 @@ window.smoothScroll = (function (window, document, undefined) {
 	// Public method
 	// Runs functions
 	var init = function ( options ) {
-
+		
+		// call reinit with the provided values
+		reinit(options);
+	};
+	
+	// Reassign the click handlers (for newly added links);
+	// If no options are provided, the last used options (default options) will be used.
+	// Public method
+	var reinit = function ( options ) {
+		
+		options = options || _lastOptions || {}; // if no options, use last options; if no last options, use empty object
+		
+		_lastOptions = _mergeObjects( _defaults, options); // Merge user options with defaults
+		
 		// Feature test before initializing
 		if ( 'querySelector' in document && 'addEventListener' in window && Array.prototype.forEach ) {
 
 			// Selectors and variables
-			options = _mergeObjects( _defaults, options || {} ); // Merge user options with defaults
 			var toggles = document.querySelectorAll('[data-scroll]'); // Get smooth scroll toggles
 
-			// When a toggle is clicked, run the click handler
+			// Go through all toggles and attach click handlers
 			Array.prototype.forEach.call(toggles, function (toggle, index) {
-				toggle.addEventListener('click', animateScroll.bind( null, toggle, toggle.getAttribute('href'), options ), false);
+				
+				var index;
+				// If toggle has index, remove assigned listener;
+				// otherwise give it an index
+				if ( toggle.hasAttributeNS('smooth-scroll', 'index') ) {
+					
+					index = toggle.getAttributeNS('smooth-scroll', 'index');
+					toggle.removeEventListener('click', _linkClickListeners[index], false);
+				} else {
+					
+					index = _linkCounter++;
+					toggle.setAttributeNS('smooth-scroll', 'index', index);
+				}
+				
+				// prepare a listener
+				var listener = animateScroll.bind( null, toggle, toggle.getAttribute('href'), _lastOptions );
+				
+				// remember listener for this toggle (using index)
+				_linkClickListeners[index] = listener;		
+				
+				// add the listener
+				toggle.addEventListener('click', listener, false);
 			});
-
 		}
-
 	};
 
 	// Return public methods
 	return {
 		init: init,
+		reinit: reinit,
 		animateScroll: animateScroll
 	};
 
