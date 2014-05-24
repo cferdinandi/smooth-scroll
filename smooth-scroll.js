@@ -206,7 +206,8 @@ window.smoothScroll = (function (window, document, undefined) {
 	// Initialize Smooth Scroll
 	// Public method
 	// Runs functions
-	var init = function ( options ) {		
+	var init = function ( options ) {
+		
 		// call reinit with the provided values
 		reinit(options);
 	};
@@ -252,7 +253,7 @@ window.smoothScroll = (function (window, document, undefined) {
 				toggle.addEventListener('click', listener, false);
 			});
 		}
-	}
+	};
 
 	// Return public methods
 	return {
