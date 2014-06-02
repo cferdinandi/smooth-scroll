@@ -125,7 +125,7 @@
 	// Update the URL
 	// Private method
 	// Runs functions
-	var updateURL = function ( anchor, url ) {
+	var updateUrl = function ( anchor, url ) {
 		if ( history.pushState && (url || url === 'true') ) {
 			history.pushState( {
 				pos: anchor.id
@@ -163,7 +163,7 @@
 		}
 
 		// Update URL
-		updateURL(anchor, updateURL);
+		updateUrl(anchor, updateURL);
 
 		// Stop the scroll animation when it reaches its target (or the bottom/top of page)
 		// Private method
