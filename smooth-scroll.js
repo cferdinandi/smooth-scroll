@@ -31,7 +31,7 @@
 	 */
 
 	var exports = {}; // Object for public APIs
-	var supports = { html5: !!document.querySelector && !!root.addEventListener }; // Feature test
+	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
 
 	// Default settings
 	var defaults = {
@@ -255,7 +255,7 @@
 	exports.init = function ( options ) {
 
 		// feature test
-		if ( !supports.html5 ) return;
+		if ( !supports ) return;
 
 		// Selectors and variables
 		var settings = extend( defaults, options || {} ); // Merge user options with defaults
