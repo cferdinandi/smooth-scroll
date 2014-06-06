@@ -173,6 +173,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 * IE10 rounding error fixed by [Luke Siedle](https://github.com/luke-siedle).
 * Enhanced callback functions by [Constant Meiring](https://github.com/constantm).
 * Scroll-to-top bug for links at the bottom of the page by [Jonas Havers](https://github.com/JonasHavers).
+* AMD support and numerous code improvements by [Todd Motto](https://github.com/toddmotto).
 
 
 
@@ -188,6 +189,15 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 
 ## Changelog
+* v4.7.0 - June 7, 2014
+	* Added AMD support.
+	* Moved public APIs to `exports` variable.
+	* Improved feature test.
+	* Replaced `Array.prototype.forEach` hack with proper `forEach` function.
+	* Added a more well supported `trim` function.
+	* General code optimizations for better minification and performance.
+	* Updated to JSDoc documentation (sort of).
+	* Updated to three number versioning system.
 * v4.6 - March 21, 2014
 	* [Fixed scroll-to-top bug for links at the bottom of the page](https://github.com/cferdinandi/smooth-scroll/issues/49).
 * v4.5 - March 20, 2014

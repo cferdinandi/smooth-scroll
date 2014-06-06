@@ -1,6 +1,6 @@
 /* =============================================================
 
-	Smooth Scroll v4.5
+	Smooth Scroll v4.7.0
 	Animate scrolling to anchor links, by Chris Ferdinandi.
 	http://gomakethings.com
 
@@ -10,15 +10,31 @@
 	Free to use under the MIT License.
 	http://gomakethings.com/mit/
 
+	@todo update readme
+
  * ============================================================= */
 
-window.smoothScroll = (function (window, document, undefined) {
+(function (root, factory) {
+	if ( typeof define === 'function' && define.amd ) {
+		define(factory);
+	} else if ( typeof exports === 'object' ) {
+		module.exports = factory;
+	} else {
+		root.smoothScroll = factory(root);
+	}
+})(this, function (root) {
 
 	'use strict';
 
+	/*
+	 * Variables
+	 */
+
+	var exports = {}; // Object for public APIs
+	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
+
 	// Default settings
-	// Private {object} variable
-	var _defaults = {
+	var defaults = {
 		speed: 500,
 		easing: 'easeInOutCubic',
 		offset: 0,
@@ -27,39 +43,73 @@ window.smoothScroll = (function (window, document, undefined) {
 		callbackAfter: function () {}
 	};
 
-	// Merge default settings with user options
-	// Private method
-	// Returns an {object}
-	var _mergeObjects = function ( original, updates ) {
-		for (var key in updates) {
-			original[key] = updates[key];
+
+	/*
+	 * Methods
+	 */
+
+	// Merge defaults with user options
+	// @private
+	// @param {Object} defaults Default settings
+	// @param {Object} options User options
+	// @returns {Object} Merged values of defaults and options
+	var extend = function ( defaults, options ) {
+		for ( var key in options ) {
+			if (Object.prototype.hasOwnProperty.call(options, key)) {
+				defaults[key] = options[key];
+			}
 		}
-		return original;
+		return defaults;
+	};
+
+	// A simple forEach() implementation for Arrays, Objects and NodeLists
+	// @private
+	// @param {Array|Object|NodeList} collection Collection of items to iterate
+	// @param {Function} callback Callback function for each iteration
+	// @param {Array|Object|NodeList} scope Object/NodeList/Array that forEach is iterating over (aka `this`)
+	var forEach = function (collection, callback, scope) {
+		if (Object.prototype.toString.call(collection) === '[object Object]') {
+			for (var prop in collection) {
+				if (Object.prototype.hasOwnProperty.call(collection, prop)) {
+					callback.call(scope, collection[prop], prop, collection);
+				}
+			}
+		} else {
+			for (var i = 0, len = collection.length; i < len; i++) {
+				callback.call(scope, collection[i], i, collection);
+			}
+		}
 	};
 
 	// Calculate the easing pattern
-	// Private method
-	// Returns a decimal number
-	var _easingPattern = function ( type, time ) {
-		if ( type == 'easeInQuad' ) return time * time; // accelerating from zero velocity
-		if ( type == 'easeOutQuad' ) return time * (2 - time); // decelerating to zero velocity
-		if ( type == 'easeInOutQuad' ) return time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
-		if ( type == 'easeInCubic' ) return time * time * time; // accelerating from zero velocity
-		if ( type == 'easeOutCubic' ) return (--time) * time * time + 1; // decelerating to zero velocity
-		if ( type == 'easeInOutCubic' ) return time < 0.5 ? 4 * time * time * time : (time - 1) * (2 * time - 2) * (2 * time - 2) + 1; // acceleration until halfway, then deceleration
-		if ( type == 'easeInQuart' ) return time * time * time * time; // accelerating from zero velocity
-		if ( type == 'easeOutQuart' ) return 1 - (--time) * time * time * time; // decelerating to zero velocity
-		if ( type == 'easeInOutQuart' ) return time < 0.5 ? 8 * time * time * time * time : 1 - 8 * (--time) * time * time * time; // acceleration until halfway, then deceleration
-		if ( type == 'easeInQuint' ) return time * time * time * time * time; // accelerating from zero velocity
-		if ( type == 'easeOutQuint' ) return 1 + (--time) * time * time * time * time; // decelerating to zero velocity
-		if ( type == 'easeInOutQuint' ) return time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
-		return time; // no easing, no acceleration
+	// @private
+	// @param {String} type Easing pattern
+	// @param {Number} time Time animation should take to complete
+	// @returns {Number}
+	var easingPattern = function ( type, time ) {
+		var pattern;
+		if ( type === 'easeInQuad' ) pattern = time * time; // accelerating from zero velocity
+		if ( type === 'easeOutQuad' ) pattern = time * (2 - time); // decelerating to zero velocity
+		if ( type === 'easeInOutQuad' ) pattern = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
+		if ( type === 'easeInCubic' ) pattern = time * time * time; // accelerating from zero velocity
+		if ( type === 'easeOutCubic' ) pattern = (--time) * time * time + 1; // decelerating to zero velocity
+		if ( type === 'easeInOutCubic' ) pattern = time < 0.5 ? 4 * time * time * time : (time - 1) * (2 * time - 2) * (2 * time - 2) + 1; // acceleration until halfway, then deceleration
+		if ( type === 'easeInQuart' ) pattern = time * time * time * time; // accelerating from zero velocity
+		if ( type === 'easeOutQuart' ) pattern = 1 - (--time) * time * time * time; // decelerating to zero velocity
+		if ( type === 'easeInOutQuart' ) pattern = time < 0.5 ? 8 * time * time * time * time : 1 - 8 * (--time) * time * time * time; // acceleration until halfway, then deceleration
+		if ( type === 'easeInQuint' ) pattern = time * time * time * time * time; // accelerating from zero velocity
+		if ( type === 'easeOutQuint' ) pattern = 1 + (--time) * time * time * time * time; // decelerating to zero velocity
+		if ( type === 'easeInOutQuint' ) pattern = time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
+		return pattern || time; // no easing, no acceleration
 	};
 
 	// Calculate how far to scroll
-	// Private method
-	// Returns an integer
-	var _getEndLocation = function ( anchor, headerHeight, offset ) {
+	// @private
+	// @param {Element} anchor The anchor element to scroll to
+	// @param {Number} headerHeight Height of a fixed header, if any
+	// @param {Number} offset Number of pixels by which to offset scroll
+	// @returns {Number}
+	var getEndLocation = function ( anchor, headerHeight, offset ) {
 		var location = 0;
 		if (anchor.offsetParent) {
 			do {
@@ -68,17 +118,13 @@ window.smoothScroll = (function (window, document, undefined) {
 			} while (anchor);
 		}
 		location = location - headerHeight - offset;
-		if ( location >= 0 ) {
-			return location;
-		} else {
-			return 0;
-		}
+		return location >= 0 ? location : 0;
 	};
 
 	// Determine the document's height
-	// Private method
-	// Returns an integer
-	var _getDocumentHeight = function () {
+	// @private
+	// @returns {Number}
+	var getDocumentHeight = function () {
 		return Math.max(
 			document.body.scrollHeight, document.documentElement.scrollHeight,
 			document.body.offsetHeight, document.documentElement.offsetHeight,
@@ -86,139 +132,147 @@ window.smoothScroll = (function (window, document, undefined) {
 		);
 	};
 
+	// Remove whitespace from a string
+	// @private
+	// @param {String} string
+	// @returns {String}
+	var trim = function ( string ) {
+		return string.replace(/^\s+|\s+$/g, '');
+	};
+
 	// Convert data-options attribute into an object of key/value pairs
-	// Private method
-	// Returns an {object}
-	var _getDataOptions = function ( options ) {
-
-		if ( options === null || options === undefined  ) {
-			return {};
-		} else {
-			var settings = {}; // Create settings object
-			options = options.split(';'); // Split into array of options
-
-			// Create a key/value pair for each setting
+	// @private
+	// @param {String} options Link-specific options as a data attribute string
+	// @returns {Object}
+	var getDataOptions = function ( options ) {
+		var settings = {};
+		// Create a key/value pair for each setting
+		if ( options ) {
+			options = options.split(';');
 			options.forEach( function(option) {
-				option = option.trim();
+				option = trim(option);
 				if ( option !== '' ) {
 					option = option.split(':');
-					settings[option[0]] = option[1].trim();
+					settings[option[0]] = trim(option[1]);
 				}
 			});
-
-			return settings;
 		}
-
+		return settings;
 	};
 
 	// Update the URL
-	// Private method
-	// Runs functions
-	var _updateURL = function ( anchor, url ) {
-		if ( (url === true || url === 'true') && history.pushState ) {
-			history.pushState( {pos:anchor.id}, '', anchor );
+	// @private
+	// @param {Element} anchor The element to scroll to
+	// @param {Boolean} url Whether or not to update the URL history
+	var updateUrl = function ( anchor, url ) {
+		if ( history.pushState && (url || url === 'true') ) {
+			history.pushState( {
+				pos: anchor.id
+			}, '', anchor );
 		}
 	};
 
 	// Start/stop the scrolling animation
-	// Public method
-	// Runs functions
-	var animateScroll = function ( toggle, anchor, options, event ) {
+	// @public
+	// @param {Element} toggle The element that toggled the scroll event
+	// @param {Element} anchor The element to scroll to
+	// @param {Object} settings
+	// @param {Event} event
+	exports.animateScroll = function ( toggle, anchor, settings, event ) {
 
 		// Options and overrides
-		options = _mergeObjects( _defaults, options || {} ); // Merge user options with defaults
-		var overrides = _getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
-		var speed = parseInt(overrides.speed || options.speed, 10);
-		var easing = overrides.easing || options.easing;
-		var offset = parseInt(overrides.offset || options.offset, 10);
-		var updateURL = overrides.updateURL || options.updateURL;
+		settings = extend( defaults, settings || {} ); // Merge user options with defaults
+		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
+		var speed = parseInt(overrides.speed || settings.speed, 10);
+		var easing = overrides.easing || settings.easing;
+		var offset = parseInt(overrides.offset || settings.offset, 10);
+		var updateURL = overrides.updateURL || settings.updateURL;
 
 		// Selectors and variables
 		var fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
 		var headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
-		var startLocation = window.pageYOffset; // Current location on the page
-		var endLocation = _getEndLocation( document.querySelector(anchor), headerHeight, offset ); // Scroll to location
+		var startLocation = root.pageYOffset; // Current location on the page
+		var endLocation = getEndLocation( document.querySelector(anchor), headerHeight, offset ); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
-		var documentHeight = _getDocumentHeight();
+		var documentHeight = getDocumentHeight();
 		var timeLapsed = 0;
 		var percentage, position;
 
 		// Prevent default click event
-		if ( toggle && toggle.tagName === 'A' && event ) {
+		if ( toggle && toggle.tagName.toLowerCase() === 'a' && event ) {
 			event.preventDefault();
 		}
 
 		// Update URL
-		_updateURL(anchor, updateURL);
+		updateUrl(anchor, updateURL);
 
 		// Stop the scroll animation when it reaches its target (or the bottom/top of page)
-		// Private method
-		// Runs functions
-		var _stopAnimateScroll = function (position, endLocation, animationInterval) {
-			var currentLocation = window.pageYOffset;
-			if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= documentHeight ) ) {
+		// @private
+		// @param {Number} position Current position on the page
+		// @param {Number} endLocation Scroll to location
+		// @param {Number} animationInterval How much to scroll on this loop
+		var stopAnimateScroll = function (position, endLocation, animationInterval) {
+			var currentLocation = root.pageYOffset;
+			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >= documentHeight ) ) {
 				clearInterval(animationInterval);
-				options.callbackAfter( toggle, anchor ); // Run callbacks after animation complete
+				settings.callbackAfter( toggle, anchor ); // Run callbacks after animation complete
 			}
 		};
 
 		// Loop scrolling animation
-		// Private method
-		// Runs functions
-		var _loopAnimateScroll = function () {
+		// @private
+		var loopAnimateScroll = function () {
 			timeLapsed += 16;
 			percentage = ( timeLapsed / speed );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
-			position = startLocation + ( distance * _easingPattern(easing, percentage) );
-			window.scrollTo( 0, Math.floor(position) );
-			_stopAnimateScroll(position, endLocation, animationInterval);
+			position = startLocation + ( distance * easingPattern(easing, percentage) );
+			root.scrollTo( 0, Math.floor(position) );
+			stopAnimateScroll(position, endLocation, animationInterval);
 		};
 
 		// Set interval timer
-		// Private method
-		// Runs functions
-		var _startAnimateScroll = function () {
-			options.callbackBefore( toggle, anchor ); // Run callbacks before animating scroll
-			animationInterval = setInterval(_loopAnimateScroll, 16);
+		// @private
+		var startAnimateScroll = function () {
+			settings.callbackBefore( toggle, anchor ); // Run callbacks before animating scroll
+			animationInterval = setInterval(loopAnimateScroll, 16);
 		};
 
 		// Reset position to fix weird iOS bug
-		// https://github.com/cferdinandi/smooth-scroll/issues/45
-		if ( window.pageYOffset === 0 ) {
-			window.scrollTo( 0, 0 );
+		// @link https://github.com/cferdinandi/smooth-scroll/issues/45
+		if ( root.pageYOffset === 0 ) {
+			root.scrollTo( 0, 0 );
 		}
 
 		// Start scrolling animation
-		_startAnimateScroll();
+		startAnimateScroll();
 
 	};
 
 	// Initialize Smooth Scroll
-	// Public method
-	// Runs functions
-	var init = function ( options ) {
+	// @public
+	// @param {Object} options User settings
+	exports.init = function ( options ) {
 
-		// Feature test before initializing
-		if ( 'querySelector' in document && 'addEventListener' in window && Array.prototype.forEach ) {
+		// feature test
+		if ( !supports ) return;
 
-			// Selectors and variables
-			options = _mergeObjects( _defaults, options || {} ); // Merge user options with defaults
-			var toggles = document.querySelectorAll('[data-scroll]'); // Get smooth scroll toggles
+		// Selectors and variables
+		var settings = extend( defaults, options || {} ); // Merge user options with defaults
+		var toggles = document.querySelectorAll('[data-scroll]'); // Get smooth scroll toggles
 
-			// When a toggle is clicked, run the click handler
-			Array.prototype.forEach.call(toggles, function (toggle, index) {
-				toggle.addEventListener('click', animateScroll.bind( null, toggle, toggle.getAttribute('href'), options ), false);
-			});
-
-		}
+		// When a toggle is clicked, run the click handler
+		forEach(toggles, function (toggle) {
+			toggle.addEventListener('click', exports.animateScroll.bind( null, toggle, toggle.getAttribute('href'), settings ), false);
+		});
 
 	};
 
-	// Return public methods
-	return {
-		init: init,
-		animateScroll: animateScroll
-	};
 
-})(window, document);
+	/*
+	 * Public APIs
+	 */
+
+	return exports;
+
+});
