@@ -10,8 +10,6 @@
 	Free to use under the MIT License.
 	http://gomakethings.com/mit/
 
-	@todo update readme
-
  * ============================================================= */
 
 (function (root, factory) {
