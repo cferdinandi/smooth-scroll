@@ -6,13 +6,14 @@ A lightweight script to animate scrolling to anchor links.
 **In This Documentation**
 
 1. [Getting Started](#getting-started)
-2. [Options & Settings](#options-and-settings)
-3. [Browser Compatibility](#browser-compatibility)
-4. [Contributors](#contributors)
-5. [How to Contribute](#how-to-contribute)
-6. [License](#license)
-7. [Changelog](#changelog)
-8. [Older Docs](#older-docs)
+2. [Installing with Package Managers](#installing-with-package-managers)
+3. [Options & Settings](#options-and-settings)
+4. [Browser Compatibility](#browser-compatibility)
+5. [Contributors](#contributors)
+6. [How to Contribute](#how-to-contribute)
+7. [License](#license)
+8. [Changelog](#changelog)
+9. [Older Docs](#older-docs)
 
 
 
@@ -43,6 +44,16 @@ Turn anchor links into Smooth Scroll links by adding the `[data-scroll]` data at
 ```
 
 In the footer of your page, after the content, initialize Smooth Scroll. And that's it, you're done. Nice work!
+
+
+
+## Installing with Package Managers
+
+You can install Smooth Scroll with your favorite package manager.
+
+* **[NPM](https://www.npmjs.org/):** `npm install cferdinandi/smooth-scroll`
+* **[Bower](http://bower.io/):** `bower install https://github.com/cferdinandi/smooth-scroll.git`
+* **[Component](http://component.io/):** `component install install cferdinandi/smooth-scroll`
 
 
 
@@ -198,6 +209,7 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 	* General code optimizations for better minification and performance.
 	* Updated to JSDoc documentation (sort of).
 	* Updated to three number versioning system.
+	* Added package manager installation info.
 * v4.6 - March 21, 2014
 	* [Fixed scroll-to-top bug for links at the bottom of the page](https://github.com/cferdinandi/smooth-scroll/issues/49).
 * v4.5 - March 20, 2014
