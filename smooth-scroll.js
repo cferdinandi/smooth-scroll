@@ -1,5 +1,4 @@
 /**
- *
  * Smooth Scroll v4.7.0
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://gomakethings.com
@@ -9,7 +8,6 @@
  *
  * Free to use under the MIT License.
  * http://gomakethings.com/mit/
- *
  */
 
 (function (root, factory) {
