@@ -192,21 +192,18 @@
 	 * @param {Object} settings
 	 * @param {Event} event
 	 */
-	exports.animateScroll = function ( toggle, anchor, settings, event ) {
+	exports.animateScroll = function ( toggle, anchor, options, event ) {
 
 		// Options and overrides
-		settings = extend( defaults, settings || {} ); // Merge user options with defaults
+		var settings = extend( defaults, options || {} ); // Merge user options with defaults
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
-		var speed = parseInt(overrides.speed || settings.speed, 10);
-		var easing = overrides.easing || settings.easing;
-		var offset = parseInt(overrides.offset || settings.offset, 10);
-		var updateURL = overrides.updateURL || settings.updateURL;
+		settings = extend( settings, overrides );
 
 		// Selectors and variables
 		var fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
 		var headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
 		var startLocation = root.pageYOffset; // Current location on the page
-		var endLocation = getEndLocation( document.querySelector(anchor), headerHeight, offset ); // Scroll to location
+		var endLocation = getEndLocation( document.querySelector(anchor), headerHeight, parseInt(settings.offset, 10) ); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
 		var documentHeight = getDocumentHeight();
@@ -219,7 +216,7 @@
 		}
 
 		// Update URL
-		updateUrl(anchor, updateURL);
+		updateUrl(anchor, settings.updateURL);
 
 		/**
 		 * Stop the scroll animation when it reaches its target (or the bottom/top of page)
@@ -242,9 +239,9 @@
 		 */
 		var loopAnimateScroll = function () {
 			timeLapsed += 16;
-			percentage = ( timeLapsed / speed );
+			percentage = ( timeLapsed / parseInt(settings.speed, 10) );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
-			position = startLocation + ( distance * easingPattern(easing, percentage) );
+			position = startLocation + ( distance * easingPattern(settings.easing, percentage) );
 			root.scrollTo( 0, Math.floor(position) );
 			stopAnimateScroll(position, endLocation, animationInterval);
 		};
