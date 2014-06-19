@@ -1,5 +1,5 @@
 /**
- * Smooth Scroll v4.7.1
+ * Smooth Scroll v4.7.2
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://gomakethings.com
  *
@@ -16,7 +16,7 @@
 	} else if ( typeof exports === 'object' ) {
 		module.smoothScroll = factory(root);
 	} else {
-		root.MyPlugin = factory(root);
+		root.smoothScroll = factory(root);
 	}
 })(this, function (root) {
 

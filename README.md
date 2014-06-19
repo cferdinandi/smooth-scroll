@@ -201,6 +201,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 ## Changelog
 
+* v4.7.2 - June 19, 2014
+	* Fixed typo that broke scroll.
 * v4.7.1 - June 19, 2014
 	* Fixed factory/root/UMD definition.
 * v4.7.0 - June 7, 2014
