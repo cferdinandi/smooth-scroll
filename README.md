@@ -53,7 +53,7 @@ You can install Smooth Scroll with your favorite package manager.
 
 * **[NPM](https://www.npmjs.org/):** `npm install cferdinandi/smooth-scroll`
 * **[Bower](http://bower.io/):** `bower install https://github.com/cferdinandi/smooth-scroll.git`
-* **[Component](http://component.io/):** `component install install cferdinandi/smooth-scroll`
+* **[Component](http://component.io/):** `component install cferdinandi/smooth-scroll`
 
 
 
@@ -200,6 +200,9 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 
 ## Changelog
+
+* v4.7.1 - June 19, 2014
+	* Fixed factory/root/UMD definition.
 * v4.7.0 - June 7, 2014
 	* Added AMD support.
 	* Moved public APIs to `exports` variable.
