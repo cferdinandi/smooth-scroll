@@ -195,6 +195,7 @@
 	exports.animateScroll = function ( toggle, anchor, options, event ) {
 
 		// Options and overrides
+		var anchor = anchor.replace(/^\//, '');
 		var settings = extend( defaults, options || {} ); // Merge user options with defaults
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
 		settings = extend( settings, overrides );
