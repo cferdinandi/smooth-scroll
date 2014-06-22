@@ -1,0 +1,37 @@
+{
+	"name": "smooth-scroll",
+	"version": "4.8.0",
+	"description": "Animate scrolling to anchor links",
+	"author": {
+		"name": "Chris Ferdinandi",
+		"url": "http://gomakethings.com"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "http://github.com/cferdinandi/smooth-scroll"
+	},
+	"devDependencies": {
+		"gulp": "~3.8.0",
+		"gulp-autoprefixer": "0.0.7",
+		"gulp-clean": "^0.2.4",
+		"gulp-concat": "~2.2.0",
+		"gulp-flatten": "~0.0.2",
+		"gulp-tap": "~0.1.1",
+		"gulp-header": "^1.0.2",
+		"gulp-jshint": "^1.6.1",
+		"gulp-karma": "0.0.4",
+		"gulp-minify-css": "~0.3.4",
+		"gulp-plumber": "~0.6.2",
+		"gulp-rename": "~1.1.0",
+		"gulp-sass": "~0.7.2",
+		"gulp-uglify": "~0.3.0",
+		"jshint-stylish": "^0.2.0",
+		"karma": "^0.12.16",
+		"karma-coverage": "^0.2.4",
+		"karma-jasmine": "~0.2.0",
+		"karma-phantomjs-launcher": "^0.1.4",
+		"karma-spec-reporter": "0.0.13",
+		"karma-htmlfile-reporter": "~0.1"
+	}
+}
