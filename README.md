@@ -203,6 +203,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 ## Changelog
 
+* v4.8.1 - June 27, 2014
+	* Fixed problem with `toggles` containing a URL before the fragment identifier
 * v4.8.0 - June 21, 2014
 	* Converted to gulp.js workflow.
 	* Added unit testing.
