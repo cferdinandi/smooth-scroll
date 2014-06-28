@@ -107,20 +107,6 @@ gulp.task('styles', ['clean'], function() {
 		.pipe(gulp.dest(paths.styles.output));
 });
 
-gulp.task('sass', ['clean'], function() {
-	return gulp.src(paths.sass.input)
-		.pipe(plumber())
-		.pipe(flatten())
-		.pipe(tap(function (file, t) {
-			if ( file.stat.isDirectory() ) {
-				return gulp.src(file.path + '/*.scss')
-					.pipe(header(banner.full, { package : package }))
-					.pipe(gulp.dest(paths.sass.output + '/components'));
-			}
-		}))
-		.pipe(gulp.dest(paths.sass.output));
-});
-
 gulp.task('static', ['clean'], function() {
 	return gulp.src(paths.static)
 		.pipe(plumber())
@@ -156,7 +142,6 @@ gulp.task('default', [
 	'clean',
 	'scripts',
 	'styles',
-	'sass',
 	'static',
 	'test'
 ]);
