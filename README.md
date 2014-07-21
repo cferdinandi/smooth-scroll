@@ -1,7 +1,7 @@
 # Smooth Scroll [![Build Status](https://travis-ci.org/cferdinandi/smooth-scroll.svg)](https://travis-ci.org/cferdinandi/smooth-scroll)
 A lightweight script to animate scrolling to anchor links.
 
-[Download Smooth Scroll 4](https://github.com/cferdinandi/smooth-scroll/archive/master.zip) / [View the demo](http://cferdinandi.github.io/smooth-scroll/)
+[Download Smooth Scroll](https://github.com/cferdinandi/smooth-scroll/archive/master.zip) / [View the demo](http://cferdinandi.github.io/smooth-scroll/)
 
 **In This Documentation**
 
@@ -71,7 +71,7 @@ You can pass options and callbacks into Smooth Scroll through the `init()` funct
 smoothScroll.init({
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
 	easing: 'easeInOutCubic', // Easing pattern to use
-	updateURL: false, // Boolean. Whether or not to update the URL with the anchor hash on scroll
+	updateURL: true, // Boolean. Whether or not to update the URL with the anchor hash on scroll
 	offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
 	callbackBefore: function ( toggle, anchor ) {}, // Function to run before scrolling
 	callbackAfter: function ( toggle, anchor ) {} // Function to run after scrolling
@@ -121,14 +121,18 @@ Smooth Scroll also lets you override global settings on a link-by-link basis usi
 
 ```html
 <a data-scroll
-   data-options="speed: 500;
-                 easing: easeInOutCubic;
-                 offset: 0;
-                 updateURL: false"
+   data-options='{
+                	"speed": 500,
+                	"easing": "easeInOutCubic",
+                	"offset": 0,
+                	"updateURL": false
+                }'
 >
 	Anchor Link
 </a>
 ```
+
+**Note:** You must use [valid JSON](http://jsonlint.com/) in order for the `data-options` feature to work.
 
 ### Use Smooth Scroll events in your own scripts
 
@@ -187,6 +191,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 * Enhanced callback functions by [Constant Meiring](https://github.com/constantm).
 * Scroll-to-top bug for links at the bottom of the page by [Jonas Havers](https://github.com/JonasHavers).
 * AMD support and numerous code improvements by [Todd Motto](https://github.com/toddmotto).
+* Push State bug fix by [Yanick Witschi](https://github.com/Toflar).
 
 
 
@@ -203,6 +208,10 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 ## Changelog
 
+* v5.0.0 - July 21, 2014
+	* Updated `data-options` functionality to JSON.
+	* Fixed update URL bug.
+	* Set update URL to `true` by default.
 * v4.8.2 - June 28, 2014
 	* Fixed `extend()` method.
 * v4.8.1 - June 27, 2014

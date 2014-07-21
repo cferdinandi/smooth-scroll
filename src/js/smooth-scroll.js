@@ -23,7 +23,7 @@
 		speed: 500,
 		easing: 'easeInOutCubic',
 		offset: 0,
-		updateURL: false,
+		updateURL: true,
 		callbackBefore: function () {},
 		callbackAfter: function () {}
 	};
@@ -146,19 +146,7 @@
 	 * @returns {Object}
 	 */
 	var getDataOptions = function ( options ) {
-		var settings = {};
-		// Create a key/value pair for each setting
-		if ( options ) {
-			options = options.split(';');
-			options.forEach( function(option) {
-				option = trim(option);
-				if ( option !== '' ) {
-					option = option.split(':');
-					settings[option[0]] = trim(option[1]);
-				}
-			});
-		}
-		return settings;
+		return !options || !(typeof JSON === 'object' && typeof JSON.parse === 'function') ? {} : JSON.parse( options );
 	};
 
 	/**
@@ -171,7 +159,7 @@
 		if ( history.pushState && (url || url === 'true') ) {
 			history.pushState( {
 				pos: anchor.id
-			}, '', anchor );
+			}, '', window.location.pathname + anchor );
 		}
 	};
 
