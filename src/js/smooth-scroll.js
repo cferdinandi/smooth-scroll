@@ -130,16 +130,6 @@
 	};
 
 	/**
-	 * Remove whitespace from a string
-	 * @private
-	 * @param {String} string
-	 * @returns {String}
-	 */
-	var trim = function ( string ) {
-		return string.replace(/^\s+|\s+$/g, '');
-	};
-
-	/**
 	 * Convert data-options attribute into an object of key/value pairs
 	 * @private
 	 * @param {String} options Link-specific options as a data attribute string
