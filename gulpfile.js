@@ -25,10 +25,6 @@ var paths = {
 		input : 'src/sass/**/*.scss',
 		output : 'dist/css/'
 	},
-	sass : {
-		input : 'src/sass/*',
-		output : 'dist/sass/',
-	},
 	static : 'src/static/**',
 	test : {
 		spec : [ 'test/spec/**/*.js' ],

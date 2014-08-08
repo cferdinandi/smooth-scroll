@@ -24,8 +24,11 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 ### 1. Include Smooth Scroll on your site.
 
 ```html
+<script src="dist/js/bind-polyfill.js"></script>
 <script src="dist/js/smooth-scroll.js"></script>
 ```
+
+Drop requires `bind-polyfill.js`, a polyfill that extends ECMAScript 5 API support to more browsers.
 
 ### 2. Add the markup to your HTML.
 
@@ -208,6 +211,9 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 ## Changelog
 
+* v5.0.1 - August 8, 2014
+	* Added polyfill for `Functions.prototype.bind`.
+	* Removed Sass paths from `gulpfile.js`.
 * v5.0.0 - July 21, 2014
 	* Updated `data-options` functionality to JSON.
 	* Fixed update URL bug.

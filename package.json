@@ -1,6 +1,6 @@
 {
 	"name": "smooth-scroll",
-	"version": "5.0.0",
+	"version": "5.0.1",
 	"description": "Animate scrolling to anchor links",
 	"author": {
 		"name": "Chris Ferdinandi",
