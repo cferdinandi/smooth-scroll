@@ -28,7 +28,7 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 <script src="dist/js/smooth-scroll.js"></script>
 ```
 
-Drop requires `bind-polyfill.js`, a polyfill that extends ECMAScript 5 API support to more browsers.
+Smooth Scroll requires `bind-polyfill.js`, a polyfill that extends ECMAScript 5 API support to more browsers.
 
 ### 2. Add the markup to your HTML.
 
