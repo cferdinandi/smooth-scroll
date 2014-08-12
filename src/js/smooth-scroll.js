@@ -73,6 +73,26 @@
 	};
 
 	/**
+	 * Check if anchor ID starts with a number
+	 * @private
+	 * @param {String} id The anchor ID to test
+	 */
+	var isNumber = function ( id ) {
+		return new RegExp('[0-9]').test( id.substr(1).charAt(0) );
+	};
+
+	/**
+	 * Escape numeric character for use with querySelector
+	 * @private
+	 * @param {String} id id The anchor ID to escape
+	 */
+	var escapeCharacter = function ( id ) {
+		var firstCharacter = id.substr(1).charAt(0);
+		var restOfString = id.substr(2);
+		return '#\\3' + firstCharacter + '\n' + restOfString;
+	};
+
+	/**
 	 * Calculate the easing pattern
 	 * @private
 	 * @param {String} type Easing pattern
@@ -167,6 +187,11 @@
 		var settings = extend( settings || defaults, options || {} );  // Merge user options with defaults
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
 		settings = extend( settings, overrides );
+
+		// If anchor ID starts with a number, escape characters
+		if ( isNumber(anchor) ) {
+			anchor = escapeCharacter(anchor);
+		}
 
 		// Selectors and variables
 		var fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header

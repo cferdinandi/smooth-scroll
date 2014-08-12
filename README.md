@@ -211,6 +211,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 ## Changelog
 
+* v5.0.2 - August 12, 2014
+	* Added character escaping when first character in anchor ID is a number.
 * v5.0.1 - August 8, 2014
 	* Added polyfill for `Functions.prototype.bind`.
 	* Removed Sass paths from `gulpfile.js`.
