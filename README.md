@@ -211,6 +211,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 ## Changelog
 
+* v5.0.3 - August 13, 2014
+	* Replaced character escaping method with [`CSS.escape`](https://github.com/mathiasbynens/CSS.escape) for more robust character escaping.
 * v5.0.2 - August 12, 2014
 	* Added character escaping when first character in anchor ID is a number.
 * v5.0.1 - August 8, 2014
