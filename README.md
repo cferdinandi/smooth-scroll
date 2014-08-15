@@ -211,6 +211,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 ## Changelog
 
+Smooth Scroll uses [semantic versioning](http://semver.org/).
+
 * v5.0.4 - August 15, 2014
 	* Added fix for UMD structure.
 * v5.0.3 - August 13, 2014
