@@ -2,7 +2,7 @@
 	if ( typeof define === 'function' && define.amd ) {
 		define('smoothScroll', factory(root));
 	} else if ( typeof exports === 'object' ) {
-		module.smoothScroll = factory(root);
+		module.exports = factory(root);
 	} else {
 		root.smoothScroll = factory(root);
 	}
@@ -14,7 +14,7 @@
 	// Variables
 	//
 
-	var exports = {}; // Object for public APIs
+	var smoothScroll = {}; // Object for public APIs
 	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
 	var settings;
 
@@ -233,7 +233,7 @@
 	 * @param {Object} settings
 	 * @param {Event} event
 	 */
-	exports.animateScroll = function ( toggle, anchor, options, event ) {
+	smoothScroll.animateScroll = function ( toggle, anchor, options, event ) {
 
 		// Options and overrides
 		var settings = extend( settings || defaults, options || {} );  // Merge user options with defaults
@@ -315,7 +315,7 @@
 	 * @public
 	 * @param {Object} options User settings
 	 */
-	exports.init = function ( options ) {
+	smoothScroll.init = function ( options ) {
 
 		// feature test
 		if ( !supports ) return;
@@ -326,7 +326,7 @@
 
 		// When a toggle is clicked, run the click handler
 		forEach(toggles, function (toggle) {
-			toggle.addEventListener('click', exports.animateScroll.bind( null, toggle, toggle.hash, settings ), false);
+			toggle.addEventListener('click', smoothScroll.animateScroll.bind( null, toggle, toggle.hash, settings ), false);
 		});
 
 	};
@@ -336,6 +336,6 @@
 	// Public APIs
 	//
 
-	return exports;
+	return smoothScroll;
 
 });
