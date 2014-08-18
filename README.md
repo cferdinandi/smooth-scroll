@@ -217,7 +217,6 @@ Smooth Scroll uses [semantic versioning](http://semver.org/).
 	* Added `destroy` method.
 	* Converted to event bubbling approach for better performance.
 	* Switched to Ruby Sass.
-	* Fixed test task bug.
 * v5.0.4 - August 15, 2014
 	* Added fix for UMD structure.
 * v5.0.3 - August 13, 2014
