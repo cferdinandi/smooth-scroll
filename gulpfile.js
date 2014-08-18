@@ -92,7 +92,7 @@ gulp.task('scripts', ['clean'], function() {
 gulp.task('styles', ['clean'], function() {
 	return gulp.src(paths.styles.input)
 		.pipe(plumber())
-		.pipe(sass())
+		.pipe(sass({style: 'expanded', noCache: true}))
 		.pipe(flatten())
 		.pipe(prefix('last 2 version', '> 1%'))
 		.pipe(header(banner.full, { package : package }))
@@ -127,7 +127,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('test', function() {
-	return gulp.src(paths.scripts.input.concat(paths.test.spec))
+	return gulp.src([paths.scripts.input + '**/*.js'].concat(paths.test.spec))
 		.pipe(plumber())
 		.pipe(karma({ configFile: 'test/karma.conf.js' }))
 		.on('error', function(err) { throw err; });

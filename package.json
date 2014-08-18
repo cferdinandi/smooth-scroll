@@ -1,6 +1,6 @@
 {
 	"name": "smooth-scroll",
-	"version": "5.0.4",
+	"version": "5.1.0",
 	"description": "Animate scrolling to anchor links",
 	"author": {
 		"name": "Chris Ferdinandi",
@@ -24,7 +24,7 @@
 		"gulp-minify-css": "~0.3.4",
 		"gulp-plumber": "~0.6.2",
 		"gulp-rename": "~1.1.0",
-		"gulp-sass": "~0.7.2",
+		"gulp-ruby-sass": "~0.7.1",
 		"gulp-uglify": "~0.3.0",
 		"jshint-stylish": "^0.2.0",
 		"karma": "^0.12.16",
