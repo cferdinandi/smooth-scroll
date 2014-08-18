@@ -9,7 +9,7 @@ var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var sass = require('gulp-sass');
+var sass = require('gulp-ruby-sass');
 var prefix = require('gulp-autoprefixer');
 var minify = require('gulp-minify-css');
 var karma = require('gulp-karma');
@@ -92,7 +92,7 @@ gulp.task('scripts', ['clean'], function() {
 gulp.task('styles', ['clean'], function() {
 	return gulp.src(paths.styles.input)
 		.pipe(plumber())
-		.pipe(sass())
+		.pipe(sass({style: 'expanded', noCache: true}))
 		.pipe(flatten())
 		.pipe(prefix('last 2 version', '> 1%'))
 		.pipe(header(banner.full, { package : package }))

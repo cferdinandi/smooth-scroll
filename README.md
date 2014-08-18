@@ -139,7 +139,10 @@ Smooth Scroll also lets you override global settings on a link-by-link basis usi
 
 ### Use Smooth Scroll events in your own scripts
 
-You can also call Smooth Scroll's scroll animation events in your own scripts:
+You can also call Smooth Scroll's scroll animation events in your own scripts.
+
+#### animateScroll()
+Animate scrolling to an anchor.
 
 ```javascript
 smoothScroll.animateScroll(
@@ -163,6 +166,14 @@ var toggle = document.querySelector('#toggle');
 var options = { speed: 1000, easing: 'easeOutCubic' };
 smoothScroll.animateScroll( toggle, '#bazinga', options );
 ```
+
+#### destroy()
+Destroy the current `smoothScroll.init()`.
+
+```javascript
+smoothScroll.destroy();
+```
+
 
 ### Fixed Headers
 
@@ -213,6 +224,10 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.1.0 - August 18, 2014
+	* Added `destroy` method.
+	* Converted to event bubbling approach for better performance.
+	* Switched to Ruby Sass.
 * v5.0.4 - August 15, 2014
 	* Added fix for UMD structure.
 * v5.0.3 - August 13, 2014

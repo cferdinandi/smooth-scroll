@@ -1,5 +1,5 @@
 /**
- * smooth-scroll v5.0.4
+ * smooth-scroll v5.1.0
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://github.com/cferdinandi/smooth-scroll
  * 
@@ -261,11 +261,6 @@
 		var timeLapsed = 0;
 		var percentage, position;
 
-		// Prevent default click event
-		if ( toggle && toggle.tagName.toLowerCase() === 'a' && event ) {
-			event.preventDefault();
-		}
-
 		// Update URL
 		updateUrl(anchor, settings.updateURL);
 
@@ -320,6 +315,28 @@
 	};
 
 	/**
+	 * If smooth scroll element clicked, animate scroll
+	 * @private
+	 */
+	var eventHandler = function () {
+		var toggle = event.target;
+		if ( toggle.hasAttribute('data-scroll') && toggle.tagName.toLowerCase() === 'a' ) {
+			event.preventDefault(); // Prevent default click event
+			smoothScroll.animateScroll( toggle, toggle.hash, settings, event ); // Animate scroll
+		}
+	};
+
+	/**
+	 * Destroy the current initialization.
+	 * @public
+	 */
+	smoothScroll.destroy = function () {
+		if ( !settings ) return;
+		document.removeEventListener( 'click', eventHandler, false );
+		settings = null;
+	};
+
+	/**
 	 * Initialize Smooth Scroll
 	 * @public
 	 * @param {Object} options User settings
@@ -329,14 +346,14 @@
 		// feature test
 		if ( !supports ) return;
 
+		// Destroy any existing initializations
+		smoothScroll.destroy();
+
 		// Selectors and variables
 		settings = extend( defaults, options || {} ); // Merge user options with defaults
-		var toggles = document.querySelectorAll('[data-scroll]'); // Get smooth scroll toggles
 
 		// When a toggle is clicked, run the click handler
-		forEach(toggles, function (toggle) {
-			toggle.addEventListener('click', smoothScroll.animateScroll.bind( null, toggle, toggle.hash, settings ), false);
-		});
+		document.addEventListener('click', eventHandler, false);
 
 	};
 
