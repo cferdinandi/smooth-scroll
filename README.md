@@ -224,6 +224,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.1.1 - August 21, 2014
+	* Passed in `event` variable to `eventHandler` method, fixing Firefox bug.
 * v5.1.0 - August 18, 2014
 	* Added `destroy` method.
 	* Converted to event bubbling approach for better performance.

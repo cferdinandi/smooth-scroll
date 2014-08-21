@@ -309,7 +309,7 @@
 	 * If smooth scroll element clicked, animate scroll
 	 * @private
 	 */
-	var eventHandler = function () {
+	var eventHandler = function (event) {
 		var toggle = event.target;
 		if ( toggle.hasAttribute('data-scroll') && toggle.tagName.toLowerCase() === 'a' ) {
 			event.preventDefault(); // Prevent default click event
