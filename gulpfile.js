@@ -127,7 +127,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('test', function() {
-	return gulp.src(paths.scripts.input.concat(paths.test.spec))
+	return gulp.src([paths.scripts.input + '/../**/*.js'].concat(paths.test.spec))
 		.pipe(plumber())
 		.pipe(karma({ configFile: 'test/karma.conf.js' }))
 		.on('error', function(err) { throw err; });
