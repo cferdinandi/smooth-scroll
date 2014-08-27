@@ -73,6 +73,7 @@ You can pass options and callbacks into Smooth Scroll through the `init()` funct
 ```javascript
 smoothScroll.init({
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
+	delay: 1000, // Integer. Delay before the animation starts in milliseconds
 	easing: 'easeInOutCubic', // Easing pattern to use
 	updateURL: true, // Boolean. Whether or not to update the URL with the anchor hash on scroll
 	offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
@@ -224,6 +225,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.1.2 - August 27, 2014
+	* Added support for delaying scroll animation.
 * v5.1.1 - August 21, 2014
 	* Passed in `event` variable to `eventHandler` method, fixing Firefox bug.
 * v5.1.0 - August 18, 2014

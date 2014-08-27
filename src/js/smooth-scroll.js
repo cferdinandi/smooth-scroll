@@ -21,6 +21,7 @@
 	// Default settings
 	var defaults = {
 		speed: 500,
+		delay:0,
 		easing: 'easeInOutCubic',
 		offset: 0,
 		updateURL: true,
@@ -301,7 +302,7 @@
 		}
 
 		// Start scrolling animation
-		startAnimateScroll();
+		setTimeout(startAnimateScroll, options.delay);
 
 	};
 
