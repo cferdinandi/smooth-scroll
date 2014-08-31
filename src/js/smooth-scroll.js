@@ -73,6 +73,32 @@
 	};
 
 	/**
+	 * Get the closest matching element up the DOM tree
+	 * @param {Element} elem Starting element
+	 * @param {String} selector Selector to match against (class, ID, or data attribute)
+	 * @return {Boolean|Element} Returns false if not match found
+	 */
+	var getClosest = function (elem, selector) {
+		var firstChar = selector.charAt(0);
+		for ( ; elem && elem !== document; elem = elem.parentNode ) {
+			if ( firstChar === '.' ) {
+				if ( elem.classList.contains( selector.substr(1) ) ) {
+					return elem;
+				}
+			} else if ( firstChar === '#' ) {
+				if ( elem.id === selector.substr(1) ) {
+					return elem;
+				}
+			} else if ( firstChar === '[' ) {
+				if ( elem.hasAttribute( selector.substr(1, selector.length - 2) ) ) {
+					return elem;
+				}
+			}
+		}
+		return false;
+	};
+
+	/**
 	 * Escape special characters for use with querySelector
 	 * @private
 	 * @param {String} id The anchor ID to escape
@@ -310,8 +336,8 @@
 	 * @private
 	 */
 	var eventHandler = function (event) {
-		var toggle = event.target;
-		if ( toggle.hasAttribute('data-scroll') && toggle.tagName.toLowerCase() === 'a' ) {
+		var toggle = getClosest(event.target, '[data-scroll]');
+		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
 			event.preventDefault(); // Prevent default click event
 			smoothScroll.animateScroll( toggle, toggle.hash, settings, event ); // Animate scroll
 		}
