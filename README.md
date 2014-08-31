@@ -148,8 +148,7 @@ Animate scrolling to an anchor.
 smoothScroll.animateScroll(
 	toggle, // Node that toggles the animation. ex. document.querySelector('#toggle')
 	anchor, // ID of the anchor to scroll to. ex. '#bazinga'
-	options, // Classes and callbacks. Same options as those passed into the init() function.
-	event // Optional, if a DOM event was triggered.
+	options // Classes and callbacks. Same options as those passed into the init() function.
 );
 ```
 
@@ -226,6 +225,7 @@ Smooth Scroll uses [semantic versioning](http://semver.org/).
 
 * v5.1.2 - August 31, 2014
 	* Fixed event listener filter to account for sub elements.
+	* Removed unused `event` argument from `animateScroll`
 * v5.1.1 - August 21, 2014
 	* Passed in `event` variable to `eventHandler` method, fixing Firefox bug.
 * v5.1.0 - August 18, 2014

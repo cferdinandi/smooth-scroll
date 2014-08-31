@@ -259,7 +259,7 @@
 	 * @param {Object} settings
 	 * @param {Event} event
 	 */
-	smoothScroll.animateScroll = function ( toggle, anchor, options, event ) {
+	smoothScroll.animateScroll = function ( toggle, anchor, options ) {
 
 		// Options and overrides
 		var settings = extend( settings || defaults, options || {} );  // Merge user options with defaults
