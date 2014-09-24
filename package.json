@@ -6,6 +6,7 @@
 		"name": "Chris Ferdinandi",
 		"url": "http://gomakethings.com"
 	},
+	"main": "dist/js/smooth-scroll.js",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
