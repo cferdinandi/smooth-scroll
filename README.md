@@ -205,6 +205,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 * Scroll-to-top bug for links at the bottom of the page by [Jonas Havers](https://github.com/JonasHavers).
 * AMD support and numerous code improvements by [Todd Motto](https://github.com/toddmotto).
 * Push State bug fix by [Yanick Witschi](https://github.com/Toflar).
+* CommonJS module support by [Riku Rouvila](https://github.com/rikukissa).
 
 
 
