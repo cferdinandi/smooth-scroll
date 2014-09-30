@@ -223,6 +223,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.1.3 - September 29, 2014
+	* Fixed CommonJS module bug.
 * v5.1.2 - August 31, 2014
 	* Fixed event listener filter to account for sub elements.
 	* Removed unused `event` argument from `animateScroll`
