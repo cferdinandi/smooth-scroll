@@ -8,14 +8,14 @@ A lightweight script to animate scrolling to anchor links.
 1. [Getting Started](#getting-started)
 2. [Installing with Package Managers](#installing-with-package-managers)
 3. [Working with the Source Files](#working-with-the-source-files)
-3. [Options & Settings](#options-and-settings)
-4. [Browser Compatibility](#browser-compatibility)
-5. [Known Issues](#known-issues)
-6. [Contributors](#contributors)
-7. [How to Contribute](#how-to-contribute)
-8. [License](#license)
-9. [Changelog](#changelog)
-10. [Older Docs](#older-docs)
+4. [Options & Settings](#options-and-settings)
+5. [Browser Compatibility](#browser-compatibility)
+6. [Known Issues](#known-issues)
+7. [Contributors](#contributors)
+8. [How to Contribute](#how-to-contribute)
+9. [License](#license)
+10. [Changelog](#changelog)
+11. [Older Docs](#older-docs)
 
 
 
