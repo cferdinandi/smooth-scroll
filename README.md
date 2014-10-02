@@ -68,8 +68,7 @@ You can install Smooth Scroll with your favorite package manager.
 
 If you would prefer, you can work with the development code in the `src` directory using the included [Gulp build system](http://gulpjs.com/). This compiles, lints, and minifies code, and runs unit tests.
 
-**Dependencies:**
-
+### Dependencies
 Make sure these are installed first.
 
 * [Node.js](http://nodejs.org)
@@ -77,7 +76,7 @@ Make sure these are installed first.
 * [Gulp](http://gulpjs.com) `sudo npm install -g gulp`
 * [PhantomJS](http://phantomjs.org)
 
-**Quick Start:**
+### Quick Start
 
 1. In bash/terminal/command line, `cd` into your project directory.
 2. Run `npm install` to install required files.
