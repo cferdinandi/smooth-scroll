@@ -7,13 +7,15 @@ A lightweight script to animate scrolling to anchor links.
 
 1. [Getting Started](#getting-started)
 2. [Installing with Package Managers](#installing-with-package-managers)
-3. [Options & Settings](#options-and-settings)
-4. [Browser Compatibility](#browser-compatibility)
-5. [Contributors](#contributors)
-6. [How to Contribute](#how-to-contribute)
-7. [License](#license)
-8. [Changelog](#changelog)
-9. [Older Docs](#older-docs)
+3. [Working with the Source Files](#working-with-the-source-files)
+4. [Options & Settings](#options-and-settings)
+5. [Browser Compatibility](#browser-compatibility)
+6. [Known Issues](#known-issues)
+7. [Contributors](#contributors)
+8. [How to Contribute](#how-to-contribute)
+9. [License](#license)
+10. [Changelog](#changelog)
+11. [Older Docs](#older-docs)
 
 
 
@@ -59,6 +61,28 @@ You can install Smooth Scroll with your favorite package manager.
 * **[NPM](https://www.npmjs.org/):** `npm install cferdinandi/smooth-scroll`
 * **[Bower](http://bower.io/):** `bower install https://github.com/cferdinandi/smooth-scroll.git`
 * **[Component](http://component.io/):** `component install cferdinandi/smooth-scroll`
+
+
+
+## Working with the Source Files
+
+If you would prefer, you can work with the development code in the `src` directory using the included [Gulp build system](http://gulpjs.com/). This compiles, lints, and minifies code, and runs unit tests.
+
+### Dependencies
+Make sure these are installed first.
+
+* [Node.js](http://nodejs.org)
+* [Ruby Sass](http://sass-lang.com/install)
+* [Gulp](http://gulpjs.com) `sudo npm install -g gulp`
+* [PhantomJS](http://phantomjs.org)
+
+### Quick Start
+
+1. In bash/terminal/command line, `cd` into your project directory.
+2. Run `npm install` to install required files.
+3. When it's done installing, run `gulp` to get going.
+
+Every time you want to run your tasks, run `gulp`.
 
 
 
@@ -167,7 +191,7 @@ smoothScroll.animateScroll( toggle, '#bazinga', options );
 ```
 
 #### destroy()
-Destroy the current `smoothScroll.init()`.
+Destroy the current `smoothScroll.init()`. This is called automatically during the `init` function to remove any existing initializations.
 
 ```javascript
 smoothScroll.destroy();
@@ -190,6 +214,12 @@ Add a `[data-scroll-header]` data attribute to fixed headers. Smooth Scroll will
 Smooth Scroll works in all modern browsers, and IE 9 and above.
 
 Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhancement. If the JavaScript file fails to load, or if your site is viewed on older and less capable browsers, anchor links will jump the way they normally would. If you need to smooth scrolling for older browsers, [download the jQuery version of Smooth Scroll on GitHub](https://github.com/cferdinandi/smooth-scroll/tree/archive-v1).
+
+
+
+## Known Issues
+
+If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The `<body>` element can have a fixed, non-percentage based height (ex. `500px`), or a height of `auto`.
 
 
 
