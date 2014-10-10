@@ -173,6 +173,7 @@
 	/**
 	 * Calculate the easing pattern
 	 * @private
+	 * @link https://gist.github.com/gre/1650294
 	 * @param {String} type Easing pattern
 	 * @param {Number} time Time animation should take to complete
 	 * @returns {Number}
