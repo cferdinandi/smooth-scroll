@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Smooth Scroll</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- stylesheets -->
+		<link rel="stylesheet" href="assets/css/custom.css" type="text/css">
+	</head>
+
+	<body>
+
+		<main class="container" id="top">
+
+			<nav>
+				<h1>Smooth Scroll</h1>
+				<p><a href="https://github.com/cferdinandi/smooth-scroll">GitHub</a></p>
+				<hr>
+			</nav>
+
+			<section>
+	<p>
+		<strong>Linear</strong><br>
+		<a data-scroll data-options='{ "easing": "linear" }' href="#bazinga">Linear (no other options)</a><br>
+	</p>
+
+	<p>
+		<strong>Ease-In</strong><br>
+		<a data-scroll data-options='{ "easing": "easeInQuad" }' href="#bazinga">Quad</a><br>
+		<a data-scroll data-options='{ "easing": "easeInCubic" }' href="#bazinga">Cubic</a><br>
+		<a data-scroll data-options='{ "easing": "easeInQuart" }' href="#bazinga">Quart</a><br>
+		<a data-scroll data-options='{ "easing": "easeInQuint" }' href="#bazinga">Quint</a>
+	</p>
+
+	<p>
+		<strong>Ease-In-Out</strong><br>
+		<a data-scroll data-options='{ "easing": "easeInOutQuad" }' href="#bazinga">Quad</a><br>
+		<a data-scroll data-options='{ "easing": "easeInOutCubic" }' href="#bazinga">Cubic</a><br>
+		<a data-scroll data-options='{ "easing": "easeInOutQuart" }' href="#bazinga">Quart</a><br>
+		<a data-scroll data-options='{ "easing": "easeInOutQuint" }' href="#bazinga">Quint</a>
+	</p>
+
+	<p>
+		<strong>Ease-Out</strong><br>
+		<a data-scroll data-options='{ "easing": "easeOutQuad" }' href="#bazinga">Quad</a><br>
+		<a data-scroll data-options='{ "easing": "easeOutCubic" }' href="#bazinga">Cubic</a><br>
+		<a data-scroll data-options='{ "easing": "easeOutQuart" }' href="#bazinga">Quart</a><br>
+		<a data-scroll data-options='{ "easing": "easeOutQuint" }' href="#bazinga">Quint</a>
+	</p>
+
+	<p>
+		.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+		.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+		.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
+	</p>
+
+	<p id="bazinga"><a data-scroll href="#1@#%^-bottom">Bazinga!</a></p>
+
+	<p>
+		.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+		.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+		.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
+	</p>
+
+	<p id="1@#%^-bottom"><a data-scroll data-options='{ "easing": "easeOutCubic" }' href="#top">Back to the top</a></p>
+			</section>
+		</main>
+
+		<!-- Javascript -->
+		<script src='dist/js/smooth-scroll.js'></script>
+		<script>
+			smoothScroll.init({
+				speed: 1000,
+				easing: 'easeInOutCubic',
+				offset: 0,
+				updateURL: true,
+				callbackBefore: function ( toggle, anchor ) {},
+				callbackAfter: function ( toggle, anchor ) {}
+			});
+		</script>
+
+
+	</body>
+</html>
