@@ -1,5 +1,5 @@
 /**
- * smooth-scroll v5.1.4
+ * smooth-scroll v5.1.5
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://github.com/cferdinandi/smooth-scroll
  * 
@@ -272,16 +272,23 @@
 	smoothScroll.animateScroll = function ( toggle, anchor, options ) {
 
 		// Options and overrides
-		var settings = extend( settings || defaults, options || {} );  // Merge user options with defaults
+		var _settings = extend( settings || defaults, options || {} );  // Merge user options with defaults
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
-		settings = extend( settings, overrides );
-		anchor = '#' + escapeCharacters(anchor.substr(1)); // Escape special characters and leading numbers
+		_settings = extend( _settings, overrides );
+		
+		var anchorElement = null;
+		if (typeof anchor === 'object' && anchor.nodeType === document.ELEMENT_NODE) {
+			anchorElement = anchor;
+		} else {
+			anchor = '#' + escapeCharacters(anchor.substr(1)); // Escape special characters and leading numbers
+			anchorElement = document.querySelector(anchor);
+		}
 
 		// Selectors and variables
 		var fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
 		var headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
 		var startLocation = root.pageYOffset; // Current location on the page
-		var endLocation = getEndLocation( document.querySelector(anchor), headerHeight, parseInt(settings.offset, 10) ); // Scroll to location
+		var endLocation = getEndLocation( anchorElement, headerHeight, parseInt(_settings.offset, 10) ); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
 		var documentHeight = getDocumentHeight();
@@ -289,7 +296,7 @@
 		var percentage, position;
 
 		// Update URL
-		updateUrl(anchor, settings.updateURL);
+		updateUrl(anchor, _settings.updateURL);
 
 		/**
 		 * Stop the scroll animation when it reaches its target (or the bottom/top of page)
