@@ -251,6 +251,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.2.0 - November 21, 2014
+	* Add focus to scrolled to anchor if focusable.
 * v5.1.4 - October 18, 2014
 	* Removed `.bind` dependency and polyfill.
 	* Updated `gulpfile.js` tasks and namespacing.
