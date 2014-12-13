@@ -92,4 +92,48 @@ describe('Smooth Scroll', function () {
             expect(smoothScroll.animateScroll).not.toHaveBeenCalled();
         });
     });
+
+    describe('before and after callbacks', function () {
+        var elt = createTestLink('#anchor', true);
+        document.body.setAttribute('id', 'anchor');
+
+        // Generates a callback to test asynchronous calls.
+        var callback = function (eltVal, anchorVal, done) {
+            return function (toggle, anchor) {
+                expect(toggle).toBe(eltVal);
+                expect(anchor).toBe(anchorVal);
+                done();
+            };
+        };
+
+        afterEach(function () {
+            smoothScroll.destroy();
+        });
+
+        it('calls the before callback', function (done) {
+            var settings = {
+                callbackBefore: callback(elt, '#anchor', done)
+            };
+            smoothScroll.init(settings);
+            simulateClick(elt);
+        });
+
+        it('calls the after callback', function (done) {
+            var settings = {
+                callbackAfter: callback(elt, '#anchor', done)
+            };
+            smoothScroll.init(settings);
+            simulateClick(elt);
+        });
+
+        it('calls before and after in the right order', function (done) {
+            var settings = {
+                // The before callback will not trigger done().
+                callbackBefore: callback(elt, '#anchor', function () {}),
+                callbackAfter: callback(elt, '#anchor', done)
+            };
+            smoothScroll.init(settings);
+            simulateClick(elt);
+        });
+    });
 });
