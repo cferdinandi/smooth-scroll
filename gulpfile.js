@@ -174,7 +174,7 @@ gulp.task('copy:static', ['clean:dist'], function() {
 
 // Lint scripts
 gulp.task('lint:scripts', function () {
-	return gulp.src(paths.scripts.input)
+	return gulp.src([paths.test.input, paths.test.spec])
 		.pipe(plumber())
 		.pipe(jshint())
 		.pipe(jshint.reporter('jshint-stylish'));
