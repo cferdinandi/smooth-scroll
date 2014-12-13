@@ -1,4 +1,5 @@
 describe('Smooth Scroll', function () {
+    'use strict';
 
     describe('API', function () {
         it('should export the smoothScroll module', function () {
