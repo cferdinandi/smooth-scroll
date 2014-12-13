@@ -73,10 +73,7 @@ describe('Smooth Scroll', function () {
             spyOn(smoothScroll, 'animateScroll');
             smoothScroll.init();
             simulateClick(elt);
-            // TODO: uncomment one, remove the other and .tohaveBeenCalled when the animateScroll signature bug is fixed.
-            // expect(smoothScroll.animateScroll).toHaveBeenCalledWith(elt, '#anchor', jasmine.objectContaining(settingsStub), jasmine.any(Object));
-            // expect(smoothScroll.animateScroll).toHaveBeenCalledWith(elt, '#anchor', jasmine.objectContaining(settingsStub));
-            expect(smoothScroll.animateScroll).toHaveBeenCalled();
+            expect(smoothScroll.animateScroll).toHaveBeenCalledWith(elt, '#anchor', jasmine.objectContaining(settingsStub));
         });
 
         it('does nothing if not initialized', function () {
