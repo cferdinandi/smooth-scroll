@@ -257,8 +257,7 @@
 	 * @public
 	 * @param {Element} toggle The element that toggled the scroll event
 	 * @param {Element} anchor The element to scroll to
-	 * @param {Object} settings
-	 * @param {Event} event
+	 * @param {Object} options
 	 */
 	smoothScroll.animateScroll = function ( toggle, anchor, options ) {
 
@@ -342,7 +341,7 @@
 		var toggle = getClosest(event.target, '[data-scroll]');
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
 			event.preventDefault(); // Prevent default click event
-			smoothScroll.animateScroll( toggle, toggle.hash, settings, event ); // Animate scroll
+			smoothScroll.animateScroll( toggle, toggle.hash, settings); // Animate scroll
 		}
 	};
 
