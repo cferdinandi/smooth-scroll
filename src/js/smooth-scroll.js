@@ -248,7 +248,7 @@
 		if ( history.pushState && (url || url === 'true') ) {
 			history.pushState( {
 				pos: anchor.id
-			}, '', window.location.pathname + anchor );
+			}, '', window.location.pathname + window.location.search + anchor );
 		}
 	};
 
