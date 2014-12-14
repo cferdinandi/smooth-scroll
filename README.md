@@ -233,6 +233,7 @@ If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is u
 * AMD support and numerous code improvements by [Todd Motto](https://github.com/toddmotto).
 * Push State bug fix by [Yanick Witschi](https://github.com/Toflar).
 * CommonJS module support by [Riku Rouvila](https://github.com/rikukissa).
+* Unit tests by [Thibaud Colas](https://github.com/ThibWeb).
 
 
 
@@ -251,6 +252,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.2.1 - December 13, 2014
+	* Added unit tests.
 * v5.2.0 - November 21, 2014
 	* Add focus to scrolled to anchor if focusable.
 * v5.1.4 - October 18, 2014
