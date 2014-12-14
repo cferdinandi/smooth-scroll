@@ -246,9 +246,7 @@
 	 */
 	var updateUrl = function ( anchor, url ) {
 		if ( history.pushState && (url || url === 'true') ) {
-			history.pushState( {
-				pos: anchor.id
-			}, '', window.location.pathname + anchor );
+			history.pushState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
 		}
 	};
 
