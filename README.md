@@ -234,6 +234,7 @@ If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is u
 * Push State bug fix by [Yanick Witschi](https://github.com/Toflar).
 * CommonJS module support by [Riku Rouvila](https://github.com/rikukissa).
 * Query string fix when updating URL by [Qu Yatong](https://github.com/quyatong).
+* Scroll to top support by [Robbert Broersma](https://github.com/robbert).
 * Unit tests by [Thibaud Colas](https://github.com/ThibWeb).
 
 
@@ -253,6 +254,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.3.0 - December 20, 2014
+	* Now supports scrolling to the top with an empty hash (#).
 * v5.2.2 - December 13, 2014
 	* Updating URL now accounts for query strings.
 * v5.2.1 - December 13, 2014
