@@ -1,5 +1,5 @@
 /**
- * smooth-scroll v5.2.2
+ * smooth-scroll v5.3.0
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://github.com/cferdinandi/smooth-scroll
  * 
@@ -275,7 +275,7 @@
 		anchor = '#' + escapeCharacters(anchor.substr(1)); // Escape special characters and leading numbers
 
 		// Selectors and variables
-		var anchorElem = document.querySelector(anchor);
+		var anchorElem = anchor === '#' ? document.documentElement : document.querySelector(anchor);
 		var fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
 		var headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
 		var startLocation = root.pageYOffset; // Current location on the page
