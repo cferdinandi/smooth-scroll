@@ -1,5 +1,5 @@
 /**
- * smooth-scroll v5.3.0
+ * smooth-scroll v5.3.1
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://github.com/cferdinandi/smooth-scroll
  * 
@@ -25,7 +25,7 @@
 
 	var smoothScroll = {}; // Object for public APIs
 	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
-	var settings;
+	var settings, eventTimeout, fixedHeader, headerHeight;
 
 	// Default settings
 	var defaults = {
@@ -276,8 +276,6 @@
 
 		// Selectors and variables
 		var anchorElem = anchor === '#' ? document.documentElement : document.querySelector(anchor);
-		var fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
-		var headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
 		var startLocation = root.pageYOffset; // Current location on the page
 		var endLocation = getEndLocation( anchorElem, headerHeight, parseInt(settings.offset, 10) ); // Scroll to location
 		var animationInterval; // interval timer
@@ -353,13 +351,38 @@
 	};
 
 	/**
+	 * On window scroll and resize, only run events at a rate of 15fps for better performance
+	 * @private
+	 * @param  {Function} eventTimeout Timeout function
+	 * @param  {Object} settings
+	 */
+	var eventThrottler = function (event) {
+		if ( !eventTimeout ) {
+			eventTimeout = setTimeout(function() {
+				eventTimeout = null; // Reset timeout
+				headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
+			}, 66);
+		}
+	};
+
+	/**
 	 * Destroy the current initialization.
 	 * @public
 	 */
 	smoothScroll.destroy = function () {
+
+		// If plugin isn't already initialized, stop
 		if ( !settings ) return;
+
+		// Remove event listeners
 		document.removeEventListener( 'click', eventHandler, false );
+		root.removeEventListener( 'resize', eventThrottler, false );
+
+		// Reset varaibles
 		settings = null;
+		eventTimeout = null;
+		fixedHeader = null;
+		headerHeight = null;
 	};
 
 	/**
@@ -377,9 +400,12 @@
 
 		// Selectors and variables
 		settings = extend( defaults, options || {} ); // Merge user options with defaults
+		fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
+		headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
 
 		// When a toggle is clicked, run the click handler
-		document.addEventListener('click', eventHandler, false);
+		document.addEventListener('click', eventHandler, false );
+		root.addEventListener( 'resize', eventThrottler, false );
 
 	};
 
