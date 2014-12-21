@@ -99,6 +99,16 @@
 	};
 
 	/**
+	 * Get the height of an element
+	 * @private
+	 * @param  {Node]} elem The element
+	 * @return {Number}     The element's height
+	 */
+	var getHeight = function (elem) {
+		return Math.max( elem.scrollHeight, elem.offsetHeight, elem.clientHeight );
+	};
+
+	/**
 	 * Escape special characters for use with querySelector
 	 * @private
 	 * @param {String} id The anchor ID to escape
@@ -351,7 +361,7 @@
 		if ( !eventTimeout ) {
 			eventTimeout = setTimeout(function() {
 				eventTimeout = null; // Reset timeout
-				headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
+				headerHeight = fixedHeader === null ? 0 : ( getHeight( fixedHeader ) + fixedHeader.offsetTop ); // Get the height of a fixed header if one exists
 			}, 66);
 		}
 	};
@@ -392,11 +402,11 @@
 		// Selectors and variables
 		settings = extend( defaults, options || {} ); // Merge user options with defaults
 		fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
-		headerHeight = fixedHeader === null ? 0 : (fixedHeader.offsetHeight + fixedHeader.offsetTop); // Get the height of a fixed header if one exists
+		headerHeight = fixedHeader === null ? 0 : ( getHeight( fixedHeader ) + fixedHeader.offsetTop ); // Get the height of a fixed header if one exists
 
 		// When a toggle is clicked, run the click handler
 		document.addEventListener('click', eventHandler, false );
-		root.addEventListener( 'resize', eventThrottler, false );
+		if ( fixedHeader ) { root.addEventListener( 'resize', eventThrottler, false ); }
 
 	};
 
