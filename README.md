@@ -254,6 +254,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.3.1 - December 20, 2014
+	* Cache header height for better performance.
 * v5.3.0 - December 20, 2014
 	* Now supports scrolling to the top with an empty hash (#).
 * v5.2.2 - December 13, 2014
