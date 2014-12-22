@@ -1,5 +1,5 @@
 /**
- * smooth-scroll v5.3.2
+ * smooth-scroll v5.3.3
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://github.com/cferdinandi/smooth-scroll
  * 
@@ -25,7 +25,7 @@
 
 	var smoothScroll = {}; // Object for public APIs
 	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
-	var settings, eventTimeout, fixedHeader, headerHeight;
+	var settings, eventTimeout, fixedHeader;
 
 	// Default settings
 	var defaults = {
@@ -287,6 +287,8 @@
 		// Selectors and variables
 		var anchorElem = anchor === '#' ? document.documentElement : document.querySelector(anchor);
 		var startLocation = root.pageYOffset; // Current location on the page
+		if ( !fixedHeader ) { fixedHeader = document.querySelector('[data-scroll-header]'); }  // Get the fixed header if not already set
+		var headerHeight = fixedHeader === null ? 0 : ( getHeight( fixedHeader ) + fixedHeader.offsetTop ); // Get the height of a fixed header if one exists
 		var endLocation = getEndLocation( anchorElem, headerHeight, parseInt(settings.offset, 10) ); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
@@ -392,7 +394,6 @@
 		settings = null;
 		eventTimeout = null;
 		fixedHeader = null;
-		headerHeight = null;
 	};
 
 	/**
@@ -411,7 +412,6 @@
 		// Selectors and variables
 		settings = extend( defaults, options || {} ); // Merge user options with defaults
 		fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
-		headerHeight = fixedHeader === null ? 0 : ( getHeight( fixedHeader ) + fixedHeader.offsetTop ); // Get the height of a fixed header if one exists
 
 		// When a toggle is clicked, run the click handler
 		document.addEventListener('click', eventHandler, false );
