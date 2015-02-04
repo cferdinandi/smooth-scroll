@@ -288,7 +288,7 @@
 		var percentage, position;
 
 		// Update URL
-		updateUrl(anchor, settings.updateURL);
+		if ( !settings.skipUpdateUrl ) updateUrl(anchor, settings.updateURL);
 
 		/**
 		 * Stop the scroll animation when it reaches its target (or the bottom/top of page)
