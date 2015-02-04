@@ -7,15 +7,15 @@
  * http://gomakethings.com/mit/
  */
 
-(function (root, factory) {
+(function (root, document, factory) {
 	if ( typeof define === 'function' && define.amd ) {
-		define('smoothScroll', factory(root));
+		define('smoothScroll', factory(root, document));
 	} else if ( typeof exports === 'object' ) {
-		module.exports = factory(root);
+		module.exports = factory(root, document);
 	} else {
-		root.smoothScroll = factory(root);
+		root.smoothScroll = factory(root, document);
 	}
-})(window || this, function (root) {
+})(window || this, document, function (root, document) {
 
 	'use strict';
 
@@ -240,10 +240,12 @@
 	 * @returns {Number}
 	 */
 	var getDocumentHeight = function () {
+		var documentBody = document.body;
+		var documentElement = document.documentElement;
 		return Math.max(
-			document.body.scrollHeight, document.documentElement.scrollHeight,
-			document.body.offsetHeight, document.documentElement.offsetHeight,
-			document.body.clientHeight, document.documentElement.clientHeight
+			documentBody.scrollHeight, documentElement.scrollHeight,
+			documentBody.offsetHeight, documentElement.offsetHeight,
+			documentBody.clientHeight, documentElement.clientHeight
 		);
 	};
 
