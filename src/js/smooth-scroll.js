@@ -231,10 +231,12 @@
 	 * @returns {Number}
 	 */
 	var getDocumentHeight = function () {
+		var documentBody = document.body;
+		var documentElement = document.documentElement;
 		return Math.max(
-			document.body.scrollHeight, document.documentElement.scrollHeight,
-			document.body.offsetHeight, document.documentElement.offsetHeight,
-			document.body.clientHeight, document.documentElement.clientHeight
+			documentBody.scrollHeight, documentElement.scrollHeight,
+			documentBody.offsetHeight, documentElement.offsetHeight,
+			documentBody.clientHeight, documentElement.clientHeight
 		);
 	};
 
