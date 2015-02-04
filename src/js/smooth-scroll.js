@@ -1,12 +1,12 @@
-(function (root, factory) {
+(function (root, document, factory) {
 	if ( typeof define === 'function' && define.amd ) {
-		define('smoothScroll', factory(root));
+		define('smoothScroll', factory(root, document));
 	} else if ( typeof exports === 'object' ) {
-		module.exports = factory(root);
+		module.exports = factory(root, document);
 	} else {
-		root.smoothScroll = factory(root);
+		root.smoothScroll = factory(root, document);
 	}
-})(window || this, function (root) {
+})(window || this, document, function (root, document) {
 
 	'use strict';
 
