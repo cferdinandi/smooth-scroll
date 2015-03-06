@@ -254,6 +254,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.3.4 - March 6, 2015
+	* Fixed `headerHeight` error with fixed headers. (https://github.com/cferdinandi/smooth-scroll/issues/149)
 * v5.3.3 - December 21, 2014
 	* Adjust how fixed header is set for better accuracy and flexibility.
 * v5.3.2 - December 20, 2014

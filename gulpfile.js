@@ -128,9 +128,18 @@ gulp.task('build:scripts', ['clean:dist'], function() {
 gulp.task('build:styles', ['clean:dist'], function() {
 	return gulp.src(paths.styles.input)
 		.pipe(plumber())
-		.pipe(sass({style: 'expanded', noCache: true, 'sourcemap=none': true}))
+		.pipe(sass({
+			style: 'expanded',
+			lineNumbers: true,
+			noCache: true,
+			'sourcemap=none': true
+		}))
 		.pipe(flatten())
-		.pipe(prefix('last 2 version', '> 1%'))
+		.pipe(prefix({
+			browsers: ['last 2 version', '> 1%'],
+			cascade: true,
+			remove: true
+		}))
 		.pipe(header(banner.full, { package : package }))
 		.pipe(gulp.dest(paths.styles.output))
 		.pipe(rename({ suffix: '.min' }))
@@ -236,16 +245,16 @@ gulp.task('clean:docs', function () {
 
 // Spin up livereload server and listen for file changes
 gulp.task('listen', function () {
-    livereload.listen();
-    gulp.watch(paths.input).on('change', function(file) {
-        gulp.start('default');
-        gulp.start('refresh');
-    });
+	livereload.listen();
+	gulp.watch(paths.input).on('change', function(file) {
+		gulp.start('default');
+		gulp.start('refresh');
+	});
 });
 
 // Run livereload after file change
 gulp.task('refresh', ['compile', 'docs'], function () {
-    livereload.changed();
+	livereload.changed();
 });
 
 
@@ -285,6 +294,6 @@ gulp.task('default', [
 
 // Compile files, generate docs, and run unit tests when something changes
 gulp.task('watch', [
-    'listen',
-    'default'
+	'listen',
+	'default'
 ]);
