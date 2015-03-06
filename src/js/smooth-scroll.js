@@ -16,7 +16,7 @@
 
 	var smoothScroll = {}; // Object for public APIs
 	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
-	var settings, eventTimeout, fixedHeader;
+	var settings, eventTimeout, fixedHeader, headerHeight;
 
 	// Default settings
 	var defaults = {
@@ -260,6 +260,10 @@
 		}
 	};
 
+	var getHeaderHeight = function ( header ) {
+		return header === null ? 0 : ( getHeight( header ) + header.offsetTop );
+	};
+
 	/**
 	 * Start/stop the scrolling animation
 	 * @public
@@ -279,7 +283,7 @@
 		var anchorElem = anchor === '#' ? document.documentElement : document.querySelector(anchor);
 		var startLocation = root.pageYOffset; // Current location on the page
 		if ( !fixedHeader ) { fixedHeader = document.querySelector('[data-scroll-header]'); }  // Get the fixed header if not already set
-		var headerHeight = fixedHeader === null ? 0 : ( getHeight( fixedHeader ) + fixedHeader.offsetTop ); // Get the height of a fixed header if one exists
+		if ( !headerHeight ) { headerHeight = getHeaderHeight( fixedHeader ); } // Get the height of a fixed header if one exists and not already set
 		var endLocation = getEndLocation( anchorElem, headerHeight, parseInt(settings.offset, 10) ); // Scroll to location
 		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
@@ -363,7 +367,7 @@
 		if ( !eventTimeout ) {
 			eventTimeout = setTimeout(function() {
 				eventTimeout = null; // Reset timeout
-				headerHeight = fixedHeader === null ? 0 : ( getHeight( fixedHeader ) + fixedHeader.offsetTop ); // Get the height of a fixed header if one exists
+				headerHeight = getHeaderHeight( fixedHeader ); // Get the height of a fixed header if one exists
 			}, 66);
 		}
 	};
@@ -385,6 +389,7 @@
 		settings = null;
 		eventTimeout = null;
 		fixedHeader = null;
+		headerHeight = null;
 	};
 
 	/**
@@ -403,6 +408,7 @@
 		// Selectors and variables
 		settings = extend( defaults, options || {} ); // Merge user options with defaults
 		fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
+		headerHeight = getHeaderHeight( fixedHeader );
 
 		// When a toggle is clicked, run the click handler
 		document.addEventListener('click', eventHandler, false );
