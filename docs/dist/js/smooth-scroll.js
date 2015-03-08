@@ -9,13 +9,13 @@
 
 (function (root, factory) {
 	if ( typeof define === 'function' && define.amd ) {
-		define('smoothScroll', factory(root));
+		define([], factory);
 	} else if ( typeof exports === 'object' ) {
-		module.exports = factory(root);
+		module.exports = factory;
 	} else {
 		root.smoothScroll = factory(root);
 	}
-})(this, function (root) {
+})(this, function (window) {
 
 	'use strict';
 
@@ -24,7 +24,7 @@
 	//
 
 	var smoothScroll = {}; // Object for public APIs
-	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
+	var supports = !!document.querySelector && !!window.addEventListener; // Feature test
 	var settings, eventTimeout, fixedHeader, headerHeight;
 
 	// Default settings
@@ -265,7 +265,7 @@
 	 */
 	var updateUrl = function ( anchor, url ) {
 		if ( history.pushState && (url || url === 'true') ) {
-			history.pushState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
+			history.pushState( null, null, [window.location.protocol, '//', window.location.host, window.location.pathname, window.location.search, anchor].join('') );
 		}
 	};
 
@@ -290,7 +290,7 @@
 
 		// Selectors and variables
 		var anchorElem = anchor === '#' ? document.documentElement : document.querySelector(anchor);
-		var startLocation = root.pageYOffset; // Current location on the page
+		var startLocation = window.pageYOffset; // Current location on the page
 		if ( !fixedHeader ) { fixedHeader = document.querySelector('[data-scroll-header]'); }  // Get the fixed header if not already set
 		if ( !headerHeight ) { headerHeight = getHeaderHeight( fixedHeader ); } // Get the height of a fixed header if one exists and not already set
 		var endLocation = getEndLocation( anchorElem, headerHeight, parseInt(settings.offset, 10) ); // Scroll to location
@@ -311,8 +311,8 @@
 		 * @param {Number} animationInterval How much to scroll on this loop
 		 */
 		var stopAnimateScroll = function (position, endLocation, animationInterval) {
-			var currentLocation = root.pageYOffset;
-			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >= documentHeight ) ) {
+			var currentLocation = window.pageYOffset;
+			if ( position == endLocation || currentLocation == endLocation || ( (window.innerHeight + currentLocation) >= documentHeight ) ) {
 				clearInterval(animationInterval);
 				anchorElem.focus();
 				settings.callbackAfter( toggle, anchor ); // Run callbacks after animation complete
@@ -328,7 +328,7 @@
 			percentage = ( timeLapsed / parseInt(settings.speed, 10) );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
 			position = startLocation + ( distance * easingPattern(settings.easing, percentage) );
-			root.scrollTo( 0, Math.floor(position) );
+			window.scrollTo( 0, Math.floor(position) );
 			stopAnimateScroll(position, endLocation, animationInterval);
 		};
 
@@ -345,8 +345,8 @@
 		 * Reset position to fix weird iOS bug
 		 * @link https://github.com/cferdinandi/smooth-scroll/issues/45
 		 */
-		if ( root.pageYOffset === 0 ) {
-			root.scrollTo( 0, 0 );
+		if ( window.pageYOffset === 0 ) {
+			window.scrollTo( 0, 0 );
 		}
 
 		// Start scrolling animation
@@ -392,7 +392,7 @@
 
 		// Remove event listeners
 		document.removeEventListener( 'click', eventHandler, false );
-		root.removeEventListener( 'resize', eventThrottler, false );
+		window.removeEventListener( 'resize', eventThrottler, false );
 
 		// Reset varaibles
 		settings = null;
@@ -421,7 +421,7 @@
 
 		// When a toggle is clicked, run the click handler
 		document.addEventListener('click', eventHandler, false );
-		if ( fixedHeader ) { root.addEventListener( 'resize', eventThrottler, false ); }
+		if ( fixedHeader ) { window.addEventListener( 'resize', eventThrottler, false ); }
 
 	};
 
