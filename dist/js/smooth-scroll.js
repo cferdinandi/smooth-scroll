@@ -1,5 +1,5 @@
 /**
- * smooth-scroll v5.3.5
+ * smooth-scroll v5.3.6
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://github.com/cferdinandi/smooth-scroll
  * 
@@ -9,9 +9,9 @@
 
 (function (root, factory) {
 	if ( typeof define === 'function' && define.amd ) {
-		define([], factory);
+		define([], factory(root));
 	} else if ( typeof exports === 'object' ) {
-		module.exports = factory;
+		module.exports = factory(root);
 	} else {
 		root.smoothScroll = factory(root);
 	}
