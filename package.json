@@ -39,7 +39,7 @@
 		"gulp-minify-css": "^0.3.4",
 		"gulp-autoprefixer": "^0.0.7",
 		"gulp-svgmin": "^0.4.6",
-		"gulp-svgstore": "^2.0.0",
+		"gulp-svgstore": "^5.0.1",
 		"gulp-markdown": "^1.0.0",
 		"gulp-file-include": "^0.5.1"
 	}
