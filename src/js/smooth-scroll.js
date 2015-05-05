@@ -1,19 +1,19 @@
 (function (root, factory) {
 	if ( typeof define === 'function' && define.amd ) {
-		define([], factory(root));
+		define([], factory());
 	} else if ( typeof exports === 'object' ) {
-		module.exports = factory(root);
+		module.exports = factory();
 	} else {
-		root.smoothScroll = factory(root);
+		root.smoothScroll = factory();
 	}
-})(this, function (root) {
+})(this, function () {
 
 	'use strict';
 
 	//
 	// Variables
 	//
-
+	var root = window;
 	var smoothScroll = {}; // Object for public APIs
 	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
 	var settings, eventTimeout, fixedHeader, headerHeight;
