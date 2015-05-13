@@ -1,5 +1,5 @@
 /**
- * smooth-scroll v5.3.6
+ * smooth-scroll v5.3.7
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://github.com/cferdinandi/smooth-scroll
  * 
@@ -15,7 +15,7 @@
 	} else {
 		root.smoothScroll = factory(root);
 	}
-})(this, function (root) {
+})(typeof global !== "undefined" ? global : this.window || this.global, function (root) {
 
 	'use strict';
 
@@ -24,7 +24,7 @@
 	//
 
 	var smoothScroll = {}; // Object for public APIs
-	var supports = !!document.querySelector && !!root.addEventListener; // Feature test
+	var supports = !!root.document.querySelector && !!root.addEventListener; // Feature test
 	var settings, eventTimeout, fixedHeader, headerHeight;
 
 	// Default settings
@@ -89,7 +89,7 @@
 	 */
 	var getClosest = function (elem, selector) {
 		var firstChar = selector.charAt(0);
-		for ( ; elem && elem !== document; elem = elem.parentNode ) {
+		for ( ; elem && elem !== root.document; elem = elem.parentNode ) {
 			if ( firstChar === '.' ) {
 				if ( elem.classList.contains( selector.substr(1) ) ) {
 					return elem;
@@ -241,9 +241,9 @@
 	 */
 	var getDocumentHeight = function () {
 		return Math.max(
-			document.body.scrollHeight, document.documentElement.scrollHeight,
-			document.body.offsetHeight, document.documentElement.offsetHeight,
-			document.body.clientHeight, document.documentElement.clientHeight
+			root.document.body.scrollHeight, root.document.documentElement.scrollHeight,
+			root.document.body.offsetHeight, root.document.documentElement.offsetHeight,
+			root.document.body.clientHeight, root.document.documentElement.clientHeight
 		);
 	};
 
@@ -264,8 +264,8 @@
 	 * @param {Boolean} url Whether or not to update the URL history
 	 */
 	var updateUrl = function ( anchor, url ) {
-		if ( history.pushState && (url || url === 'true') ) {
-			history.pushState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
+		if ( root.history.pushState && (url || url === 'true') ) {
+			root.history.pushState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
 		}
 	};
 
@@ -289,9 +289,9 @@
 		anchor = '#' + escapeCharacters(anchor.substr(1)); // Escape special characters and leading numbers
 
 		// Selectors and variables
-		var anchorElem = anchor === '#' ? document.documentElement : document.querySelector(anchor);
+		var anchorElem = anchor === '#' ? root.document.documentElement : root.document.querySelector(anchor);
 		var startLocation = root.pageYOffset; // Current location on the page
-		if ( !fixedHeader ) { fixedHeader = document.querySelector('[data-scroll-header]'); }  // Get the fixed header if not already set
+		if ( !fixedHeader ) { fixedHeader = root.document.querySelector('[data-scroll-header]'); }  // Get the fixed header if not already set
 		if ( !headerHeight ) { headerHeight = getHeaderHeight( fixedHeader ); } // Get the height of a fixed header if one exists and not already set
 		var endLocation = getEndLocation( anchorElem, headerHeight, parseInt(settings.offset, 10) ); // Scroll to location
 		var animationInterval; // interval timer
@@ -391,7 +391,7 @@
 		if ( !settings ) return;
 
 		// Remove event listeners
-		document.removeEventListener( 'click', eventHandler, false );
+		root.document.removeEventListener( 'click', eventHandler, false );
 		root.removeEventListener( 'resize', eventThrottler, false );
 
 		// Reset varaibles
@@ -416,11 +416,11 @@
 
 		// Selectors and variables
 		settings = extend( defaults, options || {} ); // Merge user options with defaults
-		fixedHeader = document.querySelector('[data-scroll-header]'); // Get the fixed header
+		fixedHeader = root.document.querySelector('[data-scroll-header]'); // Get the fixed header
 		headerHeight = getHeaderHeight( fixedHeader );
 
 		// When a toggle is clicked, run the click handler
-		document.addEventListener('click', eventHandler, false );
+		root.document.addEventListener('click', eventHandler, false );
 		if ( fixedHeader ) { root.addEventListener( 'resize', eventThrottler, false ); }
 
 	};

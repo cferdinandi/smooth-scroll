@@ -236,6 +236,7 @@ If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is u
 * Query string fix when updating URL by [Qu Yatong](https://github.com/quyatong).
 * Scroll to top support by [Robbert Broersma](https://github.com/robbert).
 * Unit tests by [Thibaud Colas](https://github.com/ThibWeb).
+* Browserify support by [Alexander Beletsky](https://github.com/alexbeletsky).
 
 
 
@@ -254,6 +255,8 @@ Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
 Smooth Scroll uses [semantic versioning](http://semver.org/).
 
+* v5.3.7 - May 12, 2015
+	* Fixed `this` and `root` bug with Browserify.
 * v5.3.6 - March 9, 2015
 	* REALLY fixed UMD wrapper.
 * v5.3.5 - March 7, 2015
