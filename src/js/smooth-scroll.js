@@ -255,8 +255,8 @@
 	 * @param {Boolean} url Whether or not to update the URL history
 	 */
 	var updateUrl = function ( anchor, url ) {
-		if ( history.pushState && (url || url === 'true') ) {
-			history.pushState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
+		if ( history.replaceState && (url || url === 'true') ) {
+			history.replaceState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
 		}
 	};
 
