@@ -11,10 +11,8 @@ A lightweight script to animate scrolling to anchor links. Smooth Scroll works g
 4. [Options & Settings](#options-and-settings)
 5. [Browser Compatibility](#browser-compatibility)
 6. [Known Issues](#known-issues)
-7. [Contributors](#contributors)
-8. [How to Contribute](#how-to-contribute)
-9. [License](#license)
-10. [Older Docs](#older-docs)
+7. [How to Contribute](#how-to-contribute)
+8. [License](#license)
 
 
 
@@ -145,11 +143,11 @@ Smooth Scroll also lets you override global settings on a link-by-link basis usi
 ```html
 <a data-scroll
    data-options='{
-                	"speed": 500,
-                	"easing": "easeInOutCubic",
-                	"offset": 0,
-                	"updateURL": false
-                }'
+					"speed": 500,
+					"easing": "easeInOutCubic",
+					"offset": 0,
+					"updateURL": false
+				}'
 >
 	Anchor Link
 </a>
@@ -204,6 +202,24 @@ Add a `[data-scroll-header]` data attribute to fixed headers. Smooth Scroll will
 </nav>
 ```
 
+### Animating links to other pages
+
+Smooth Scroll does not include an option to animate scrolling to links on other pages, but you can easily add this functionality using the API.
+
+1. Do *not* add the `data-scroll` attribute to links to other pages. Treat them like normal links, and include your anchor link hash as normal.
+	```markup
+	<a href="some-page.html#example">
+	```
+2. Add the following script to the footer of your page, after the `smoothScroll.init()` function.
+	```markup
+	<script>
+		if ( window.location.hash ) {
+			var options = {}; // Any custom options you want to use would go here
+			smoothScroll.animateScroll( null, window.location.hash, options );
+		}
+	</script>
+	```
+
 
 ## Browser Compatibility
 
@@ -219,26 +235,6 @@ If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is u
 
 
 
-## Contributors
-
-* Easing support contributed by [Willem Liu](https://github.com/willemliu).
-* Easing functions forked from [Gaëtan Renaudeau](https://gist.github.com/gre/1650294).
-* URL history support contributed by [Robert Pate](https://github.com/robertpateii).
-* Fixed header support contributed by [Arndt von Lucadou](https://github.com/a-v-l).
-* Infinite loop bugs in iOS and Chrome (when zoomed) by [Alex Guzman](https://github.com/alexguzman).
-* IE10 rounding error fixed by [Luke Siedle](https://github.com/luke-siedle).
-* Enhanced callback functions by [Constant Meiring](https://github.com/constantm).
-* Scroll-to-top bug for links at the bottom of the page by [Jonas Havers](https://github.com/JonasHavers).
-* AMD support and numerous code improvements by [Todd Motto](https://github.com/toddmotto).
-* Push State bug fix by [Yanick Witschi](https://github.com/Toflar).
-* CommonJS module support by [Riku Rouvila](https://github.com/rikukissa).
-* Query string fix when updating URL by [Qu Yatong](https://github.com/quyatong).
-* Scroll to top support by [Robbert Broersma](https://github.com/robbert).
-* Unit tests by [Thibaud Colas](https://github.com/ThibWeb).
-* Browserify support by [Alexander Beletsky](https://github.com/alexbeletsky).
-
-
-
 ## How to Contribute
 
 In lieu of a formal style guide, take care to maintain the existing coding style. Don't forget to update the version number, the changelog (in the `readme.md` file), and when applicable, the documentation.
@@ -246,11 +242,5 @@ In lieu of a formal style guide, take care to maintain the existing coding style
 
 
 ## License
-Smooth Scroll is licensed under the [MIT License](http://gomakethings.com/mit/).
 
-
-
-## Older Docs
-
-* [Version 3](http://cferdinandi.github.io/smooth-scroll/archive/v3/)
-* [Version 1](https://github.com/cferdinandi/smooth-scroll/tree/archive-v1)
+The code is available under the [MIT License](LICENSE.md).
