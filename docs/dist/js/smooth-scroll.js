@@ -1,5 +1,5 @@
 /**
- * smooth-scroll v5.3.7
+ * smooth-scroll v6.0.0
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://github.com/cferdinandi/smooth-scroll
  * 
@@ -9,13 +9,13 @@
 
 (function (root, factory) {
 	if ( typeof define === 'function' && define.amd ) {
-		define([], factory(root));
+		define(['buoy'], factory(root));
 	} else if ( typeof exports === 'object' ) {
-		module.exports = factory(root);
+		module.exports = factory(root, require('buoy'));
 	} else {
-		root.smoothScroll = factory(root);
+		root.smoothScroll = factory(root, root.buoy);
 	}
-})(typeof global !== "undefined" ? global : this.window || this.global, function (root) {
+})(typeof global !== 'undefined' ? global : this.window || this.global, function (root) {
 
 	'use strict';
 
@@ -41,81 +41,6 @@
 	//
 	// Methods
 	//
-
-	/**
-	 * A simple forEach() implementation for Arrays, Objects and NodeLists
-	 * @private
-	 * @param {Array|Object|NodeList} collection Collection of items to iterate
-	 * @param {Function} callback Callback function for each iteration
-	 * @param {Array|Object|NodeList} scope Object/NodeList/Array that forEach is iterating over (aka `this`)
-	 */
-	var forEach = function (collection, callback, scope) {
-		if (Object.prototype.toString.call(collection) === '[object Object]') {
-			for (var prop in collection) {
-				if (Object.prototype.hasOwnProperty.call(collection, prop)) {
-					callback.call(scope, collection[prop], prop, collection);
-				}
-			}
-		} else {
-			for (var i = 0, len = collection.length; i < len; i++) {
-				callback.call(scope, collection[i], i, collection);
-			}
-		}
-	};
-
-	/**
-	 * Merge defaults with user options
-	 * @private
-	 * @param {Object} defaults Default settings
-	 * @param {Object} options User options
-	 * @returns {Object} Merged values of defaults and options
-	 */
-	var extend = function ( defaults, options ) {
-		var extended = {};
-		forEach(defaults, function (value, prop) {
-			extended[prop] = defaults[prop];
-		});
-		forEach(options, function (value, prop) {
-			extended[prop] = options[prop];
-		});
-		return extended;
-	};
-
-	/**
-	 * Get the closest matching element up the DOM tree
-	 * @param {Element} elem Starting element
-	 * @param {String} selector Selector to match against (class, ID, or data attribute)
-	 * @return {Boolean|Element} Returns false if not match found
-	 */
-	var getClosest = function (elem, selector) {
-		var firstChar = selector.charAt(0);
-		for ( ; elem && elem !== root.document; elem = elem.parentNode ) {
-			if ( firstChar === '.' ) {
-				if ( elem.classList.contains( selector.substr(1) ) ) {
-					return elem;
-				}
-			} else if ( firstChar === '#' ) {
-				if ( elem.id === selector.substr(1) ) {
-					return elem;
-				}
-			} else if ( firstChar === '[' ) {
-				if ( elem.hasAttribute( selector.substr(1, selector.length - 2) ) ) {
-					return elem;
-				}
-			}
-		}
-		return false;
-	};
-
-	/**
-	 * Get the height of an element
-	 * @private
-	 * @param  {Node]} elem The element
-	 * @return {Number}     The element's height
-	 */
-	var getHeight = function (elem) {
-		return Math.max( elem.scrollHeight, elem.offsetHeight, elem.clientHeight );
-	};
 
 	/**
 	 * Escape special characters for use with querySelector
@@ -270,7 +195,7 @@
 	};
 
 	var getHeaderHeight = function ( header ) {
-		return header === null ? 0 : ( getHeight( header ) + header.offsetTop );
+		return header === null ? 0 : ( buoy.getHeight( header ) + header.offsetTop );
 	};
 
 	/**
@@ -283,9 +208,8 @@
 	smoothScroll.animateScroll = function ( toggle, anchor, options ) {
 
 		// Options and overrides
-		var settings = extend( settings || defaults, options || {} );  // Merge user options with defaults
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
-		settings = extend( settings, overrides );
+		var settings = buoy.extend( settings || defaults, options || {}, overrides ); // Merge user options with defaults
 		anchor = '#' + escapeCharacters(anchor.substr(1)); // Escape special characters and leading numbers
 
 		// Selectors and variables
@@ -359,7 +283,7 @@
 	 * @private
 	 */
 	var eventHandler = function (event) {
-		var toggle = getClosest(event.target, '[data-scroll]');
+		var toggle = buoy.getClosest(event.target, '[data-scroll]');
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
 			event.preventDefault(); // Prevent default click event
 			smoothScroll.animateScroll( toggle, toggle.hash, settings); // Animate scroll
@@ -415,7 +339,7 @@
 		smoothScroll.destroy();
 
 		// Selectors and variables
-		settings = extend( defaults, options || {} ); // Merge user options with defaults
+		settings = buoy.extend( defaults, options || {} ); // Merge user options with defaults
 		fixedHeader = root.document.querySelector('[data-scroll-header]'); // Get the fixed header
 		headerHeight = getHeaderHeight( fixedHeader );
 

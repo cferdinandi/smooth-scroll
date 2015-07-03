@@ -25,7 +25,7 @@ var uglify = require('gulp-uglify');
 var karma = require('gulp-karma');
 
 // Styles
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 var prefix = require('gulp-autoprefixer');
 var minify = require('gulp-minify-css');
 
@@ -129,10 +129,8 @@ gulp.task('build:styles', ['clean:dist'], function() {
 	return gulp.src(paths.styles.input)
 		.pipe(plumber())
 		.pipe(sass({
-			style: 'expanded',
-			lineNumbers: true,
-			noCache: true,
-			'sourcemap=none': true
+			outputStyle: 'expanded',
+			sourceComments: true
 		}))
 		.pipe(flatten())
 		.pipe(prefix({
