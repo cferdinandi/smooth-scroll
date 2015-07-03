@@ -23,8 +23,11 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 ### 1. Include Smooth Scroll on your site.
 
 ```html
+<script src="dist/js/buoy.js"></script>
 <script src="dist/js/smooth-scroll.js"></script>
 ```
+
+Smooth Scroll requires [Buoy](https://github.com/cferdinandi/buoy), a lightweight collection of helper methods for getting stuff done with native JavaScript.
 
 ### 2. Add the markup to your HTML.
 
@@ -66,7 +69,6 @@ If you would prefer, you can work with the development code in the `src` directo
 Make sure these are installed first.
 
 * [Node.js](http://nodejs.org)
-* [Ruby Sass](http://sass-lang.com/install)
 * [Gulp](http://gulpjs.com) `sudo npm install -g gulp`
 
 ### Quick Start
@@ -75,8 +77,7 @@ Make sure these are installed first.
 2. Run `npm install` to install required files.
 3. When it's done installing, run one of the task runners to get going:
 	* `gulp` manually compiles files.
-	* `gulp watch` automatically compiles files when changes are made.
-	* `gulp reload` automatically compiles files and applies changes using [LiveReload](http://livereload.com/).
+	* `gulp watch` automatically compiles files when changes are made and applies changes using [LiveReload](http://livereload.com/).
 
 
 
@@ -232,6 +233,22 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 ## Known Issues
 
 If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The `<body>` element can have a fixed, non-percentage based height (ex. `500px`), or a height of `auto`.
+
+
+
+## Adding `[data-scroll]` attributes to the `wp_nav_menu()` in WordPress
+
+Add this to your `functions.php` file:
+
+```js
+function YOURPREFIX_custom_nav_attributes ( $atts, $item, $args ) {
+    $atts['data-scroll'] = 'true';
+    return $atts;
+}
+add_filter( 'nav_menu_link_attributes', 'YOURPREFIX_custom_nav_attributes', 10, 3 );
+```
+
+**Source:** http://wordpress.stackexchange.com/questions/121123/how-to-add-a-data-attribute-to-a-wordpress-menu-item
 
 
 
