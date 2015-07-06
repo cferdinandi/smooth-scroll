@@ -1,5 +1,5 @@
 /**
- * smooth-scroll v6.0.0
+ * smooth-scroll v7.0.0
  * Animate scrolling to anchor links, by Chris Ferdinandi.
  * http://github.com/cferdinandi/smooth-scroll
  * 

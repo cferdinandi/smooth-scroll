@@ -38,8 +38,7 @@ describe('Smooth Scroll', function () {
 		easing: jasmine.any(String),
 		offset: jasmine.any(Number),
 		updateURL: jasmine.any(Boolean),
-		callbackBefore: jasmine.any(Function),
-		callbackAfter: jasmine.any(Function)
+		callback: jasmine.any(Function)
 	};
 
 
@@ -121,27 +120,9 @@ describe('Smooth Scroll', function () {
 			smoothScroll.destroy();
 		});
 
-		it('Should run callback before', function (done) {
+		it('Should run callback', function (done) {
 			var settings = {
-				callbackBefore: callback(elt, '#anchor', done)
-			};
-			smoothScroll.init(settings);
-			simulateClick(elt);
-		});
-
-		it('Should run callback after', function (done) {
-			var settings = {
-				callbackAfter: callback(elt, '#anchor', done)
-			};
-			smoothScroll.init(settings);
-			simulateClick(elt);
-		});
-
-		it('Should run callbacks in the right order', function (done) {
-			var settings = {
-				// The before callback will not trigger done().
-				callbackBefore: callback(elt, '#anchor', function () {}),
-				callbackAfter: callback(elt, '#anchor', done)
+				callback: callback(elt, '#anchor', done)
 			};
 			smoothScroll.init(settings);
 			simulateClick(elt);
