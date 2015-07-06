@@ -23,11 +23,8 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 ### 1. Include Smooth Scroll on your site.
 
 ```html
-<script src="dist/js/buoy.js"></script>
 <script src="dist/js/smooth-scroll.js"></script>
 ```
-
-Smooth Scroll requires [Buoy](https://github.com/cferdinandi/buoy), a lightweight collection of helper methods for getting stuff done with native JavaScript.
 
 ### 2. Add the markup to your HTML.
 
@@ -95,8 +92,7 @@ smoothScroll.init({
 	easing: 'easeInOutCubic', // Easing pattern to use
 	updateURL: true, // Boolean. Whether or not to update the URL with the anchor hash on scroll
 	offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
-	callbackBefore: function ( toggle, anchor ) {}, // Function to run before scrolling
-	callbackAfter: function ( toggle, anchor ) {} // Function to run after scrolling
+	callback: function ( toggle, anchor ) {} // Function to run after scrolling
 });
 ```
 
