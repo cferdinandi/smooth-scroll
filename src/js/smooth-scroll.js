@@ -327,10 +327,16 @@
 		// Options and overrides
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
 		var settings = extend( settings || defaults, options || {}, overrides ); // Merge user options with defaults
-		anchor = '#' + escapeCharacters(anchor.substr(1)); // Escape special characters and leading numbers
+		var anchorElem;
+		if (typeof anchor === 'object' && anchor.nodeName) {
+			anchorElem = anchor;
+		} else {
+			anchor = '#' + escapeCharacters(anchor.substr(1)); // Escape special characters and leading numbers
+			anchorElem = anchor === '#' ? root.document.documentElement : root.document.querySelector(anchor);
+		}
 
 		// Selectors and variables
-		var anchorElem = anchor === '#' ? root.document.documentElement : root.document.querySelector(anchor);
+		
 		var startLocation = root.pageYOffset; // Current location on the page
 		if ( !fixedHeader ) { fixedHeader = root.document.querySelector('[data-scroll-header]'); }  // Get the fixed header if not already set
 		if ( !headerHeight ) { headerHeight = getHeaderHeight( fixedHeader ); } // Get the height of a fixed header if one exists and not already set
@@ -342,7 +348,9 @@
 		var percentage, position;
 
 		// Update URL
-		updateUrl(anchor, settings.updateURL);
+		if (options.updateUrl !== false) {
+			updateUrl(anchor, settings.updateURL);
+		}
 
 		/**
 		 * Stop the scroll animation when it reaches its target (or the bottom/top of page)
