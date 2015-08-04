@@ -204,18 +204,20 @@ Add a `[data-scroll-header]` data attribute to fixed headers. Smooth Scroll will
 Smooth Scroll does not include an option to animate scrolling to links on other pages, but you can easily add this functionality using the API.
 
 1. Do *not* add the `data-scroll` attribute to links to other pages. Treat them like normal links, and include your anchor link hash as normal.
-    ```markup
-    <a href="some-page.html#example">
-    ```
+
+        ```markup
+        <a href="some-page.html#example">
+        	```
 2. Add the following script to the footer of your page, after the `smoothScroll.init()` function.
-    ```markup
-    <script>
-        if ( window.location.hash ) {
-            var options = {}; // Any custom options you want to use would go here
-            smoothScroll.animateScroll( null, window.location.hash, options );
-        }
-    </script>
-    ```
+
+        ```markup
+        <script>
+        	if ( window.location.hash ) {
+        	    var options = {}; // Any custom options you want to use would go here
+                smoothScroll.animateScroll( null, window.location.hash, options );
+            }
+        </script>
+        ```
 
 
 ## Browser Compatibility
