@@ -205,12 +205,12 @@ Smooth Scroll does not include an option to animate scrolling to links on other 
 
 1. Do *not* add the `data-scroll` attribute to links to other pages. Treat them like normal links, and include your anchor link hash as normal.
 
-    ```markup
+    ```html
     <a href="some-page.html#example">
     ```
 2. Add the following script to the footer of your page, after the `smoothScroll.init()` function.
 
-    ```markup
+    ```html
     <script>
         if ( window.location.hash ) {
             var options = {}; // Any custom options you want to use would go here
