@@ -38,6 +38,7 @@ describe('Smooth Scroll', function () {
 		easing: jasmine.any(String),
 		offset: jasmine.any(Number),
 		updateURL: jasmine.any(Boolean),
+		replaceState: jasmine.any(Boolean),
 		callback: jasmine.any(Function)
 	};
 

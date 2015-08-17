@@ -24,6 +24,7 @@
 		easing: 'easeInOutCubic',
 		offset: 0,
 		updateURL: true,
+		replaceState: false,
 		callback: function () {}
 	};
 
@@ -304,10 +305,12 @@
 	 * @private
 	 * @param {Element} anchor The element to scroll to
 	 * @param {Boolean} url Whether or not to update the URL history
+	 * @param {Boolean} replaceState Whether or not to use `replaceState` or `pushState`
 	 */
-	var updateUrl = function ( anchor, url ) {
-		if ( root.history.pushState && (url || url === 'true') ) {
-			root.history.pushState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
+	var updateUrl = function ( anchor, url, replaceState ) {
+		var updateState = replaceState ? root.history.replaceState : root.history.pushState;
+		if (updateState && (url || url === 'true')) {
+			updateState.call(root.history, null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
 		}
 	};
 
@@ -342,7 +345,7 @@
 		var percentage, position;
 
 		// Update URL
-		updateUrl(anchor, settings.updateURL);
+		updateUrl(anchor, settings.updateURL, settings.replaceState);
 
 		/**
 		 * Stop the scroll animation when it reaches its target (or the bottom/top of page)
