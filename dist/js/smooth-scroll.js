@@ -1,10 +1,8 @@
-/**
- * smooth-scroll v7.0.2
- * Animate scrolling to anchor links, by Chris Ferdinandi.
+/*!
+ * smooth-scroll v7.1.0: Animate scrolling to anchor links
+ * (c) 2015 Chris Ferdinandi
+ * MIT License
  * http://github.com/cferdinandi/smooth-scroll
- * 
- * Free to use under the MIT License.
- * http://gomakethings.com/mit/
  */
 
 (function (root, factory) {
@@ -24,11 +22,13 @@
 	//
 
 	var smoothScroll = {}; // Object for public APIs
-	var supports = !!root.document.querySelector && !!root.addEventListener; // Feature test
+	var supports = 'querySelector' in document && 'addEventListener' in root; // Feature test
 	var settings, eventTimeout, fixedHeader, headerHeight;
 
 	// Default settings
 	var defaults = {
+		selector: '[data-scroll]',
+		selectorHeader: '[data-scroll-header]',
 		speed: 500,
 		easing: 'easeInOutCubic',
 		offset: 0,
@@ -341,7 +341,7 @@
 		// Selectors and variables
 		var anchorElem = anchor === '#' ? root.document.documentElement : root.document.querySelector(anchor);
 		var startLocation = root.pageYOffset; // Current location on the page
-		if ( !fixedHeader ) { fixedHeader = root.document.querySelector('[data-scroll-header]'); }  // Get the fixed header if not already set
+		if ( !fixedHeader ) { fixedHeader = root.document.querySelector( settings.selectorHeader ); }  // Get the fixed header if not already set
 		if ( !headerHeight ) { headerHeight = getHeaderHeight( fixedHeader ); } // Get the height of a fixed header if one exists and not already set
 		var endLocation = getEndLocation( anchorElem, headerHeight, parseInt(settings.offset, 10) ); // Scroll to location
 		var animationInterval; // interval timer
@@ -408,7 +408,7 @@
 	 * @private
 	 */
 	var eventHandler = function (event) {
-		var toggle = getClosest(event.target, '[data-scroll]');
+		var toggle = getClosest( event.target, settings.selector );
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
 			event.preventDefault(); // Prevent default click event
 			smoothScroll.animateScroll( toggle, toggle.hash, settings); // Animate scroll
@@ -465,7 +465,7 @@
 
 		// Selectors and variables
 		settings = extend( defaults, options || {} ); // Merge user options with defaults
-		fixedHeader = root.document.querySelector('[data-scroll-header]'); // Get the fixed header
+		fixedHeader = root.document.querySelector( settings.selectorHeader ); // Get the fixed header
 		headerHeight = getHeaderHeight( fixedHeader );
 
 		// When a toggle is clicked, run the click handler

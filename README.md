@@ -3,17 +3,6 @@ A lightweight script to animate scrolling to anchor links. Smooth Scroll works g
 
 [Download Smooth Scroll](https://github.com/cferdinandi/smooth-scroll/archive/master.zip) / [View the demo](http://cferdinandi.github.io/smooth-scroll/)
 
-**In This Documentation**
-
-1. [Getting Started](#getting-started)
-2. [Installing with Package Managers](#installing-with-package-managers)
-3. [Working with the Source Files](#working-with-the-source-files)
-4. [Options & Settings](#options-and-settings)
-5. [Browser Compatibility](#browser-compatibility)
-6. [Known Issues](#known-issues)
-7. [How to Contribute](#how-to-contribute)
-8. [License](#license)
-
 
 
 ## Getting Started
@@ -75,6 +64,7 @@ Make sure these are installed first.
 3. When it's done installing, run one of the task runners to get going:
 	* `gulp` manually compiles files.
 	* `gulp watch` automatically compiles files when changes are made and applies changes using [LiveReload](http://livereload.com/).
+	* `gulp test` compiles files and runs unit tests.
 
 
 
@@ -88,6 +78,8 @@ You can pass options and callbacks into Smooth Scroll through the `init()` funct
 
 ```javascript
 smoothScroll.init({
+	selector: '[data-scroll]', // Selector for links (must be a valid CSS selector)
+	selectorHeader: '[data-scroll-header]', // Selector for fixed headers (must be a valid CSS selector)
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
 	easing: 'easeInOutCubic', // Easing pattern to use
 	updateURL: true, // Boolean. Whether or not to update the URL with the anchor hash on scroll
