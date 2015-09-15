@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v7.1.0: Animate scrolling to anchor links
+ * smooth-scroll v7.1.1: Animate scrolling to anchor links
  * (c) 2015 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -315,7 +315,7 @@
 	 * @param {Boolean} url Whether or not to update the URL history
 	 */
 	var updateUrl = function ( anchor, url ) {
-		if ( root.history.pushState && (url || url === 'true') ) {
+		if ( root.history.pushState && (url || url === 'true') && root.location.protocol !== 'file:' ) {
 			root.history.pushState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
 		}
 	};
