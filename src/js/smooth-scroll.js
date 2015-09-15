@@ -308,7 +308,7 @@
 	 * @param {Boolean} url Whether or not to update the URL history
 	 */
 	var updateUrl = function ( anchor, url ) {
-		if ( root.history.pushState && (url || url === 'true') ) {
+		if ( root.history.pushState && (url || url === 'true') && root.location.protocol !== 'file:' ) {
 			root.history.pushState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
 		}
 	};
