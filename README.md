@@ -226,19 +226,32 @@ If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is u
 
 
 
-## Adding `[data-scroll]` attributes to the `wp_nav_menu()` in WordPress
+## Programatically adding `[data-scroll]` attributes to all anchor links
 
-Add this to your `functions.php` file:
+Useful if you have anchor links scattered throughout a page, or if you're using WordPress's `wp_nav_menu()` function. Add this code to your JavaScript:
 
 ```js
-function YOURPREFIX_custom_nav_attributes ( $atts, $item, $args ) {
-    $atts['data-scroll'] = 'true';
-    return $atts;
-}
-add_filter( 'nav_menu_link_attributes', 'YOURPREFIX_custom_nav_attributes', 10, 3 );
-```
+;(function (window, document, undefined) {
 
-**Source:** http://wordpress.stackexchange.com/questions/121123/how-to-add-a-data-attribute-to-a-wordpress-menu-item
+    'use strict';
+
+    // Cut the mustard
+	var supports = 'querySelector' in document && 'addEventListener' in window;
+    if ( !supports ) return;
+
+    // Get all anchors
+    var anchors = document.querySelectorAll( '[href*="#"]' );
+
+	// Add smooth scroll to all anchors
+	for ( var i = 0, len = anchors.length; i < len; i++ ) {
+		anchors[i].setAttribute( 'data-scroll', true );
+	}
+
+	// Initial smooth scroll (add your attributes as desired)
+    smoothScroll.init();
+
+})(window, document);
+```
 
 
 
