@@ -17,23 +17,23 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 
 ### 2. Add the markup to your HTML.
 
+Turn anchor links into Smooth Scroll links by adding the `[data-scroll]` data attribute. Give the anchor location an ID just like you normally would.
+
 ```html
 <a data-scroll href="#bazinga">Anchor Link</a>
 ...
 <span id="bazinga">Bazinga!</span>
 ```
 
-Turn anchor links into Smooth Scroll links by adding the `[data-scroll]` data attribute. Give the anchor location an ID just like you normally would.
-
 ### 3. Initialize Smooth Scroll.
+
+In the footer of your page, after the content, initialize Smooth Scroll. And that's it, you're done. Nice work!
 
 ```html
 <script>
 	smoothScroll.init();
 </script>
 ```
-
-In the footer of your page, after the content, initialize Smooth Scroll. And that's it, you're done. Nice work!
 
 
 
@@ -49,7 +49,7 @@ You can install Smooth Scroll with your favorite package manager.
 
 ## Working with the Source Files
 
-If you would prefer, you can work with the development code in the `src` directory using the included [Gulp build system](http://gulpjs.com/). This compiles, lints, and minifies code, and runs unit tests. It's the same build system that's used by [Kraken](http://cferdinandi.github.io/kraken/), so it includes some unnecessary tasks and Sass variables but can be dropped right in to the boilerplate without any configuration.
+If you would prefer, you can work with the development code in the `src` directory using the included [Gulp build system](http://gulpjs.com/). This compiles, lints, and minifies code, and runs unit tests.
 
 ### Dependencies
 Make sure these are installed first.
@@ -82,8 +82,8 @@ smoothScroll.init({
 	selectorHeader: '[data-scroll-header]', // Selector for fixed headers (must be a valid CSS selector)
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
 	easing: 'easeInOutCubic', // Easing pattern to use
-	updateURL: true, // Boolean. Whether or not to update the URL with the anchor hash on scroll
 	offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
+	scrollOnLoad: true, // Boolean. If true, animate to anchor on page load if URL has a hash
 	callback: function ( toggle, anchor ) {} // Function to run after scrolling
 });
 ```
@@ -127,22 +127,21 @@ Learn more about the different easing patterns and what they do at [easings.net]
 
 ### Override settings with data attributes
 
-Smooth Scroll also lets you override global settings on a link-by-link basis using the `[data-options]` data attribute:
+Smooth Scroll also lets you override global settings on a link-by-link basis using the `[data-options]` data attribute.
 
 ```html
 <a data-scroll
    data-options='{
 					"speed": 500,
 					"easing": "easeInOutCubic",
-					"offset": 0,
-					"updateURL": false
+					"offset": 0
 				}'
 >
 	Anchor Link
 </a>
 ```
 
-**Note:** You must use [valid JSON](http://jsonlint.com/) in order for the `data-options` feature to work.
+***Note:*** *You must use [valid JSON](http://jsonlint.com/) in order for the `data-options` feature to work. Does not support the `callback` method.*
 
 ### Use Smooth Scroll events in your own scripts
 
@@ -153,8 +152,8 @@ Animate scrolling to an anchor.
 
 ```javascript
 smoothScroll.animateScroll(
-	toggle, // Node that toggles the animation. ex. document.querySelector('#toggle')
 	anchor, // ID of the anchor to scroll to. ex. '#bazinga'
+	toggle, // Node that toggles the animation, OR an integer. ex. document.querySelector('#toggle')
 	options // Classes and callbacks. Same options as those passed into the init() function.
 );
 ```
@@ -162,7 +161,7 @@ smoothScroll.animateScroll(
 **Example 1**
 
 ```javascript
-smoothScroll.animateScroll( null, '#bazinga' );
+smoothScroll.animateScroll( '#bazinga' );
 ```
 
 **Example 2**
@@ -170,7 +169,20 @@ smoothScroll.animateScroll( null, '#bazinga' );
 ```javascript
 var toggle = document.querySelector('#toggle');
 var options = { speed: 1000, easing: 'easeOutCubic' };
-smoothScroll.animateScroll( toggle, '#bazinga', options );
+smoothScroll.animateScroll( '#bazinga', toggle, options );
+```
+
+**Example 3**
+
+```javascript
+smoothScroll.animateScroll( 750 );
+```
+
+#### escapeCharacters()
+Escape special characters for use with `animateScroll()`.
+
+```javascript
+var toggle = smoothScroll.escapeCharacters('#1@#%^-');
 ```
 
 #### destroy()
@@ -191,25 +203,9 @@ Add a `[data-scroll-header]` data attribute to fixed headers. Smooth Scroll will
 </nav>
 ```
 
-### Animating links to other pages
+### Animating links to other pages [NEW in v10]
 
-Smooth Scroll does not include an option to animate scrolling to links on other pages, but you can easily add this functionality using the API.
-
-1. Do *not* add the `data-scroll` attribute to links to other pages. Treat them like normal links, and include your anchor link hash as normal.
-
-    ```html
-    <a href="some-page.html#example">
-    ```
-2. Add the following script to the footer of your page, after the `smoothScroll.init()` function.
-
-    ```html
-    <script>
-        if ( window.location.hash ) {
-            var options = {}; // Any custom options you want to use would go here
-            smoothScroll.animateScroll( null, window.location.hash, options );
-        }
-    </script>
-    ```
+Smooth Scroll now supports animating anchor links to other pages. Simply make sure that `scrollOnLoad` is set to `true` (the default) and point your link to the anchor on the page as normal.
 
 
 ## Browser Compatibility
@@ -222,7 +218,9 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 
 ## Known Issues
 
-If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The `<body>` element can have a fixed, non-percentage based height (ex. `500px`), or a height of `auto`.
+- If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The `<body>` element can have a fixed, non-percentage based height (ex. `500px`), or a height of `auto`.
+- SmoothScroll looks for a `hash` on the `href` of the link. As a result passing in an empty hash (`#`) will not work and will jump to the top of the page.
+- Many browsers will treat `#top` the same as an empty hash (`#`), resulting in a jump to the top of the page. To animate scrolling to the top of the page, please use a different ID.
 
 
 
