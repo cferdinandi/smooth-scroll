@@ -59,13 +59,36 @@ describe('Smooth Scroll', function () {
 
 		it('Should add event listeners', function () {
 			spyOn(document, 'addEventListener');
+			spyOn(window, 'addEventListener');
 			smoothScroll.init();
 			expect(document.addEventListener).toHaveBeenCalledWith('click', jasmine.any(Function), false);
+			expect(window.addEventListener).toHaveBeenCalledWith('hashchange', jasmine.any(Function), false);
 
 			spyOn(document, 'removeEventListener');
+			spyOn(window, 'removeEventListener');
 			smoothScroll.destroy();
 			expect(document.removeEventListener).toHaveBeenCalledWith('click', jasmine.any(Function), false);
+			expect(window.removeEventListener).toHaveBeenCalledWith('hashchange', jasmine.any(Function), false);
 		});
+	});
+
+	describe('Should merge user options into defaults', function () {
+
+		var elt = injectElem('#anchor', true);
+
+		beforeEach(function () {
+			smoothScroll.init({
+				callback: function () { document.documentElement.classList.add('callback'); }
+			});
+		});
+
+		it('User options should be merged into defaults', function () {
+			simulateClick(elt);
+			setTimeout(function() {
+				expect(document.documentElement.classList.contains('callback')).toBe(true);
+			}, 200);
+		});
+
 	});
 
 
@@ -75,57 +98,36 @@ describe('Smooth Scroll', function () {
 
 	describe('Should animate scroll when anchor clicked', function () {
 		var elt = injectElem('#anchor', true);
-		document.body.setAttribute('id', 'anchor');
+		document.body.id = 'anchor';
+
+		beforeEach(function() {
+			spyOn(smoothScroll, 'animateScroll');
+		});
 
 		afterEach(function () {
 			smoothScroll.destroy();
 		});
 
 		it('Should trigger smooth scrolling on click', function () {
-			spyOn(smoothScroll, 'animateScroll');
 			smoothScroll.init();
 			simulateClick(elt);
-			expect(smoothScroll.animateScroll).toHaveBeenCalledWith(elt, '#anchor', jasmine.objectContaining(settingsStub));
+			setTimeout(function() {
+				expect(smoothScroll.animateScroll).toHaveBeenCalledWith(elt, '#anchor', jasmine.objectContaining(settingsStub));
+			}, 200);
 		});
 
 		it('Should do nothing if not initialized', function () {
-			spyOn(smoothScroll, 'animateScroll');
 			simulateClick(elt);
 			expect(smoothScroll.animateScroll).not.toHaveBeenCalled();
 		});
 
 		it('Should do nothing if destroyed', function () {
-			spyOn(smoothScroll, 'animateScroll');
 			smoothScroll.init();
 			smoothScroll.destroy();
 			simulateClick(elt);
-			expect(smoothScroll.animateScroll).not.toHaveBeenCalled();
-		});
-	});
-
-	describe('Should run callbacks', function () {
-		var elt = injectElem('#anchor', true);
-		document.body.setAttribute('id', 'anchor');
-
-		// Generates a callback to test asynchronous calls.
-		var callback = function (eltVal, anchorVal, done) {
-			return function (toggle, anchor) {
-				expect(toggle).toBe(eltVal);
-				expect(anchor).toBe(anchorVal);
-				done();
-			};
-		};
-
-		afterEach(function () {
-			smoothScroll.destroy();
-		});
-
-		it('Should run callback', function (done) {
-			var settings = {
-				callback: callback(elt, '#anchor', done)
-			};
-			smoothScroll.init(settings);
-			simulateClick(elt);
+			setTimeout(function() {
+				expect(smoothScroll.animateScroll).not.toHaveBeenCalled();
+			}, 200);
 		});
 	});
 });
