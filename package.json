@@ -1,8 +1,8 @@
 {
 	"name": "smooth-scroll",
-	"version": "8.0.0",
+	"version": "8.1.0",
 	"description": "Animate scrolling to anchor links",
-	"main": "./dist/js/smooth-scroll.js",
+	"main": "./dist/js/smooth-scroll.min.js",
 	"author": {
 		"name": "Chris Ferdinandi",
 		"url": "http://gomakethings.com"
