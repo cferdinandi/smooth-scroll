@@ -59,16 +59,12 @@ describe('Smooth Scroll', function () {
 
 		it('Should add event listeners', function () {
 			spyOn(document, 'addEventListener');
-			spyOn(window, 'addEventListener');
 			smoothScroll.init();
 			expect(document.addEventListener).toHaveBeenCalledWith('click', jasmine.any(Function), false);
-			expect(window.addEventListener).toHaveBeenCalledWith('hashchange', jasmine.any(Function), false);
 
 			spyOn(document, 'removeEventListener');
-			spyOn(window, 'removeEventListener');
 			smoothScroll.destroy();
 			expect(document.removeEventListener).toHaveBeenCalledWith('click', jasmine.any(Function), false);
-			expect(window.removeEventListener).toHaveBeenCalledWith('hashchange', jasmine.any(Function), false);
 		});
 	});
 
