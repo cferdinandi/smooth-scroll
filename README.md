@@ -83,8 +83,8 @@ smoothScroll.init({
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
 	easing: 'easeInOutCubic', // Easing pattern to use
 	offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
-	scrollOnLoad: true, // Boolean. If true, animate to anchor on page load if URL has a hash
-	callback: function ( toggle, anchor ) {} // Function to run after scrolling
+	updateURL: true, // Boolean. If true, update the URL hash on scroll
+	callback: function ( anchor, toggle ) {} // Function to run after scrolling
 });
 ```
 
@@ -203,9 +203,29 @@ Add a `[data-scroll-header]` data attribute to fixed headers. Smooth Scroll will
 </nav>
 ```
 
-### Animating links to other pages [NEW in v10]
+### Animating links to other pages
 
-Smooth Scroll now supports animating anchor links to other pages. Simply make sure that `scrollOnLoad` is set to `true` (the default) and point your link to the anchor on the page as normal.
+This is an often requested feature, but Smooth Scroll does not include an option to animate scrolling to links on other pages.
+
+You can attempt to implement it using the API, but it's very difficult to prevent the automatic browser jump when the page loads, and anything I've done to work around it results in weird, janky issues, so I've decided to leave this out of the core. Here's a potential workaround...
+
+1. Do *not* add the `data-scroll` attribute to links to other pages. Treat them like normal links, and include your anchor link hash as normal.
+
+    ```html
+    <a href="some-page.html#example">
+    ```
+2. Add the following script to the footer of your page, after the `smoothScroll.init()` function.
+
+    ```html
+    <script>
+        if ( window.location.hash ) {
+        	var hash = smoothScroll.escapeCharacters( window.location.hash ); // Escape the hash
+        	var toggle = document.querySelector( 'a[href*="' + hash + '"]' ); // Get the toggle (if one exists)
+            var options = {}; // Any custom options you want to use would go here
+            smoothScroll.animateScroll( hash, toggle, options );
+        }
+    </script>
+    ```
 
 
 ## Browser Compatibility
