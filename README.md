@@ -238,11 +238,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 
 ## Known Issues
 
-- If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The `<body>` element can have a fixed, non-percentage based height (ex. `500px`), or a height of `auto`.
-- SmoothScroll looks for a `hash` on the `href` of the link. As a result passing in an empty hash (`#`) will not work and will jump to the top of the page.
-- Many browsers will treat `#top` the same as an empty hash (`#`), resulting in a jump to the top of the page. To animate scrolling to the top of the page, please use a different ID.
-- To prevent the page from jumping, Smooth Scroll removes the target element's ID, scrolls, and then adds it back. As a result, elements styled using the ID as a selector will momentarily lose their styling. I recommend using classes as selectors instead.
-
+If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The `<body>` element can have a fixed, non-percentage based height (ex. `500px`), or a height of `auto`.
 
 
 ## Programatically adding `[data-scroll]` attributes to all anchor links
