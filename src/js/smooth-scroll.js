@@ -16,7 +16,7 @@
 
 	var smoothScroll = {}; // Object for public APIs
 	var supports = 'querySelector' in document && 'addEventListener' in root; // Feature test
-	var settings, eventTimeout, fixedHeader, headerHeight;
+	var settings, eventTimeout, fixedHeader, headerHeight, animationInterval;
 
 	// Default settings
 	var defaults = {
@@ -334,6 +334,8 @@
 	 */
 	smoothScroll.animateScroll = function ( anchor, toggle, options ) {
 
+		// if ( scrolling ) return;
+
 		// Options and overrides
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
 		var settings = extend( settings || defaults, options || {}, overrides ); // Merge user options with defaults
@@ -347,7 +349,6 @@
 		if ( !fixedHeader ) { fixedHeader = root.document.querySelector( settings.selectorHeader ); }  // Get the fixed header if not already set
 		if ( !headerHeight ) { headerHeight = getHeaderHeight( fixedHeader ); } // Get the height of a fixed header if one exists and not already set
 		var endLocation = isNum ? anchor : getEndLocation( anchorElem, headerHeight, parseInt(settings.offset, 10) ); // Location to scroll to
-		var animationInterval; // interval timer
 		var distance = endLocation - startLocation; // distance to travel
 		var documentHeight = getDocumentHeight();
 		var timeLapsed = 0;
@@ -394,6 +395,7 @@
 		 * @private
 		 */
 		var startAnimateScroll = function () {
+			clearInterval(animationInterval);
 			animationInterval = setInterval(loopAnimateScroll, 16);
 		};
 
@@ -456,6 +458,7 @@
 		eventTimeout = null;
 		fixedHeader = null;
 		headerHeight = null;
+		animationInterval = null;
 	};
 
 	/**
