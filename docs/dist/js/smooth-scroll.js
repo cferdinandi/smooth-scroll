@@ -424,12 +424,13 @@
 	 * @private
 	 */
 	var eventHandler = function (event) {
+		if(event.button == 0){
 		var toggle = getClosest( event.target, settings.selector );
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
 			event.preventDefault(); // Prevent default click event
 			var hash = smoothScroll.escapeCharacters( toggle.hash ); // Escape hash characters
 			smoothScroll.animateScroll( hash, toggle, settings); // Animate scroll
-		}
+		}}
 	};
 
 	/**
