@@ -334,16 +334,13 @@
 	 */
 	smoothScroll.animateScroll = function ( anchor, toggle, options ) {
 
-		// if ( scrolling ) return;
-
 		// Options and overrides
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
 		var settings = extend( settings || defaults, options || {}, overrides ); // Merge user options with defaults
 
 		// Selectors and variables
 		var isNum = Object.prototype.toString.call( anchor ) === '[object Number]' ? true : false;
-		var anchorElem = isNum ? null : anchor === '#' ? root.document.documentElement : root.document.querySelector(anchor);
-		// var anchorElem = isNum ? null : ( anchor === '#' ? root.document.documentElement : root.document.querySelector(anchor) );
+		var anchorElem = isNum ? null : ( anchor === '#' ? root.document.documentElement : root.document.querySelector(anchor) );
 		if ( !isNum && !anchorElem ) return;
 		var startLocation = root.pageYOffset; // Current location on the page
 		if ( !fixedHeader ) { fixedHeader = root.document.querySelector( settings.selectorHeader ); }  // Get the fixed header if not already set
@@ -417,12 +414,18 @@
 	 * @private
 	 */
 	var eventHandler = function (event) {
+
+		// Don't run if right-click or command/control + click
+		if ( event.button !== 0 || event.metaKey || event.ctrlKey ) return;
+
+		// If a smooth scroll link, animate it
 		var toggle = getClosest( event.target, settings.selector );
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
 			event.preventDefault(); // Prevent default click event
 			var hash = smoothScroll.escapeCharacters( toggle.hash ); // Escape hash characters
 			smoothScroll.animateScroll( hash, toggle, settings); // Animate scroll
 		}
+
 	};
 
 	/**
