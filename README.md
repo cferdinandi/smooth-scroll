@@ -238,7 +238,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 
 ## Known Issues
 
-If the `<body>` element has been assigned a height of `100%`, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The `<body>` element can have a fixed, non-percentage based height (ex. `500px`), or a height of `auto`.
+If the `<body>` element has been assigned a height of `100%` or `overflow: hidden`, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The `<body>` element can have a fixed, non-percentage based height (ex. `500px`), or a height of `auto`, and an `overflow` of `visible`.
 
 
 ## Programatically adding `[data-scroll]` attributes to all anchor links
