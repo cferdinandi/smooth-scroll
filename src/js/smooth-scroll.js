@@ -423,8 +423,8 @@
 		
 		var keys = 'protocol hostname host pathname port search hash href'.split(' ');
 		for (var keyIndex in keys) {
-		var currentKey = keys[keyIndex]; 
-		result[currentKey] = anchor[currentKey];
+			var currentKey = keys[keyIndex]; 
+			result[currentKey] = anchor[currentKey];
 		}
 		
 		result.toString = function() { return anchor.href; };
@@ -441,15 +441,15 @@
 		// Don't run if right-click or command/control + click
 		if ( event.button !== 0 || event.metaKey || event.ctrlKey ) return;
 		
-		// Don't run if different urls
-		var cururl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-		var link = parseUri(event.target.href);
-		var linkurl = link.protocol + "//" + link.host + link.pathname;
-		if (cururl != linkurl) return;
-
 		// If a smooth scroll link, animate it
 		var toggle = getClosest( event.target, settings.selector );
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
+			// Don't run if different urls
+			var cururl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+			var link = parseUri(toggle.href);
+			var linkurl = link.protocol + "//" + link.host + link.pathname;
+			if (cururl != linkurl) return;
+			
 			event.preventDefault(); // Prevent default click event
 			var hash = smoothScroll.escapeCharacters( toggle.hash ); // Escape hash characters
 			smoothScroll.animateScroll( hash, toggle, settings); // Animate scroll
