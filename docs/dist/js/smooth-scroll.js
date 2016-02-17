@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.1.0: Animate scrolling to anchor links
+ * smooth-scroll v9.1.1: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -343,16 +343,16 @@
 
 		// Options and overrides
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
-		var settings = extend( settings || defaults, options || {}, overrides ); // Merge user options with defaults
+		var animateSettings = extend( settings || defaults, options || {}, overrides ); // Merge user options with defaults
 
 		// Selectors and variables
 		var isNum = Object.prototype.toString.call( anchor ) === '[object Number]' ? true : false;
 		var anchorElem = isNum ? null : ( anchor === '#' ? root.document.documentElement : root.document.querySelector(anchor) );
 		if ( !isNum && !anchorElem ) return;
 		var startLocation = root.pageYOffset; // Current location on the page
-		if ( !fixedHeader ) { fixedHeader = root.document.querySelector( settings.selectorHeader ); }  // Get the fixed header if not already set
+		if ( !fixedHeader ) { fixedHeader = root.document.querySelector( animateSettings.selectorHeader ); }  // Get the fixed header if not already set
 		if ( !headerHeight ) { headerHeight = getHeaderHeight( fixedHeader ); } // Get the height of a fixed header if one exists and not already set
-		var endLocation = isNum ? anchor : getEndLocation( anchorElem, headerHeight, parseInt(settings.offset, 10) ); // Location to scroll to
+		var endLocation = isNum ? anchor : getEndLocation( anchorElem, headerHeight, parseInt(animateSettings.offset, 10) ); // Location to scroll to
 		var distance = endLocation - startLocation; // distance to travel
 		var documentHeight = getDocumentHeight();
 		var timeLapsed = 0;
@@ -360,7 +360,7 @@
 
 		// Update URL
 		if ( !isNum ) {
-			updateUrl(anchor, settings.updateURL);
+			updateUrl(anchor, animateSettings.updateURL);
 		}
 
 		/**
@@ -377,7 +377,7 @@
 				if ( !isNum ) {
 					anchorElem.focus();
 				}
-				settings.callback( anchor, toggle ); // Run callbacks after animation complete
+				animateSettings.callback( anchor, toggle ); // Run callbacks after animation complete
 			}
 		};
 
@@ -387,9 +387,9 @@
 		 */
 		var loopAnimateScroll = function () {
 			timeLapsed += 16;
-			percentage = ( timeLapsed / parseInt(settings.speed, 10) );
+			percentage = ( timeLapsed / parseInt(animateSettings.speed, 10) );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
-			position = startLocation + ( distance * easingPattern(settings.easing, percentage) );
+			position = startLocation + ( distance * easingPattern(animateSettings.easing, percentage) );
 			root.scrollTo( 0, Math.floor(position) );
 			stopAnimateScroll(position, endLocation, animationInterval);
 		};
