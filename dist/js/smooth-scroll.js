@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.1.1: Animate scrolling to anchor links
+ * smooth-scroll v9.1.2: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
