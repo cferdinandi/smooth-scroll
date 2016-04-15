@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.1.2: Animate scrolling to anchor links
+ * smooth-scroll v9.1.3: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -122,7 +122,7 @@
 		}
 
 		// Get closest match
-		for ( ; elem && elem !== document; elem = elem.parentNode ) {
+		for ( ; elem && elem !== document && elem.nodeType === 1; elem = elem.parentNode ) {
 
 			// If selector is a class
 			if ( firstChar === '.' ) {
