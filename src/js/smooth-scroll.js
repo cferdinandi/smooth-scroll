@@ -115,7 +115,7 @@
 		}
 
 		// Get closest match
-		for ( ; elem && elem !== document; elem = elem.parentNode ) {
+		for ( ; elem && elem !== document && elem.nodeType === 1; elem = elem.parentNode ) {
 
 			// If selector is a class
 			if ( firstChar === '.' ) {
