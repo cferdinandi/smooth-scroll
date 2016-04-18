@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.1.2: Animate scrolling to anchor links
+ * smooth-scroll v9.1.4: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -122,7 +122,7 @@
 		}
 
 		// Get closest match
-		for ( ; elem && elem !== document; elem = elem.parentNode ) {
+		for ( ; elem && elem !== document && elem.nodeType === 1; elem = elem.parentNode ) {
 
 			// If selector is a class
 			if ( firstChar === '.' ) {
@@ -289,9 +289,18 @@
 				anchor = anchor.offsetParent;
 			} while (anchor);
 		}
-		location = location - headerHeight - offset;
-		return location >= 0 ? location : 0;
+		location = Math.max(location - headerHeight - offset, 0);
+		return Math.min(location, getDocumentHeight() - getViewportHeight());
 	};
+	
+	/**
+	 * Determine the viewport's height
+	 * @private
+	 * @returns {Number}
+	 */
+	var getViewportHeight = function() {
+        	return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    	};
 
 	/**
 	 * Determine the document's height
