@@ -282,9 +282,18 @@
 				anchor = anchor.offsetParent;
 			} while (anchor);
 		}
-		location = location - headerHeight - offset;
-		return location >= 0 ? location : 0;
+		location = Math.max(location - headerHeight - offset, 0);
+		return Math.min(location, getDocumentHeight() - getViewportHeight());
 	};
+	
+	/**
+	 * Determine the viewport's height
+	 * @private
+	 * @returns {Number}
+	 */
+	var getViewportHeight = function() {
+        	return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    	};
 
 	/**
 	 * Determine the document's height
