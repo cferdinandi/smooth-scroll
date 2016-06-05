@@ -278,11 +278,19 @@
 	 * @private
 	 * @param {Element} anchor The anchor element to scroll to
 	 * @param {Number} headerHeight Height of a fixed header, if any
-	 * @param {Number} offset Number of pixels by which to offset scroll
+	 * @param {?} offset Number of pixels by which to offset scroll or 'center' keyword
 	 * @returns {Number}
 	 */
 	var getEndLocation = function ( anchor, headerHeight, offset ) {
-		var location = 0;
+		var location = 0,
+				centerElement = offset === 'center',
+				elementHeight = getHeight(anchor),
+				vh = getViewportHeight();
+
+		if(centerElement && elementHeight < vh) offset = vh / 2 - elementHeight / 2;
+		else if(centerElement && elementHeight >= vh) offset = 0;
+		else offset = parseInt(offset, 10);
+
 		if (anchor.offsetParent) {
 			do {
 				location += anchor.offsetTop;
@@ -290,7 +298,7 @@
 			} while (anchor);
 		}
 		location = Math.max(location - headerHeight - offset, 0);
-		return Math.min(location, getDocumentHeight() - getViewportHeight());
+		return Math.min(location, getDocumentHeight() - vh);
 	};
 	
 	/**
@@ -361,7 +369,7 @@
 		var startLocation = root.pageYOffset; // Current location on the page
 		if ( !fixedHeader ) { fixedHeader = root.document.querySelector( animateSettings.selectorHeader ); }  // Get the fixed header if not already set
 		if ( !headerHeight ) { headerHeight = getHeaderHeight( fixedHeader ); } // Get the height of a fixed header if one exists and not already set
-		var endLocation = isNum ? anchor : getEndLocation( anchorElem, headerHeight, parseInt(animateSettings.offset, 10) ); // Location to scroll to
+		var endLocation = isNum ? anchor : getEndLocation( anchorElem, headerHeight, animateSettings.offset ); // Location to scroll to
 		var distance = endLocation - startLocation; // distance to travel
 		var documentHeight = getDocumentHeight();
 		var timeLapsed = 0;
