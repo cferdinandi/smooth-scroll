@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.1.4: Animate scrolling to anchor links
+ * smooth-scroll v9.2.0: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -292,7 +292,7 @@
 		location = Math.max(location - headerHeight - offset, 0);
 		return Math.min(location, getDocumentHeight() - getViewportHeight());
 	};
-	
+
 	/**
 	 * Determine the viewport's height
 	 * @private
@@ -437,9 +437,14 @@
 		// If a smooth scroll link, animate it
 		var toggle = getClosest( event.target, settings.selector );
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
+
+			// Check that link is an anchor and points to current page
+			if ( toggle.origin !== location.origin || toggle.pathname !== location.pathname ) return;
+
 			event.preventDefault(); // Prevent default click event
 			var hash = smoothScroll.escapeCharacters( toggle.hash ); // Escape hash characters
 			smoothScroll.animateScroll( hash, toggle, settings); // Animate scroll
+
 		}
 
 	};

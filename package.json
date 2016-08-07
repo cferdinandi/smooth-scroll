@@ -1,6 +1,6 @@
 {
 	"name": "smooth-scroll",
-	"version": "9.1.4",
+	"version": "9.2.0",
 	"description": "Animate scrolling to anchor links",
 	"main": "./dist/js/smooth-scroll.min.js",
 	"author": {

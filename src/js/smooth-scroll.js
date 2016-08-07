@@ -285,7 +285,7 @@
 		location = Math.max(location - headerHeight - offset, 0);
 		return Math.min(location, getDocumentHeight() - getViewportHeight());
 	};
-	
+
 	/**
 	 * Determine the viewport's height
 	 * @private
@@ -430,14 +430,14 @@
 		// If a smooth scroll link, animate it
 		var toggle = getClosest( event.target, settings.selector );
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
-			
-			if (toggle.origin !== location.origin || toggle.pathname !== location.pathname) {
-        			return;
-      			}
+
+			// Check that link is an anchor and points to current page
+			if ( toggle.origin !== location.origin || toggle.pathname !== location.pathname ) return;
 
 			event.preventDefault(); // Prevent default click event
 			var hash = smoothScroll.escapeCharacters( toggle.hash ); // Escape hash characters
 			smoothScroll.animateScroll( hash, toggle, settings); // Animate scroll
+
 		}
 
 	};
