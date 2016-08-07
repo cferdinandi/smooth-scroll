@@ -78,7 +78,7 @@ You can pass options and callbacks into Smooth Scroll through the `init()` funct
 
 ```javascript
 smoothScroll.init({
-	selector: '[data-scroll]', // Selector for links (must be a valid CSS selector)
+	selector: '[data-scroll]', // Selector for links (must be a class, ID, data attribute, or element tag)
 	selectorHeader: '[data-scroll-header]', // Selector for fixed headers (must be a valid CSS selector)
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
 	easing: 'easeInOutCubic', // Easing pattern to use
@@ -87,6 +87,8 @@ smoothScroll.init({
 	callback: function ( anchor, toggle ) {} // Function to run after scrolling
 });
 ```
+
+***Note:*** *To programatically add Smooth Scroll to all anchor links on a page, pass `selector: 'a'` into `init`. The script checks that the link points to the current page before running.*
 
 #### Easing Options
 
@@ -245,37 +247,6 @@ If the `<body>` element has been assigned a height of `100%` or `overflow: hidde
 ### Animating from the bottom
 
 Animated scrolling links at the very bottom of the page (example: a "scroll to top" link) will stop animated almost immediately after they start when using certain easing patterns. This is an issue that's been around for a while and I've yet to find a good fix for it. I've found that `easeOut*` easing patterns work as expected, but other patterns can cause issues. [See this discussion for more details.](https://github.com/cferdinandi/smooth-scroll/issues/49)
-
-
-
-## Programatically adding `[data-scroll]` attributes to all anchor links
-
-Useful if you have anchor links scattered throughout a page, or if you're using WordPress's `wp_nav_menu()` function. Add this code to your JavaScript:
-
-```js
-;(function (window, document, undefined) {
-
-	'use strict';
-
-	// Cut the mustard
-	var supports = 'querySelector' in document && 'addEventListener' in window;
-	if ( !supports ) return;
-
-	// Get all anchors
-	var anchors = document.querySelectorAll( '[href*="#"]' );
-
-	// Add smooth scroll to all anchors
-	for ( var i = 0, len = anchors.length; i < len; i++ ) {
-		var url = new RegExp( window.location.hostname + window.location.pathname );
-		if ( !url.test( anchors[i].href ) ) continue;
-		anchors[i].setAttribute( 'data-scroll', true );
-	}
-
-	// Initial smooth scroll (add your attributes as desired)
-	smoothScroll.init();
-
-})(window, document);
-```
 
 
 
