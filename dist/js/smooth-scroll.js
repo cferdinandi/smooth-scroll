@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.2.0: Animate scrolling to anchor links
+ * smooth-scroll v9.3.0: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -379,12 +379,21 @@
 		 * @param {Number} endLocation Scroll to location
 		 * @param {Number} animationInterval How much to scroll on this loop
 		 */
-		var stopAnimateScroll = function (position, endLocation, animationInterval) {
+		var stopAnimateScroll = function ( position, endLocation, animationInterval ) {
 			var currentLocation = root.pageYOffset;
-			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >= documentHeight ) ) {
+			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >=
+
+				documentHeight ) ) {
 				clearInterval(animationInterval);
+
+				// If scroll target is an anchor, bring it into focus
 				if ( !isNum ) {
 					anchorElem.focus();
+					if ( document.activeElement.id !== anchorElem.id ) {
+						anchorElem.setAttribute( 'tabindex', '-1' );
+						anchorElem.focus();
+						anchorElem.style.outline = 'none';
+					}
 				}
 				animateSettings.callback( anchor, toggle ); // Run callbacks after animation complete
 			}
