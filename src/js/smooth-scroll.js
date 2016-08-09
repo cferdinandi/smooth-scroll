@@ -372,12 +372,21 @@
 		 * @param {Number} endLocation Scroll to location
 		 * @param {Number} animationInterval How much to scroll on this loop
 		 */
-		var stopAnimateScroll = function (position, endLocation, animationInterval) {
+		var stopAnimateScroll = function ( position, endLocation, animationInterval ) {
 			var currentLocation = root.pageYOffset;
-			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >= documentHeight ) ) {
+			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >=
+
+				documentHeight ) ) {
 				clearInterval(animationInterval);
+
+				// If scroll target is an anchor, bring it into focus
 				if ( !isNum ) {
 					anchorElem.focus();
+					if ( document.activeElement.id !== anchorElem.id ) {
+						anchorElem.setAttribute( 'tabindex', '-1' );
+						anchorElem.focus();
+						anchorElem.style.outline = 'none';
+					}
 				}
 				animateSettings.callback( anchor, toggle ); // Run callbacks after animation complete
 			}
