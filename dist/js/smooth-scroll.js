@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.3.0: Animate scrolling to anchor links
+ * smooth-scroll v9.3.2: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -356,7 +356,8 @@
 
 		// Selectors and variables
 		var isNum = Object.prototype.toString.call( anchor ) === '[object Number]' ? true : false;
-		var anchorElem = isNum ? null : ( anchor === '#' ? root.document.documentElement : root.document.querySelector(anchor) );
+		var hash = smoothScroll.escapeCharacters( anchor );
+		var anchorElem = isNum ? null : ( hash === '#' ? root.document.documentElement : root.document.querySelector( hash ) );
 		if ( !isNum && !anchorElem ) return;
 		var startLocation = root.pageYOffset; // Current location on the page
 		if ( !fixedHeader ) { fixedHeader = root.document.querySelector( animateSettings.selectorHeader ); }  // Get the fixed header if not already set
@@ -369,7 +370,7 @@
 
 		// Update URL
 		if ( !isNum ) {
-			updateUrl(anchor, animateSettings.updateURL);
+			updateUrl( anchor, animateSettings.updateURL );
 		}
 
 		/**
@@ -448,11 +449,10 @@
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
 
 			// Check that link is an anchor and points to current page
-			if ( toggle.origin !== location.origin || toggle.pathname !== location.pathname ) return;
+			if ( toggle.origin !== location.origin || toggle.pathname !== location.pathname || !/#/.test(toggle.href) ) return;
 
 			event.preventDefault(); // Prevent default click event
-			var hash = smoothScroll.escapeCharacters( toggle.hash ); // Escape hash characters
-			smoothScroll.animateScroll( hash, toggle, settings); // Animate scroll
+			smoothScroll.animateScroll( toggle.hash, toggle, settings); // Animate scroll
 
 		}
 
