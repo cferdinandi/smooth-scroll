@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.3.2: Animate scrolling to anchor links
+ * smooth-scroll v9.4.1: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -449,7 +449,7 @@
 		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
 
 			// Check that link is an anchor and points to current page
-			if ( toggle.origin !== location.origin || toggle.pathname !== location.pathname || !/#/.test(toggle.href) ) return;
+			if ( toggle.hostname !== root.location.hostname || toggle.pathname !== root.location.pathname || !/#/.test(toggle.href) ) return;
 
 			event.preventDefault(); // Prevent default click event
 			smoothScroll.animateScroll( toggle.hash, toggle, settings); // Animate scroll
