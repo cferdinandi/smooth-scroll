@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.4.1: Animate scrolling to anchor links
+ * smooth-scroll v9.4.2: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -356,7 +356,7 @@
 
 		// Selectors and variables
 		var isNum = Object.prototype.toString.call( anchor ) === '[object Number]' ? true : false;
-		var hash = smoothScroll.escapeCharacters( anchor );
+		var hash = isNum ? null : smoothScroll.escapeCharacters( anchor );
 		var anchorElem = isNum ? null : ( hash === '#' ? root.document.documentElement : root.document.querySelector( hash ) );
 		if ( !isNum && !anchorElem ) return;
 		var startLocation = root.pageYOffset; // Current location on the page
