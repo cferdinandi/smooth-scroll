@@ -389,6 +389,8 @@
 						anchorElem.style.outline = 'none';
 					}
 				}
+				root.scrollTo( 0 , endLocation );
+
 				animateSettings.callback( anchor, toggle ); // Run callbacks after animation complete
 			}
 		};

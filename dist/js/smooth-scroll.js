@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.4.2: Animate scrolling to anchor links
+ * smooth-scroll v9.4.3: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -396,6 +396,8 @@
 						anchorElem.style.outline = 'none';
 					}
 				}
+				root.scrollTo( 0 , endLocation );
+
 				animateSettings.callback( anchor, toggle ); // Run callbacks after animation complete
 			}
 		};
