@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v9.4.3: Animate scrolling to anchor links
+ * smooth-scroll v10.0.0: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -23,16 +23,15 @@
 
 	var smoothScroll = {}; // Object for public APIs
 	var supports = 'querySelector' in document && 'addEventListener' in root; // Feature test
-	var settings, eventTimeout, fixedHeader, headerHeight, animationInterval;
+	var settings, anchor, toggle, fixedHeader, headerHeight, eventTimeout, animationInterval;
 
 	// Default settings
 	var defaults = {
 		selector: '[data-scroll]',
-		selectorHeader: '[data-scroll-header]',
+		selectorHeader: null,
 		speed: 500,
 		easing: 'easeInOutCubic',
 		offset: 0,
-		updateURL: true,
 		callback: function () {}
 	};
 
@@ -170,12 +169,12 @@
 
 	/**
 	 * Escape special characters for use with querySelector
-	 * @public
+	 * @private
 	 * @param {String} id The anchor ID to escape
 	 * @author Mathias Bynens
 	 * @link https://github.com/mathiasbynens/CSS.escape
 	 */
-	smoothScroll.escapeCharacters = function ( id ) {
+	var escapeCharacters = function ( id ) {
 
 		// Remove leading hash
 		if ( id.charAt(0) === '#' ) {
@@ -299,8 +298,8 @@
 	 * @returns {Number}
 	 */
 	var getViewportHeight = function() {
-        	return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    	};
+		return Math.max( document.documentElement.clientHeight, root.innerHeight || 0 );
+	};
 
 	/**
 	 * Determine the document's height
@@ -309,9 +308,9 @@
 	 */
 	var getDocumentHeight = function () {
 		return Math.max(
-			root.document.body.scrollHeight, root.document.documentElement.scrollHeight,
-			root.document.body.offsetHeight, root.document.documentElement.offsetHeight,
-			root.document.body.clientHeight, root.document.documentElement.clientHeight
+			document.body.scrollHeight, document.documentElement.scrollHeight,
+			document.body.offsetHeight, document.documentElement.offsetHeight,
+			document.body.clientHeight, document.documentElement.clientHeight
 		);
 	};
 
@@ -326,27 +325,41 @@
 	};
 
 	/**
-	 * Update the URL
+	 * Get the height of the fixed header
 	 * @private
-	 * @param {Element} anchor The element to scroll to
-	 * @param {Boolean} url Whether or not to update the URL history
+	 * @param  {Node}   header The header
+	 * @return {Number}        The height of the header
 	 */
-	var updateUrl = function ( anchor, url ) {
-		if ( root.history.pushState && (url || url === 'true') && root.location.protocol !== 'file:' ) {
-			root.history.pushState( null, null, [root.location.protocol, '//', root.location.host, root.location.pathname, root.location.search, anchor].join('') );
-		}
-	};
-
 	var getHeaderHeight = function ( header ) {
 		return header === null ? 0 : ( getHeight( header ) + header.offsetTop );
 	};
 
 	/**
+	 * Bring the anchored element into focus
+	 * @private
+	 */
+	var adjustFocus = function ( anchor, endLocation, isNum ) {
+
+		// Don't run if scrolling to a number on the page
+		if ( isNum ) return;
+
+		// Otherwise, bring anchor element into focus
+		anchor.focus();
+		if ( document.activeElement.id !== anchor.id ) {
+			anchor.setAttribute( 'tabindex', '-1' );
+			anchor.focus();
+			anchor.style.outline = 'none';
+		}
+		root.scrollTo( 0 , endLocation );
+
+	};
+
+	/**
 	 * Start/stop the scrolling animation
 	 * @public
-	 * @param {Element} anchor The element to scroll to
-	 * @param {Element} toggle The element that toggled the scroll event
-	 * @param {Object} options
+	 * @param {Node|Number} anchor  The element or position to scroll to
+	 * @param {Element}     toggle  The element that toggled the scroll event
+	 * @param {Object}      options
 	 */
 	smoothScroll.animateScroll = function ( anchor, toggle, options ) {
 
@@ -356,22 +369,22 @@
 
 		// Selectors and variables
 		var isNum = Object.prototype.toString.call( anchor ) === '[object Number]' ? true : false;
-		var hash = isNum ? null : smoothScroll.escapeCharacters( anchor );
-		var anchorElem = isNum ? null : ( hash === '#' ? root.document.documentElement : root.document.querySelector( hash ) );
+		var anchorElem = isNum || !anchor.tagName ? null : anchor;
 		if ( !isNum && !anchorElem ) return;
 		var startLocation = root.pageYOffset; // Current location on the page
-		if ( !fixedHeader ) { fixedHeader = root.document.querySelector( animateSettings.selectorHeader ); }  // Get the fixed header if not already set
-		if ( !headerHeight ) { headerHeight = getHeaderHeight( fixedHeader ); } // Get the height of a fixed header if one exists and not already set
+		if ( animateSettings.selectorHeader && !fixedHeader ) {
+			// Get the fixed header if not already set
+			fixedHeader = document.querySelector( animateSettings.selectorHeader );
+		}
+		if ( !headerHeight ) {
+			// Get the height of a fixed header if one exists and not already set
+			headerHeight = getHeaderHeight( fixedHeader );
+		}
 		var endLocation = isNum ? anchor : getEndLocation( anchorElem, headerHeight, parseInt(animateSettings.offset, 10) ); // Location to scroll to
 		var distance = endLocation - startLocation; // distance to travel
 		var documentHeight = getDocumentHeight();
 		var timeLapsed = 0;
 		var percentage, position;
-
-		// Update URL
-		if ( !isNum ) {
-			updateUrl( anchor, animateSettings.updateURL );
-		}
 
 		/**
 		 * Stop the scroll animation when it reaches its target (or the bottom/top of page)
@@ -382,23 +395,17 @@
 		 */
 		var stopAnimateScroll = function ( position, endLocation, animationInterval ) {
 			var currentLocation = root.pageYOffset;
-			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >=
+			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >= documentHeight ) ) {
 
-				documentHeight ) ) {
+				// Clear the animation timer
 				clearInterval(animationInterval);
 
-				// If scroll target is an anchor, bring it into focus
-				if ( !isNum ) {
-					anchorElem.focus();
-					if ( document.activeElement.id !== anchorElem.id ) {
-						anchorElem.setAttribute( 'tabindex', '-1' );
-						anchorElem.focus();
-						anchorElem.style.outline = 'none';
-					}
-				}
-				root.scrollTo( 0 , endLocation );
+				// Bring the anchored element into focus
+				adjustFocus( anchor, endLocation, isNum );
 
-				animateSettings.callback( anchor, toggle ); // Run callbacks after animation complete
+				// Run callback after animation complete
+				animateSettings.callback( anchor, toggle );
+
 			}
 		};
 
@@ -438,24 +445,86 @@
 	};
 
 	/**
+	 * Handle has change event
+	 * @private
+	 */
+	var hashChangeHandler = function (event) {
+
+		// Get hash from URL
+		var hash = root.location.hash;
+
+		// Only run if there's an anchor element to scroll to
+		if ( !anchor ) return;
+
+		// Reset the anchor element's ID
+		anchor.id = anchor.getAttribute( 'data-scroll-id' );
+
+		// Scroll to the anchored content
+		smoothScroll.animateScroll( anchor, toggle );
+
+		// Reset anchor and toggle
+		anchor = null;
+		toggle = null;
+
+	};
+
+	/**
 	 * If smooth scroll element clicked, animate scroll
 	 * @private
 	 */
-	var eventHandler = function (event) {
+	var clickHandler = function (event) {
 
 		// Don't run if right-click or command/control + click
 		if ( event.button !== 0 || event.metaKey || event.ctrlKey ) return;
 
-		// If a smooth scroll link, animate it
-		var toggle = getClosest( event.target, settings.selector );
-		if ( toggle && toggle.tagName.toLowerCase() === 'a' ) {
+		// Check if a smooth scroll link was clicked
+		toggle = getClosest( event.target, settings.selector );
+		if ( !toggle || toggle.tagName.toLowerCase() !== 'a' ) return;
 
-			// Check that link is an anchor and points to current page
-			if ( toggle.hostname !== root.location.hostname || toggle.pathname !== root.location.pathname || !/#/.test(toggle.href) ) return;
+		// Only run if link is an anchor and points to the current page
+		if ( toggle.hostname !== root.location.hostname || toggle.pathname !== root.location.pathname || !/#/.test(toggle.href) ) return;
 
-			event.preventDefault(); // Prevent default click event
-			smoothScroll.animateScroll( toggle.hash, toggle, settings); // Animate scroll
+		// Get the sanitized hash
+		var hash = escapeCharacters( toggle.hash );
 
+		// If the hash is empty, scroll to the top of the page
+		if ( hash === '#' ) {
+
+			// Prevent default link behavior
+			event.preventDefault();
+
+			// Set the anchored element
+			anchor = document.body;
+
+			// Save or create the ID as a data attribute and remove it (prevents scroll jump)
+			var id = anchor.id ? anchor.id : 'smooth-scroll-top';
+			anchor.setAttribute( 'data-scroll-id', id );
+			anchor.id = '';
+
+			// If no hash change event will happen, fire manually
+			// Otherwise, update the hash
+			if ( root.location.hash.substring(1) === id ) {
+				hashChangeHandler();
+			} else {
+				root.location.hash = id;
+			}
+
+			return;
+
+		}
+
+		// Get the anchored element
+		anchor = document.querySelector( hash );
+
+		// If anchored element exists, save the ID as a data attribute and remove it (prevents scroll jump)
+		if ( !anchor ) return;
+		anchor.setAttribute( 'data-scroll-id', anchor.id );
+		anchor.id = '';
+
+		// If no hash change event will happen, fire manually
+		if ( toggle.hash === root.location.hash ) {
+			event.preventDefault();
+			hashChangeHandler();
 		}
 
 	};
@@ -466,7 +535,7 @@
 	 * @param  {Function} eventTimeout Timeout function
 	 * @param  {Object} settings
 	 */
-	var eventThrottler = function (event) {
+	var resizeThrottler = function (event) {
 		if ( !eventTimeout ) {
 			eventTimeout = setTimeout(function() {
 				eventTimeout = null; // Reset timeout
@@ -485,14 +554,16 @@
 		if ( !settings ) return;
 
 		// Remove event listeners
-		root.document.removeEventListener( 'click', eventHandler, false );
-		root.removeEventListener( 'resize', eventThrottler, false );
+		document.removeEventListener( 'click', clickHandler, false );
+		root.removeEventListener( 'resize', resizeThrottler, false );
 
 		// Reset varaibles
 		settings = null;
-		eventTimeout = null;
+		anchor = null;
+		toggle = null;
 		fixedHeader = null;
 		headerHeight = null;
+		eventTimeout = null;
 		animationInterval = null;
 	};
 
@@ -511,12 +582,19 @@
 
 		// Selectors and variables
 		settings = extend( defaults, options || {} ); // Merge user options with defaults
-		fixedHeader = root.document.querySelector( settings.selectorHeader ); // Get the fixed header
+		fixedHeader = settings.selectorHeader ? document.querySelector( settings.selectorHeader ) : null; // Get the fixed header
 		headerHeight = getHeaderHeight( fixedHeader );
 
 		// When a toggle is clicked, run the click handler
-		root.document.addEventListener('click', eventHandler, false );
-		if ( fixedHeader ) { root.addEventListener( 'resize', eventThrottler, false ); }
+		document.addEventListener( 'click', clickHandler, false );
+
+		// Listen for hash changes
+		root.addEventListener('hashchange', hashChangeHandler, false);
+
+		// If window is resized and there's a fixed header, recalculate its size
+		if ( fixedHeader ) {
+			root.addEventListener( 'resize', resizeThrottler, false );
+		}
 
 	};
 

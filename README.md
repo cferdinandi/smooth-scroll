@@ -79,11 +79,10 @@ You can pass options and callbacks into Smooth Scroll through the `init()` funct
 ```javascript
 smoothScroll.init({
 	selector: '[data-scroll]', // Selector for links (must be a class, ID, data attribute, or element tag)
-	selectorHeader: '[data-scroll-header]', // Selector for fixed headers (must be a valid CSS selector)
+	selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
 	easing: 'easeInOutCubic', // Easing pattern to use
 	offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
-	updateURL: true, // Boolean. If true, update the URL hash on scroll
 	callback: function ( anchor, toggle ) {} // Function to run after scrolling
 });
 ```
@@ -154,8 +153,8 @@ Animate scrolling to an anchor.
 
 ```javascript
 smoothScroll.animateScroll(
-	anchor, // ID of the anchor to scroll to. ex. '#bazinga'
-	toggle, // Node that toggles the animation, OR an integer. ex. document.querySelector('#toggle')
+	anchor, // Node to scroll to. ex. document.querySelector( '#bazinga' )
+	toggle, // Node that toggles the animation, OR an integer. ex. document.querySelector( '#toggle' )
 	options // Classes and callbacks. Same options as those passed into the init() function.
 );
 ```
@@ -163,28 +162,24 @@ smoothScroll.animateScroll(
 **Example 1**
 
 ```javascript
-smoothScroll.animateScroll( '#bazinga' );
+var anchor = document.querySelector( '#bazinga' );
+smoothScroll.animateScroll( anchor );
 ```
 
 **Example 2**
 
 ```javascript
+var anchor = document.querySelector( '#bazinga' );
 var toggle = document.querySelector('#toggle');
 var options = { speed: 1000, easing: 'easeOutCubic' };
-smoothScroll.animateScroll( '#bazinga', toggle, options );
+smoothScroll.animateScroll( anchor, toggle, options );
 ```
 
 **Example 3**
 
 ```javascript
+// You can optionally pass in a y-position to scroll to as an integer
 smoothScroll.animateScroll( 750 );
-```
-
-#### escapeCharacters()
-Escape special characters for use with `animateScroll()`.
-
-```javascript
-var toggle = smoothScroll.escapeCharacters('#1@#%^-');
 ```
 
 #### destroy()
@@ -197,12 +192,20 @@ smoothScroll.destroy();
 
 ### Fixed Headers
 
-Add a `[data-scroll-header]` data attribute to fixed headers. Smooth Scroll will automatically offset scroll distances by the header height. If you have multiple fixed headers, add `[data-scroll-header]` to the last one in the markup.
+If you're using a fixed header, Smooth Scroll will automatically offset scroll distances by the header height. Pass in a valid CSS selector for your fixed header as an option to the `init`.
+
+If you have multiple fixed headers, pass in the last one in the markup.
 
 ```html
 <nav data-scroll-header>
 	...
 </nav>
+...
+<script>
+	smoothScroll.init({
+		selectorHeader: '[data-scroll-header]'
+	});
+</script>
 ```
 
 ### Animating links to other pages
@@ -221,10 +224,10 @@ You can attempt to implement it using the API, but it's very difficult to preven
     ```html
     <script>
         if ( window.location.hash ) {
-        	var hash = smoothScroll.escapeCharacters( window.location.hash ); // Escape the hash
-        	var toggle = document.querySelector( 'a[href*="' + hash + '"]' ); // Get the toggle (if one exists)
+        	var anchor = document.querySelector( window.location.hash ); // Get the anchor
+        	var toggle = document.querySelector( 'a[href*="' + window.location.hash + '"]' ); // Get the toggle (if one exists)
             var options = {}; // Any custom options you want to use would go here
-            smoothScroll.animateScroll( hash, toggle, options );
+            smoothScroll.animateScroll( anchor, toggle, options );
         }
     </script>
     ```
@@ -234,8 +237,7 @@ You can attempt to implement it using the API, but it's very difficult to preven
 
 Smooth Scroll works in all modern browsers, and IE 9 and above.
 
-Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhancement. If the JavaScript file fails to load, or if your site is viewed on older and less capable browsers, anchor links will jump the way they normally would. If you need to smooth scrolling for older browsers, [download the jQuery version of Smooth Scroll on GitHub](https://github.com/cferdinandi/smooth-scroll/tree/archive-v1).
-
+Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhancement. If the JavaScript file fails to load, or if your site is viewed on older and less capable browsers, anchor links will jump the way they normally would.
 
 
 ## Known Issues
