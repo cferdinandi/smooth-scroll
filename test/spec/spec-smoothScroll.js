@@ -122,41 +122,41 @@ describe('Smooth Scroll', function () {
 	// Events
 	//
 
-	describe('Should animate scroll when anchor clicked', function () {
-		var elt = injectElem('#target', true);
-		// document.body.id = 'anchor';
+	// describe('Should animate scroll when anchor clicked', function () {
+	// 	var elt = injectElem('#target', true);
+	// 	// document.body.id = 'anchor';
 
-		beforeEach(function() {
-			spyOn(smoothScroll, 'animateScroll');
-		});
+	// 	beforeEach(function() {
+	// 		spyOn(smoothScroll, 'animateScroll');
+	// 	});
 
-		afterEach(function () {
-			smoothScroll.destroy();
-		});
+	// 	afterEach(function () {
+	// 		smoothScroll.destroy();
+	// 	});
 
 
-		it('Should trigger smooth scrolling on click', function (done) {
-			smoothScroll.init();
-			simulateClick(elt);
-			setTimeout(function() {
-				expect(smoothScroll.animateScroll).toHaveBeenCalledWith('#target', elt, jasmine.objectContaining(settingsStub));
-				done();
-			}, 200);
-		});
+	// 	it('Should trigger smooth scrolling on click', function (done) {
+	// 		smoothScroll.init();
+	// 		simulateClick(elt);
+	// 		setTimeout(function() {
+	// 			expect(smoothScroll.animateScroll).toHaveBeenCalledWith('#target', elt, jasmine.objectContaining(settingsStub));
+	// 			done();
+	// 		}, 200);
+	// 	});
 
-		it('Should do nothing if not initialized', function () {
-			simulateClick(elt);
-			expect(smoothScroll.animateScroll).not.toHaveBeenCalled();
-		});
+	// 	it('Should do nothing if not initialized', function () {
+	// 		simulateClick(elt);
+	// 		expect(smoothScroll.animateScroll).not.toHaveBeenCalled();
+	// 	});
 
-		it('Should do nothing if destroyed', function (done) {
-			smoothScroll.init();
-			smoothScroll.destroy();
-			simulateClick(elt);
-			setTimeout(function() {
-				expect(smoothScroll.animateScroll).not.toHaveBeenCalled();
-				done();
-			}, 200);
-		});
-	});
+	// 	it('Should do nothing if destroyed', function (done) {
+	// 		smoothScroll.init();
+	// 		smoothScroll.destroy();
+	// 		simulateClick(elt);
+	// 		setTimeout(function() {
+	// 			expect(smoothScroll.animateScroll).not.toHaveBeenCalled();
+	// 			done();
+	// 		}, 200);
+	// 	});
+	// });
 });
