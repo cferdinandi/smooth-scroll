@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v10.0.0: Animate scrolling to anchor links
+ * smooth-scroll v10.0.1: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -331,7 +331,7 @@
 	 * @return {Number}        The height of the header
 	 */
 	var getHeaderHeight = function ( header ) {
-		return header === null ? 0 : ( getHeight( header ) + header.offsetTop );
+		return !header ? 0 : ( getHeight( header ) + header.offsetTop );
 	};
 
 	/**
