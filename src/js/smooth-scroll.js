@@ -1,3 +1,4 @@
+
 (function (root, factory) {
 	if ( typeof define === 'function' && define.amd ) {
 		define([], factory(root));
@@ -304,7 +305,7 @@
 	 * @private
 	 * @param {Number} top
 	 */
-	var scrollTop = function (top) {
+	var scrollTop = function ( top) {
 		if (settings.rootElement.scrollTo) {
 			settings.rootElement.scrollTo(0, top);
 		}
@@ -423,7 +424,7 @@
 		 */
 		var stopAnimateScroll = function ( position, endLocation, animationInterval ) {
 			var currentLocation = getRootTop();
-			if ( position == endLocation || currentLocation == endLocation || ( (getHeight(settings.rootElement) + currentLocation) >= documentHeight ) ) {
+			if ( position == endLocation || currentLocation == endLocation || ( (getRootHeight() + currentLocation) >= documentHeight ) ) {
 
 				// Clear the animation timer
 				clearInterval(animationInterval);
