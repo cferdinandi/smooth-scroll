@@ -12,6 +12,9 @@
 		"type": "git",
 		"url": "http://github.com/cferdinandi/smooth-scroll"
 	},
+	"scripts": {
+		"compile": "gulp"
+	},
 	"devDependencies": {
 		"gulp": "^3.9.0",
 		"node-fs": "^0.1.7",

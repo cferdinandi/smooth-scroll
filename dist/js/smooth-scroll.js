@@ -5,6 +5,7 @@
  * http://github.com/cferdinandi/smooth-scroll
  */
 
+
 (function (root, factory) {
 	if ( typeof define === 'function' && define.amd ) {
 		define([], factory(root));
@@ -32,6 +33,9 @@
 		speed: 500,
 		easing: 'easeInOutCubic',
 		offset: 0,
+		documentElement: document.documentElement,
+		bodyElement: document.body,
+		rootElement: root,
 		callback: function () {}
 	};
 
@@ -106,7 +110,7 @@
 
 		// Variables
 		var firstChar = selector.charAt(0);
-		var supports = 'classList' in document.documentElement;
+		var supports = 'classList' in settings.documentElement;
 		var attribute, value;
 
 		// If selector is a data attribute, split attribute from value
@@ -202,18 +206,18 @@
 
 			if (
 				// If the character is in the range [\1-\1F] (U+0001 to U+001F) or is
-				// U+007F, […]
-				(codeUnit >= 0x0001 && codeUnit <= 0x001F) || codeUnit == 0x007F ||
-				// If the character is the first character and is in the range [0-9]
-				// (U+0030 to U+0039), […]
-				(index === 0 && codeUnit >= 0x0030 && codeUnit <= 0x0039) ||
-				// If the character is the second character and is in the range [0-9]
-				// (U+0030 to U+0039) and the first character is a `-` (U+002D), […]
-				(
-					index === 1 &&
-					codeUnit >= 0x0030 && codeUnit <= 0x0039 &&
-					firstCodeUnit === 0x002D
-				)
+			// U+007F, […]
+			(codeUnit >= 0x0001 && codeUnit <= 0x001F) || codeUnit == 0x007F ||
+			// If the character is the first character and is in the range [0-9]
+			// (U+0030 to U+0039), […]
+			(index === 0 && codeUnit >= 0x0030 && codeUnit <= 0x0039) ||
+			// If the character is the second character and is in the range [0-9]
+			// (U+0030 to U+0039) and the first character is a `-` (U+002D), […]
+			(
+				index === 1 &&
+				codeUnit >= 0x0030 && codeUnit <= 0x0039 &&
+				firstCodeUnit === 0x002D
+			)
 			) {
 				// http://dev.w3.org/csswg/cssom/#escape-a-character-as-code-point
 				result += '\\' + codeUnit.toString(16) + ' ';
@@ -293,12 +297,44 @@
 	};
 
 	/**
+	 * Gets the height of the root element
+	 * @private
+	 * @returns {Number}
+	 */
+	var getRootHeight = function () {
+		return typeof settings.rootElement.clientHeight !== 'undefined' ?
+			settings.rootElement.clientHeight:
+			settings.rootElement.innerHeight;
+	};
+
+	/**
+	 * Scrolls to top
+	 * @private
+	 * @param {Number} top
+	 */
+	var scrollTop = function ( top) {
+		if (settings.rootElement.scrollTo) {
+			settings.rootElement.scrollTo(0, top);
+		}
+		settings.rootElement.scrollTop = top;
+	};
+
+	/**
+	 * Returns the current scrollbar position
+	 * @private
+	 * @returns {Number}
+	 */
+	var getRootTop = function () {
+		return settings.rootElement.pageYOffset || settings.rootElement.scrollTop;
+	};
+
+	/**
 	 * Determine the viewport's height
 	 * @private
 	 * @returns {Number}
 	 */
 	var getViewportHeight = function() {
-		return Math.max( document.documentElement.clientHeight, root.innerHeight || 0 );
+		return Math.max( settings.documentElement.clientHeight, getRootHeight() || 0 );
 	};
 
 	/**
@@ -308,9 +344,9 @@
 	 */
 	var getDocumentHeight = function () {
 		return Math.max(
-			document.body.scrollHeight, document.documentElement.scrollHeight,
-			document.body.offsetHeight, document.documentElement.offsetHeight,
-			document.body.clientHeight, document.documentElement.clientHeight
+			settings.bodyElement.scrollHeight, settings.documentElement.scrollHeight,
+			settings.bodyElement.offsetHeight, settings.documentElement.offsetHeight,
+			settings.bodyElement.clientHeight, settings.documentElement.clientHeight
 		);
 	};
 
@@ -350,7 +386,7 @@
 			anchor.focus();
 			anchor.style.outline = 'none';
 		}
-		root.scrollTo( 0 , endLocation );
+		scrollTop(endLocation);
 
 	};
 
@@ -371,7 +407,7 @@
 		var isNum = Object.prototype.toString.call( anchor ) === '[object Number]' ? true : false;
 		var anchorElem = isNum || !anchor.tagName ? null : anchor;
 		if ( !isNum && !anchorElem ) return;
-		var startLocation = root.pageYOffset; // Current location on the page
+		var startLocation = getRootTop(); // Current location on the page
 		if ( animateSettings.selectorHeader && !fixedHeader ) {
 			// Get the fixed header if not already set
 			fixedHeader = document.querySelector( animateSettings.selectorHeader );
@@ -394,8 +430,8 @@
 		 * @param {Number} animationInterval How much to scroll on this loop
 		 */
 		var stopAnimateScroll = function ( position, endLocation, animationInterval ) {
-			var currentLocation = root.pageYOffset;
-			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >= documentHeight ) ) {
+			var currentLocation = getRootTop();
+			if ( position == endLocation || currentLocation == endLocation || ( (getRootHeight() + currentLocation) >= documentHeight ) ) {
 
 				// Clear the animation timer
 				clearInterval(animationInterval);
@@ -418,7 +454,7 @@
 			percentage = ( timeLapsed / parseInt(animateSettings.speed, 10) );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
 			position = startLocation + ( distance * easingPattern(animateSettings.easing, percentage) );
-			root.scrollTo( 0, Math.floor(position) );
+			scrollTop(Math.floor(position));
 			stopAnimateScroll(position, endLocation, animationInterval);
 		};
 
@@ -435,8 +471,8 @@
 		 * Reset position to fix weird iOS bug
 		 * @link https://github.com/cferdinandi/smooth-scroll/issues/45
 		 */
-		if ( root.pageYOffset === 0 ) {
-			root.scrollTo( 0, 0 );
+		if ( getRootTop() === 0 ) {
+			scrollTop(0);
 		}
 
 		// Start scrolling animation
@@ -494,7 +530,7 @@
 			event.preventDefault();
 
 			// Set the anchored element
-			anchor = document.body;
+			anchor = settings.bodyElement;
 
 			// Save or create the ID as a data attribute and remove it (prevents scroll jump)
 			var id = anchor.id ? anchor.id : 'smooth-scroll-top';
