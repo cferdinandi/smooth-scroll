@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v10.0.1: Animate scrolling to anchor links
+ * smooth-scroll v10.1.0: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -13,7 +13,7 @@
 	} else {
 		root.smoothScroll = factory(root);
 	}
-})(typeof global !== 'undefined' ? global : this.window || this.global, function (root) {
+})(typeof global !== 'undefined' ? global : this.window || this.global, (function (root) {
 
 	'use strict';
 
@@ -537,10 +537,10 @@
 	 */
 	var resizeThrottler = function (event) {
 		if ( !eventTimeout ) {
-			eventTimeout = setTimeout(function() {
+			eventTimeout = setTimeout((function() {
 				eventTimeout = null; // Reset timeout
 				headerHeight = getHeaderHeight( fixedHeader ); // Get the height of a fixed header if one exists
-			}, 66);
+			}), 66);
 		}
 	};
 
@@ -605,4 +605,4 @@
 
 	return smoothScroll;
 
-});
+}));
