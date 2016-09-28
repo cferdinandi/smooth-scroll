@@ -46,6 +46,6 @@
 </div>
 <script>
 	var opts = {
-		containerSelector: '.scroll'
+		selectorContainer: '.scroll'
 	};
 </script>

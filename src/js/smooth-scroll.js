@@ -296,7 +296,7 @@
 	 */
 	var getEndLocation = function ( anchor, container, headerHeight, offset ) {
 		var location = getPosition(anchor);
-		location = Math.max(location - headerHeight - offset, 0);
+		location = Math.max(location - getPosition(container) - headerHeight - offset, 0);
 		return Math.min(location, getHeight(container) - getViewportHeight());
 	};
 
@@ -372,7 +372,7 @@
 		var isNum = Object.prototype.toString.call( anchor ) === '[object Number]' ? true : false;
 		var anchorElem = isNum || !anchor.tagName ? null : anchor;
 		if ( !isNum && !anchorElem ) return;
-		var startLocation = getPosition(container); // Current location on the container
+		var startLocation = getPosition(toggle); // Current location on the container
 		var endLocation = isNum ? anchor : getEndLocation( anchorElem, container, headerHeight, parseInt(animateSettings.offset, 10) ); // Location to scroll to
 		var distance = endLocation - startLocation; // distance to travel
 		var containerHeight = getHeight(container);
@@ -384,12 +384,11 @@
 		 * @private
 		 * @param {Number} position Current position on the page
 		 * @param {Number} endLocation Position of the end of scroll
-		 * @param {Number} distance Scroll to distance
 		 * @param {Number} animationInterval How much to scroll on this loop
 		 */
-		var stopAnimateScroll = function ( position, endLocation, distance, animationInterval ) {
+		var stopAnimateScroll = function ( position, endLocation, animationInterval ) {
 			var currentLocation = container.scrollTop;
-			if ( position == distance || currentLocation == distance || currentLocation >= container.scrollHeight ) {
+			if ( position == endLocation || currentLocation == endLocation || currentLocation >= container.scrollHeight ) {
 
 				// Clear the animation timer
 				clearInterval(animationInterval);
@@ -410,9 +409,9 @@
 			timeLapsed += 16;
 			percentage = ( timeLapsed / parseInt(animateSettings.speed, 10) );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
-			position = distance * easingPattern(animateSettings.easing, percentage);
+			position = startLocation + ( distance * easingPattern(animateSettings.easing, percentage) );
 			container.scrollTop = Math.floor(position);
-			stopAnimateScroll(position, endLocation, distance, animationInterval);
+			stopAnimateScroll(position, endLocation, animationInterval);
 		};
 
 		/**
