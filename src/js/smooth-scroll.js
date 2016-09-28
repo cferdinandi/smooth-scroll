@@ -363,7 +363,7 @@
 		var animateSettings = extend( settings || defaults, options || {}, overrides ); // Merge user options with defaults
 
 		// Lookup for parent container or fallback to document
-		var container = (animateSettings.containerSelector && getClosest(toggle, animateSettings.containerSelector)) || document.body;
+		var container = (animateSettings.selectorContainer && getClosest(toggle, animateSettings.selectorContainer)) || document.body;
 		// Lookup for fixed header in the current container
 		var fixedHeader = animateSettings.selectorHeader ? container.querySelector( settings.selectorHeader ) : null; // Get the header
 		var headerHeight = getHeaderHeight( fixedHeader );
