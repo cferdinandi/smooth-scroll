@@ -1,3 +1,4 @@
+<div class="scroll">
 <p>
 	<strong>Linear</strong><br>
 	<a data-scroll data-options='{ "easing": "linear" }' href="#bazinga">Linear (no other options)</a><br>
@@ -42,6 +43,9 @@
 </p>
 
 <p id="1@#%^-bottom"><a data-scroll data-options='{ "easing": "easeOutCubic" }' href="#">Back to the top</a></p>
+</div>
 <script>
-	var opts = {};
+	var opts = {
+		selectorContainer: '.scroll'
+	};
 </script>

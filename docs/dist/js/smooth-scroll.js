@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v10.1.0: Animate scrolling to anchor links
+ * smooth-scroll v11.0.0: Animate scrolling to anchor links
  * (c) 2016 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -29,6 +29,7 @@
 	var defaults = {
 		selector: '[data-scroll]',
 		selectorHeader: null,
+		selectorContainer: null,
 		speed: 500,
 		easing: 'easeInOutCubic',
 		offset: 0,
@@ -273,45 +274,37 @@
 	};
 
 	/**
+	 * Calculate the position of an element
+	 * @private
+	 * @param {Element} element The element to get the position from
+	 * @returns {Number}
+	 */
+	var getPosition = function ( element ) {
+		var location = 0;
+		if (element.offsetParent) {
+			do {
+				location += element.offsetTop;
+				element = element.offsetParent;
+			} while (element);
+		}
+		return location;
+	};
+
+
+
+	/**
 	 * Calculate how far to scroll
 	 * @private
 	 * @param {Element} anchor The anchor element to scroll to
+	 * @param {Element} container The container element to scroll
 	 * @param {Number} headerHeight Height of a fixed header, if any
 	 * @param {Number} offset Number of pixels by which to offset scroll
 	 * @returns {Number}
 	 */
-	var getEndLocation = function ( anchor, headerHeight, offset ) {
-		var location = 0;
-		if (anchor.offsetParent) {
-			do {
-				location += anchor.offsetTop;
-				anchor = anchor.offsetParent;
-			} while (anchor);
-		}
-		location = Math.max(location - headerHeight - offset, 0);
-		return Math.min(location, getDocumentHeight() - getViewportHeight());
-	};
-
-	/**
-	 * Determine the viewport's height
-	 * @private
-	 * @returns {Number}
-	 */
-	var getViewportHeight = function() {
-		return Math.max( document.documentElement.clientHeight, root.innerHeight || 0 );
-	};
-
-	/**
-	 * Determine the document's height
-	 * @private
-	 * @returns {Number}
-	 */
-	var getDocumentHeight = function () {
-		return Math.max(
-			document.body.scrollHeight, document.documentElement.scrollHeight,
-			document.body.offsetHeight, document.documentElement.offsetHeight,
-			document.body.clientHeight, document.documentElement.clientHeight
-		);
+	var getEndLocation = function ( anchor, container, headerHeight, offset ) {
+		var location = getPosition(anchor);
+		location = Math.max(location - getPosition(container) - headerHeight - offset, 0);
+		return Math.min(location, getHeight(container) - container.clientHeight);
 	};
 
 	/**
@@ -367,22 +360,20 @@
 		var overrides = getDataOptions( toggle ? toggle.getAttribute('data-options') : null );
 		var animateSettings = extend( settings || defaults, options || {}, overrides ); // Merge user options with defaults
 
+		// Lookup for parent container or fallback to document
+		var container = (animateSettings.selectorContainer && getClosest(toggle, animateSettings.selectorContainer)) || document.documentElement;
+		// Lookup for fixed header in the current container
+		var fixedHeader = animateSettings.selectorHeader ? container.querySelector( settings.selectorHeader ) : null; // Get the header
+		var headerHeight = getHeaderHeight( fixedHeader );
+
 		// Selectors and variables
 		var isNum = Object.prototype.toString.call( anchor ) === '[object Number]' ? true : false;
 		var anchorElem = isNum || !anchor.tagName ? null : anchor;
 		if ( !isNum && !anchorElem ) return;
-		var startLocation = root.pageYOffset; // Current location on the page
-		if ( animateSettings.selectorHeader && !fixedHeader ) {
-			// Get the fixed header if not already set
-			fixedHeader = document.querySelector( animateSettings.selectorHeader );
-		}
-		if ( !headerHeight ) {
-			// Get the height of a fixed header if one exists and not already set
-			headerHeight = getHeaderHeight( fixedHeader );
-		}
-		var endLocation = isNum ? anchor : getEndLocation( anchorElem, headerHeight, parseInt(animateSettings.offset, 10) ); // Location to scroll to
+		var startLocation = getPosition(toggle); // Current location on the container
+		var endLocation = isNum ? anchor : getEndLocation( anchorElem, container, headerHeight, parseInt(animateSettings.offset, 10) ); // Location to scroll to
 		var distance = endLocation - startLocation; // distance to travel
-		var documentHeight = getDocumentHeight();
+		var containerHeight = getHeight(container);
 		var timeLapsed = 0;
 		var percentage, position;
 
@@ -390,12 +381,12 @@
 		 * Stop the scroll animation when it reaches its target (or the bottom/top of page)
 		 * @private
 		 * @param {Number} position Current position on the page
-		 * @param {Number} endLocation Scroll to location
+		 * @param {Number} endLocation Position of the end of scroll
 		 * @param {Number} animationInterval How much to scroll on this loop
 		 */
 		var stopAnimateScroll = function ( position, endLocation, animationInterval ) {
-			var currentLocation = root.pageYOffset;
-			if ( position == endLocation || currentLocation == endLocation || ( (root.innerHeight + currentLocation) >= documentHeight ) ) {
+			var currentLocation = container === document.documentElement ? root.pageYOffset : container.scrollTop;
+			if ( position == endLocation || currentLocation == endLocation || currentLocation >= container.scrollHeight ) {
 
 				// Clear the animation timer
 				clearInterval(animationInterval);
@@ -405,7 +396,6 @@
 
 				// Run callback after animation complete
 				animateSettings.callback( anchor, toggle );
-
 			}
 		};
 
@@ -418,7 +408,11 @@
 			percentage = ( timeLapsed / parseInt(animateSettings.speed, 10) );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
 			position = startLocation + ( distance * easingPattern(animateSettings.easing, percentage) );
-			root.scrollTo( 0, Math.floor(position) );
+			if (container === document.documentElement) {
+				root.scrollTo( 0, Math.floor(position) );
+			} else {
+				container.scrollTop = Math.floor(position);
+			}
 			stopAnimateScroll(position, endLocation, animationInterval);
 		};
 
@@ -582,8 +576,6 @@
 
 		// Selectors and variables
 		settings = extend( defaults, options || {} ); // Merge user options with defaults
-		fixedHeader = settings.selectorHeader ? document.querySelector( settings.selectorHeader ) : null; // Get the fixed header
-		headerHeight = getHeaderHeight( fixedHeader );
 
 		// When a toggle is clicked, run the click handler
 		document.addEventListener( 'click', clickHandler, false );
@@ -595,7 +587,6 @@
 		if ( fixedHeader ) {
 			root.addEventListener( 'resize', resizeThrottler, false );
 		}
-
 	};
 
 
