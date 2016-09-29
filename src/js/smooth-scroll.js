@@ -297,16 +297,7 @@
 	var getEndLocation = function ( anchor, container, headerHeight, offset ) {
 		var location = getPosition(anchor);
 		location = Math.max(location - getPosition(container) - headerHeight - offset, 0);
-		return Math.min(location, getHeight(container) - getViewportHeight());
-	};
-
-	/**
-	 * Determine the viewport's height
-	 * @private
-	 * @returns {Number}
-	 */
-	var getViewportHeight = function() {
-		return Math.max( document.documentElement.clientHeight, root.innerHeight || 0 );
+		return Math.min(location, getHeight(container) - container.clientHeight);
 	};
 
 	/**
@@ -363,7 +354,7 @@
 		var animateSettings = extend( settings || defaults, options || {}, overrides ); // Merge user options with defaults
 
 		// Lookup for parent container or fallback to document
-		var container = (animateSettings.selectorContainer && getClosest(toggle, animateSettings.selectorContainer)) || document.body;
+		var container = (animateSettings.selectorContainer && getClosest(toggle, animateSettings.selectorContainer)) || document.documentElement;
 		// Lookup for fixed header in the current container
 		var fixedHeader = animateSettings.selectorHeader ? container.querySelector( settings.selectorHeader ) : null; // Get the header
 		var headerHeight = getHeaderHeight( fixedHeader );
@@ -387,7 +378,7 @@
 		 * @param {Number} animationInterval How much to scroll on this loop
 		 */
 		var stopAnimateScroll = function ( position, endLocation, animationInterval ) {
-			var currentLocation = container.scrollTop;
+			var currentLocation = container === document.documentElement ? root.pageYOffset : container.scrollTop;
 			if ( position == endLocation || currentLocation == endLocation || currentLocation >= container.scrollHeight ) {
 
 				// Clear the animation timer
@@ -410,7 +401,11 @@
 			percentage = ( timeLapsed / parseInt(animateSettings.speed, 10) );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
 			position = startLocation + ( distance * easingPattern(animateSettings.easing, percentage) );
-			container.scrollTop = Math.floor(position);
+			if (container === document.documentElement) {
+				root.scrollTo( 0, Math.floor(position) );
+			} else {
+				container.scrollTop = Math.floor(position);
+			}
 			stopAnimateScroll(position, endLocation, animationInterval);
 		};
 
