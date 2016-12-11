@@ -86,7 +86,7 @@ smoothScroll.init({
 });
 ```
 
-***Note:*** *To programatically add Smooth Scroll to all anchor links on a page, pass `selector: 'a'` into `init`. The script checks that the link points to the current page before running.*
+***Note:*** *To programatically add Smooth Scroll to all anchor links on a page, pass `selector: 'a[href^="#"]'` into `init`.*
 
 #### Easing Options
 
