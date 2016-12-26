@@ -406,7 +406,13 @@
 	var hashChangeHandler = function (event) {
 
 		// Get hash from URL
-		var hash = root.location.hash;
+		// var hash = decodeURIComponent( escapeCharacters( root.location.hash ) );
+		var hash;
+		try {
+			hash = escapeCharacters( decodeURIComponent( root.location.hash ) );
+		} catch(e) {
+			hash = escapeCharacters( root.location.hash );
+		}
 
 		// Only run if there's an anchor element to scroll to
 		if ( !anchor ) return;
@@ -440,7 +446,14 @@
 		if ( toggle.hostname !== root.location.hostname || toggle.pathname !== root.location.pathname || !/#/.test(toggle.href) ) return;
 
 		// Get the sanitized hash
-		var hash = escapeCharacters( toggle.hash );
+		// var hash = decodeURIComponent( escapeCharacters( toggle.hash ) );
+		// console.log(hash);
+		var hash;
+		try {
+			hash = escapeCharacters( decodeURIComponent( toggle.hash ) );
+		} catch(e) {
+			hash = escapeCharacters( toggle.hash );
+		}
 
 		// If the hash is empty, scroll to the top of the page
 		if ( hash === '#' ) {
