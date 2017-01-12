@@ -493,6 +493,9 @@
 		if ( toggle.hash === root.location.hash ) {
 			event.preventDefault();
 			hashChangeHandler();
+		} else {
+			event.preventDefault();
+			root.location.hash = toggle.hash;
 		}
 
 	};
