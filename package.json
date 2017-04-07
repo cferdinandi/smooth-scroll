@@ -32,6 +32,6 @@
 		"gulp-uglify": "^2.1.2",
 		"gulp-optimize-js": "^1.1.0",
 		"gulp-markdown": "^1.2.0",
-		"gulp-file-include": "^1.1.0"
+		"gulp-file-include": "^0.14.0"
 	}
 }
