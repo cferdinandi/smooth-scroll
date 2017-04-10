@@ -48,7 +48,7 @@ In the footer of your page, after the content, initialize Smooth Scroll. And tha
 
 You can install Smooth Scroll with your favorite package manager.
 
-* **[NPM](https://www.npmjs.org/):** `npm install cferdinandi/smooth-scroll`
+* **[NPM](https://www.npmjs.org/):** `npm install smooth-scroll`
 * **[Bower](http://bower.io/):** `bower install https://github.com/cferdinandi/smooth-scroll.git`
 * **[Component](http://component.io/):** `component install cferdinandi/smooth-scroll`
 
