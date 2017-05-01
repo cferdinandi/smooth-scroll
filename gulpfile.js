@@ -43,7 +43,6 @@ var paths = {
 	docs: {
 		input: 'src/docs/*.{html,md,markdown}',
 		output: 'docs/',
-		cname: 'src/docs/CNAME.txt',
 		templates: 'src/docs/_templates/',
 		assets: 'src/docs/assets/**'
 	}
@@ -148,16 +147,6 @@ gulp.task('copy:assets', ['clean:docs'], function() {
 		.pipe(gulp.dest(paths.docs.output + '/assets'));
 });
 
-// Copy CNAME to docs
-gulp.task('copy:cname', ['clean:docs'], function() {
-	return gulp.src(paths.docs.cname)
-		.pipe(plumber())
-		.pipe(rename({
-			extname: ''
-		}))
-		.pipe(gulp.dest(paths.docs.output));
-});
-
 
 // Remove prexisting content from docs folder
 gulp.task('clean:docs', function () {
@@ -195,8 +184,7 @@ gulp.task('docs', [
 	'clean:docs',
 	'build:docs',
 	'copy:dist',
-	'copy:assets',
-	'copy:cname'
+	'copy:assets'
 ]);
 
 // Compile files and generate docs (default)
