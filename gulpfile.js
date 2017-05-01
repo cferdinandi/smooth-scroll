@@ -147,6 +147,7 @@ gulp.task('copy:assets', ['clean:docs'], function() {
 		.pipe(gulp.dest(paths.docs.output + '/assets'));
 });
 
+
 // Remove prexisting content from docs folder
 gulp.task('clean:docs', function () {
 	return del.sync(paths.docs.output);
