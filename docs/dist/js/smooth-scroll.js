@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v11.0.0: Animate scrolling to anchor links
+ * smooth-scroll v11.0.1: Animate scrolling to anchor links
  * (c) 2017 Chris Ferdinandi
  * GPL-3.0 License
  * http://github.com/cferdinandi/smooth-scroll
@@ -245,8 +245,6 @@
 		if ( settings.easingPatterns[type] ) {
 			pattern = settings.easingPatterns[type]( time );
 		}
-
-		console.log(pattern || time);
 
 		return pattern || time; // no easing, no acceleration
 	};

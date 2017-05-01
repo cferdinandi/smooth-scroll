@@ -239,8 +239,6 @@
 			pattern = settings.easingPatterns[type]( time );
 		}
 
-		console.log(pattern || time);
-
 		return pattern || time; // no easing, no acceleration
 	};
 
