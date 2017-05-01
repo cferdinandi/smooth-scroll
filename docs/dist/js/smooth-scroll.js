@@ -32,7 +32,8 @@
 		speed: 500,
 		easing: 'easeInOutCubic',
 		offset: 0,
-		callback: function () {}
+		before: function () {},
+		after: function () {}
 	};
 
 
@@ -366,7 +367,7 @@
 				adjustFocus( anchor, endLocation, isNum );
 
 				// Run callback after animation complete
-				animateSettings.callback( anchor, toggle );
+				animateSettings.after( anchor, toggle );
 
 			}
 		};
@@ -400,6 +401,9 @@
 		if ( root.pageYOffset === 0 ) {
 			root.scrollTo( 0, 0 );
 		}
+
+		// Run callback before animation starts
+		animateSettings.before( anchor, toggle );
 
 		// Start scrolling animation
 		startAnimateScroll();

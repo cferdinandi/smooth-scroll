@@ -1,17 +1,17 @@
 # License
 
-This plugin has three types of licenses:
+Smooth Scroll has three types of licenses:
 
 1. **[Open Source](#open-source-license)**, for personal and open source projects.
 2. **[Commercial](#commercial-license)**, for commercial projects and applications.
-3. **[OEM](#oem-license)**, for when this plugin will be bundled with a commercial interface builder, SDK, or toolkit.
+3. **[OEM](#oem-license)**, for when this Smooth Scroll will be bundled with a commercial interface builder, SDK, or toolkit.
 
 <hr>
 
 
 ## Open Source License
 
-If you're looking to use this plugin on an open source or personal project, the code is available under the [GPLv3 License](https://gomakethings.com/gpl/). GPLv3 has many terms, but the most important one is that it [requires you to license you entire project under the terms of GPLv3 as well](https://www.gnu.org/licenses/gpl-3.0.html#section5):
+If you're looking to use Smooth Scroll on an open source or personal project, the code is available under the [GPLv3 License](https://gomakethings.com/gpl/). GPLv3 has many terms, but the most important one is that it [requires you to license you entire project under the terms of GPLv3 as well](https://gomakethings.com/gpl/#5-conveying-modified-source-versions):
 
 > You must license the entire work, as a whole, under this License to anyone who comes into possession of a copy. This License will therefore apply, along with any applicable section 7 additional terms, to the whole of the work, and all its parts, regardless of how they are packaged.
 
@@ -22,15 +22,15 @@ You can absolutely use the open source license for commercial projects, but thos
 
 ## Commercial License
 
-The Commercial License let's you use this plugin in commercial projects and applications without the provisions of GPLv3. With this license, your code is kept proprietary.
+The Commercial License let's you use Smooth Scroll in commercial projects and applications without the provisions of GPLv3. With this license, your code is kept proprietary.
 
-- You can use this plugin on as many websites or applications as you'd like.
+- You can use Smooth Scroll on as many websites or applications as you'd like.
 - You can include it in your own commercial products and applications, such as premium CMS themes, plugins, or templates.
-- Customers and users of your products do not need to purchase their own license, as long as they're not developing their own commercial products with this plugin.
+- Customers and users of your products do not need to purchase their own license, as long as they're not developing their own commercial products with Smooth Scroll.
 
 ### Buy a Commercial License
 
-Commercial Licenses are priced based on the number of developers working on a project that uses the plugin. Pay by credit card and instantly receive a PDF of your Commercial License.
+Commercial Licenses are priced based on the number of developers working on a project that uses Smooth Scroll. Pay by credit card and instantly receive a PDF of your Commercial License.
 
 <table class="table-responsive">
 	<thead>
@@ -42,15 +42,15 @@ Commercial Licenses are priced based on the number of developers working on a pr
 	<tbody>
 		<tr>
 			<td markdown="1">A **Single Developer License** can be used by 1 developer. Each individual developer needs to purchase a separate license.</td>
-			<td><a class="btn btn-large btn-block" class="#">Buy <span class="screen-reader">a Single Developer License</span> now for $99</a></td>
+			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=1">Buy <span class="screen-reader">a Single Developer License</span> now for $99</a></td>
 		</tr>
 		<tr>
 			<td markdown="1">A **Team License** can be used by up to 8 developers.</td>
-			<td><a class="btn btn-large btn-block" class="#">Buy <span class="screen-reader">a Team License</span> now for $399</a></td>
+			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=2">Buy <span class="screen-reader">a Team License</span> now for $399</a></td>
 		</tr>
 		<tr>
 			<td markdown="1">An **Organization License** can be used by an unlimited number of developers.</td>
-			<td><a class="btn btn-large btn-block" class="#">Buy <span class="screen-reader">an Organization License</span> now for $999</a></td>
+			<td><a class="btn btn-large btn-block" chref="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=3">Buy <span class="screen-reader">an Organization License</span> now for $999</a></td>
 		</tr>
 	</tbody>
 </table>
@@ -60,7 +60,7 @@ You can read the full text of the Commercial License below. Email me at <a href=
 
 ### The Commercial License Agreement
 
-This Software License Agreement (the “Agreement”) is between Go Make Things, LLC (“Go Make Things”) and You (including your agents and affiliates), a commercial licensee of Go Make Things's software. If you have not purchased a Commercial License from Go Make Things, these terms do not apply to you, and your use of the Go Make Things software is instead governed by the [GNU General Public License, version 3](https://gomakethings.com/gpl/).
+This Software License Agreement (the “Agreement”) is between Go Make Things, LLC (“Go Make Things”) and You (including your agents and affiliates), a commercial licensee of Go Make Things's software. If you have not purchased a Smooth Scroll Commercial License from Go Make Things, these terms do not apply to you, and your use of the Go Make Things software is instead governed by the [GNU General Public License, version 3](https://gomakethings.com/gpl/).
 
 #### 1. Definitions
 
@@ -156,6 +156,6 @@ Software Updates and Upgrades. The license granted herein applies only to the ve
 
 ## OEM License
 
-If you'll be including this plugin in a project that can be used to build new products, websites, or applications&mdash;such as a commercial interface builder, SDK, or toolkit&mdash;you need to purchase an OEM License.
+If you'll be including Smooth Scroll in a project that can be used to build new products, websites, or applications&mdash;such as a commercial interface builder, SDK, or toolkit&mdash;you need to purchase an OEM License.
 
 The OEM License is customized for you. Please content me <a href="mailto:&#099;&#104;ri&#115;&#064;g&#111;mak&#101;t&#104;&#105;&#110;g&#115;&#046;&#099;&#111;m">&#99;h&#114;&#105;s&#64;go&#109;&#97;&#107;&#101;&#116;&#104;in&#103;&#115;.&#99;&#111;&#109;</a> to discuss your project.

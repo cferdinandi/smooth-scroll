@@ -54,6 +54,22 @@
 					</header>
 
 				<main id="main" class="grid-three-fourths padding-top sticky-body tabindex" tabindex="-1" data-toc-content><h1 id="getting-started">Getting Started</h1>
+<p>Compiled and production-ready code can be found in the <code>dist</code> directory. The <code>src</code> directory contains development code.</p>
+<h2 id="1-include-smooth-scroll-on-your-site-">1. Include Smooth Scroll on your site.</h2>
+<pre><code class="lang-markup">&lt;script src=&quot;dist/js/smooth-scroll.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<h2 id="2-add-the-markup-to-your-html-">2. Add the markup to your HTML.</h2>
+<p>Turn anchor links into Smooth Scroll links by adding the <code>[data-scroll]</code> data attribute. Give the anchor location an ID just like you normally would.</p>
+<pre><code class="lang-markup">&lt;a data-scroll href=&quot;#bazinga&quot;&gt;Anchor Link&lt;/a&gt;
+...
+&lt;span id=&quot;bazinga&quot;&gt;Bazinga!&lt;/span&gt;
+</code></pre>
+<h2 id="3-initialize-smooth-scroll-">3. Initialize Smooth Scroll.</h2>
+<p>In the footer of your page, after the content, initialize Smooth Scroll. And that&#39;s it, you&#39;re done. Nice work!</p>
+<pre><code class="lang-markup">&lt;script&gt;
+    smoothScroll.init();
+&lt;/script&gt;
+</code></pre>
 					</section><!-- /.container -->
 
 					<footer class="bg-muted padding-top padding-bottom">
@@ -80,7 +96,13 @@
 				navClass: 'list-unstyled list-nav',
 			});
 			smoothScroll.init({
-				selector: 'a[href*="#"]'
+				selector: 'a[href*="#"]',
+				before: function () {
+					alert('about to run!');
+				},
+				after: function () {
+					alert('finished!');
+				}
 			})
 			gumshoe.init({
 				offset: 5

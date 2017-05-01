@@ -54,6 +54,16 @@
 					</header>
 
 				<main id="main" class="grid-three-fourths padding-top sticky-body tabindex" tabindex="-1" data-toc-content><h1 id="browser-compatibility">Browser Compatibility</h1>
+<p>Smooth Scroll works in all modern browsers, and IE 9 and above.</p>
+<p>Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhancement. If the JavaScript file fails to load, or if your site is viewed on older and less capable browsers, anchor links will jump the way they normally would.</p>
+<hr>
+
+
+<h2 id="known-issues">Known Issues</h2>
+<h3 id="-body-styling"><code>&lt;body&gt;</code> styling</h3>
+<p>If the <code>&lt;body&gt;</code> element has been assigned a height of <code>100%</code> or <code>overflow: hidden</code>, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The <code>&lt;body&gt;</code> element can have a fixed, non-percentage based height (ex. <code>500px</code>), or a height of <code>auto</code>, and an <code>overflow</code> of <code>visible</code>.</p>
+<h3 id="animating-from-the-bottom">Animating from the bottom</h3>
+<p>Animated scrolling links at the very bottom of the page (example: a &quot;scroll to top&quot; link) will stop animated almost immediately after they start when using certain easing patterns. This is an issue that&#39;s been around for a while and I&#39;ve yet to find a good fix for it. I&#39;ve found that <code>easeOut*</code> easing patterns work as expected, but other patterns can cause issues. <a href="https://github.com/cferdinandi/smooth-scroll/issues/49">See this discussion for more details.</a></p>
 					</section><!-- /.container -->
 
 					<footer class="bg-muted padding-top padding-bottom">
@@ -80,7 +90,13 @@
 				navClass: 'list-unstyled list-nav',
 			});
 			smoothScroll.init({
-				selector: 'a[href*="#"]'
+				selector: 'a[href*="#"]',
+				before: function () {
+					alert('about to run!');
+				},
+				after: function () {
+					alert('finished!');
+				}
 			})
 			gumshoe.init({
 				offset: 5

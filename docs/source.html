@@ -54,6 +54,24 @@
 					</header>
 
 				<main id="main" class="grid-three-fourths padding-top sticky-body tabindex" tabindex="-1" data-toc-content><h1 id="working-with-the-source-files">Working with the Source Files</h1>
+<p>If you would prefer, you can work with the development code in the <code>src</code> directory using the included <a href="http://gulpjs.com/">Gulp build system</a>. This compiles, lints, and minifies code.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Make sure these are installed first.</p>
+<ul>
+<li><a href="http://nodejs.org">Node.js</a></li>
+<li><a href="http://gulpjs.com">Gulp</a> <code>sudo npm install -g gulp</code></li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<ol>
+<li>In bash/terminal/command line, <code>cd</code> into your project directory.</li>
+<li>Run <code>npm install</code> to install required files.</li>
+<li>When it&#39;s done installing, run one of the task runners to get going:<ul>
+<li><code>gulp</code> manually compiles files.</li>
+<li><code>gulp watch</code> automatically compiles files when changes are made and applies changes using <a href="http://livereload.com/">LiveReload</a>.</li>
+</ul>
+</li>
+</ol>
+<p>Compiled and production-ready code can be found in the <code>dist</code> directory. The <code>src</code> directory contains development code.</p>
 					</section><!-- /.container -->
 
 					<footer class="bg-muted padding-top padding-bottom">
@@ -80,7 +98,13 @@
 				navClass: 'list-unstyled list-nav',
 			});
 			smoothScroll.init({
-				selector: 'a[href*="#"]'
+				selector: 'a[href*="#"]',
+				before: function () {
+					alert('about to run!');
+				},
+				after: function () {
+					alert('finished!');
+				}
 			})
 			gumshoe.init({
 				offset: 5
