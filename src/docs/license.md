@@ -60,7 +60,7 @@ You can read the full text of the Commercial License below. Email me at <a href=
 
 ### The Commercial License Agreement
 
-This Software License Agreement (the “Agreement”) is between Go Make Things, LLC (“Go Make Things”) and You (including your agents and affiliates), a commercial licensee of Go Make Things's software. If you have not purchased a Smooth Scroll Commercial License from Go Make Things, these terms do not apply to you, and your use of the Go Make Things software is instead governed by the [GNU General Public License, version 3](https://gomakethings.com/gpl/).
+This Software License Agreement (the **“Agreement”**) is between Go Make Things, LLC (**“Go Make Things”**) and You (including your agents and affiliates), a commercial licensee of Go Make Things's software. If you have not purchased a Smooth Scroll Commercial License from Go Make Things, these terms do not apply to you, and your use of the Go Make Things software is instead governed by the [GNU General Public License, version 3](https://gomakethings.com/gpl/).
 
 #### 1. Definitions
 
@@ -68,7 +68,7 @@ This Software License Agreement (the “Agreement”) is between Go Make Things,
 - **“End User”** means an end user of Your Application who acquires a license to such solely for their own use and not for distribution, resale, user interface design, or software development purposes.
 - **“Licensed Developer”** shall mean an individual person permitted to use the Software and make Modifications for your Applications, whether such person is Your employee or a consultant or contractor providing services to You.
 - **“Modification”** means any revision, adaptation, or derivative of the Software produced by You.
-- The **“Software”** means Isotope version 3.
+- The **“Software”** means Smooth Scroll version 11.
 
 #### 2. Commercial license grant
 
@@ -77,7 +77,7 @@ Subject to the terms of this Agreement, Go Make Things grants to You a revocable
 - for You to distribute the Software and/or Modifications to an unlimited number of End Users solely as integrated into the Applications;
 - and for End Users to use the Software as incorporated into Your Applications in accordance with the terms of this Agreement.
 
-You are entitled to receive all updates to the major version of the Software licensed by you, as well as any later version of the Software that Go Make Things, in writing, explicitly authorizes you to use. (For illustration purposes only, if you purchased a license for version 3.0, this licenses authorizes you to use version 3.9, but not 4.0.) Go Make Things makes no representation that any update will be compatible with your Application.
+You are entitled to receive all updates to the major version of the Software licensed by you, as well as any later version of the Software that Go Make Things, in writing, explicitly authorizes you to use. (For illustration purposes only, if you purchased a license for version 2.0, this licenses authorizes you to use version 2.9, but not 3.0.) Go Make Things makes no representation that any update will be compatible with your Application.
 
 #### 3. Ownership
 
@@ -145,7 +145,7 @@ Software Updates and Upgrades. The license granted herein applies only to the ve
 
 **Severability.** In the event that any portion of this Agreement is held to be unenforceable, such portions shall not limit or otherwise modify or affect any other portion of this Agreement.
 
-**Modification; Waiver.** This Agreement cannot be amended except by a written instrument executed by each of the parties. The failure of either party to enforce any provision of this Agreement may not be deemed a waiver of that or any other provision of this Agreement.
+**Modification; Waiver.** This Agreement cannot be amended except by a written instrument executed by Go Make Things.  Go Make Things reserves the right, at any time and from time to time, to update, revise, supplement, and otherwise modify this Agreement and to impose new or additional rules, policies, terms, or conditions on your use of the Software. Such updates, revisions, supplements, modifications, and additional rules, policies, terms, and conditions (collectively referred to in this Agreement as “Additional Terms”) will be effective immediately and incorporated into this Agreement. You will be notified of any Additional Terms in writing. Your continued use of the Software following will be deemed to constitute your acceptance of any and all such Additional Terms. All Additional Terms are hereby incorporated into this Agreement by this reference.   The failure of Go Make Things to enforce any provision of this Agreement may not be deemed a waiver of that or any other provision of this Agreement.
 
 **Governing Law.** This Agreement is subject to, and shall be interpreted and enforced in accordance with, the laws of the Commonwealth of Massachusetts in all respects without regard to conflict of law principles. The Courts of Bristol County, Massachusetts and Norfolk County, Massachusetts shall be the sole and exclusive Courts in which either party may attempt to enforce or establish the existence or scope of any rights, benefits or obligations under this Agreement. The UN Convention on Contracts for the International Sale of Goods is expressly excluded.
 
