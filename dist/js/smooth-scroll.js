@@ -1,7 +1,7 @@
 /*!
- * smooth-scroll v10.3.1: Animate scrolling to anchor links
+ * smooth-scroll v11.0.0: Animate scrolling to anchor links
  * (c) 2017 Chris Ferdinandi
- * MIT License
+ * GPL-3.0 License
  * http://github.com/cferdinandi/smooth-scroll
  */
 
@@ -27,12 +27,19 @@
 
 	// Default settings
 	var defaults = {
+		// Selectors
 		selector: '[data-scroll]',
 		selectorHeader: null,
+
+		// Speed & Easing
 		speed: 500,
-		easing: 'easeInOutCubic',
 		offset: 0,
-		callback: function () {}
+		easing: 'easeInOutCubic',
+		easingPatterns: {},
+
+		// Callback API
+		before: function () {},
+		after: function () {}
 	};
 
 
@@ -219,6 +226,8 @@
 	 */
 	var easingPattern = function ( type, time ) {
 		var pattern;
+
+		// Default Easing Patterns
 		if ( type === 'easeInQuad' ) pattern = time * time; // accelerating from zero velocity
 		if ( type === 'easeOutQuad' ) pattern = time * (2 - time); // decelerating to zero velocity
 		if ( type === 'easeInOutQuad' ) pattern = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
@@ -231,6 +240,14 @@
 		if ( type === 'easeInQuint' ) pattern = time * time * time * time * time; // accelerating from zero velocity
 		if ( type === 'easeOutQuint' ) pattern = 1 + (--time) * time * time * time * time; // decelerating to zero velocity
 		if ( type === 'easeInOutQuint' ) pattern = time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
+
+		// Custom Easing Patterns
+		if ( settings.easingPatterns[type] ) {
+			pattern = settings.easingPatterns[type]( time );
+		}
+
+		console.log(pattern || time);
+
 		return pattern || time; // no easing, no acceleration
 	};
 
@@ -366,7 +383,7 @@
 				adjustFocus( anchor, endLocation, isNum );
 
 				// Run callback after animation complete
-				animateSettings.callback( anchor, toggle );
+				animateSettings.after( anchor, toggle );
 
 			}
 		};
@@ -400,6 +417,9 @@
 		if ( root.pageYOffset === 0 ) {
 			root.scrollTo( 0, 0 );
 		}
+
+		// Run callback before animation starts
+		animateSettings.before( anchor, toggle );
 
 		// Start scrolling animation
 		startAnimateScroll();

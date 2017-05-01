@@ -53,68 +53,26 @@
 						</nav>
 					</header>
 
-				<main id="main" class="grid-three-fourths padding-top sticky-body tabindex" tabindex="-1" data-toc-content><h1 id="smooth-scroll">Smooth Scroll</h1>
-<p>Smooth Scroll is a lightweight script to animate scrolling to anchor links. It works great with <a href="https://github.com/cferdinandi/gumshoe">Gumshoe</a>.</p>
-<hr>
-
-<h2 id="demo">Demo</h2>
-<p>
-    <strong>Linear</strong><br>
-    <a data-scroll data-options='{ "easing": "linear" }' href="#bazinga">Linear (no other options)</a><br>
-</p>
-
-<p>
-    <strong>Ease-In</strong><br>
-    <a data-scroll data-options='{ "easing": "easeInQuad" }' href="#bazinga">Quad</a><br>
-    <a data-scroll data-options='{ "easing": "easeInCubic" }' href="#bazinga">Cubic</a><br>
-    <a data-scroll data-options='{ "easing": "easeInQuart" }' href="#bazinga">Quart</a><br>
-    <a data-scroll data-options='{ "easing": "easeInQuint" }' href="#bazinga">Quint</a>
-</p>
-
-<p>
-    <strong>Ease-In-Out</strong><br>
-    <a data-scroll data-options='{ "easing": "easeInOutQuad" }' href="#bazinga">Quad</a><br>
-    <a data-scroll data-options='{ "easing": "easeInOutCubic" }' href="#bazinga">Cubic</a><br>
-    <a data-scroll data-options='{ "easing": "easeInOutQuart" }' href="#bazinga">Quart</a><br>
-    <a data-scroll data-options='{ "easing": "easeInOutQuint" }' href="#bazinga">Quint</a>
-</p>
-
-<p>
-    <strong>Ease-Out</strong><br>
-    <a data-scroll data-options='{ "easing": "easeOutQuad" }' href="#bazinga">Quad</a><br>
-    <a data-scroll data-options='{ "easing": "easeOutCubic" }' href="#bazinga">Cubic</a><br>
-    <a data-scroll data-options='{ "easing": "easeOutQuart" }' href="#bazinga">Quart</a><br>
-    <a data-scroll data-options='{ "easing": "easeOutQuint" }' href="#bazinga">Quint</a>
-</p>
-
-<p>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
-</p>
-
-<p>
-    <strong>Non-ASCII Characters</strong><br>
-    <a data-scroll href="#中文">中文</a>
-</p>
-
-<p>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
-</p>
-
-<p id="中文">中文</p>
-
-<p id="bazinga"><a data-scroll href="#1@#%^-bottom">Bazinga!</a></p>
-
-<p>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
-</p>
-
-<p id="1@#%^-bottom"><a data-scroll data-options='{ "easing": "easeOutCubic" }' href="#">Back to the top</a></p>					</section><!-- /.container -->
+				<main id="main" class="grid-three-fourths padding-top sticky-body tabindex" tabindex="-1" data-toc-content><h1 id="working-with-the-source-files">Working with the Source Files</h1>
+<p>If you would prefer, you can work with the development code in the <code>src</code> directory using the included <a href="http://gulpjs.com/">Gulp build system</a>. This compiles, lints, and minifies code.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Make sure these are installed first.</p>
+<ul>
+<li><a href="http://nodejs.org">Node.js</a></li>
+<li><a href="http://gulpjs.com">Gulp</a> <code>sudo npm install -g gulp</code></li>
+</ul>
+<h2 id="quick-start">Quick Start</h2>
+<ol>
+<li>In bash/terminal/command line, <code>cd</code> into your project directory.</li>
+<li>Run <code>npm install</code> to install required files.</li>
+<li>When it&#39;s done installing, run one of the task runners to get going:<ul>
+<li><code>gulp</code> manually compiles files.</li>
+<li><code>gulp watch</code> automatically compiles files when changes are made and applies changes using <a href="http://livereload.com/">LiveReload</a>.</li>
+</ul>
+</li>
+</ol>
+<p>Compiled and production-ready code can be found in the <code>dist</code> directory. The <code>src</code> directory contains development code.</p>
+					</section><!-- /.container -->
 
 					<footer class="bg-muted padding-top padding-bottom">
 

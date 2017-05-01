@@ -1,6 +1,6 @@
-# How to contribute
+# Bugs, Questions, and Pull Requests
 
-I'm delighted that you're helping make this open source project better. Here are a few quick guidelines to make this an easier and better process for everyone.
+A few quick guidelines to make this an easier and better process for everyone.
 
 
 

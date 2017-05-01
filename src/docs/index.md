@@ -1,3 +1,11 @@
+# Smooth Scroll
+
+Smooth Scroll is a lightweight script to animate scrolling to anchor links. It works great with [Gumshoe](https://github.com/cferdinandi/gumshoe).
+
+<hr>
+
+## Demo
+
 <p>
 	<strong>Linear</strong><br>
 	<a data-scroll data-options='{ "easing": "linear" }' href="#bazinga">Linear (no other options)</a><br>

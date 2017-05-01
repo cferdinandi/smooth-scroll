@@ -1,13 +1,38 @@
+					</section><!-- /.container -->
 
-			</section>
-		</main>
+					<footer class="bg-muted padding-top padding-bottom">
+
+							<hr>
+
+							<p class="text-small text-muted">Built by <a href="https://gomakethings.com">Chris Ferdinandi</a>. Copyright Go Make Things, LLC. The code is available under the <a href="https://gomakethings.com/gpl/">GPLv3 License</a>. <a href="https://github.com/cferdinandi/smooth-scroll">Smooth Scroll on GitHub.</a></p>
+
+					</footer>
+				</main>
+			</div><!-- /.row -->
+		</div><!-- /.container -->
 
 		<!-- Javascript -->
+		<script src="assets/js/toc.js"></script>
+		<script src="assets/js/highlight-active-nav.js"></script>
 		<script src="dist/js/smooth-scroll.js"></script>
+		<script src="assets/js/gumshoe.min.js"></script>
+		<script src="assets/js/prism.js"></script>
 		<script>
-			smoothScroll.init();
+			tableOfContents.init({
+				heading: 'In This Section',
+				headingClass: 'h3',
+				navClass: 'list-unstyled list-nav',
+			});
+			smoothScroll.init({
+				selector: 'a[href*="#"]'
+			})
+			gumshoe.init({
+				offset: 5
+			});
+			highlightActiveNav.init({
+				urlPrefix: '/kraken/'
+			});
 		</script>
-
 
 	</body>
 </html>
