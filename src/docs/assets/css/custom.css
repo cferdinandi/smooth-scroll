@@ -1,0 +1,176 @@
+/**
+ * Typography
+ */
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+
+/**
+ * Background color
+ */
+
+@media (min-width: 40em) {
+	body {
+		background-image: -webkit-linear-gradient(left, #f7f7f7 0%, #f7f7f7 25%, transparent 25%, transparent 100%);
+		background-image: linear-gradient(to right, #f7f7f7 0, #f7f7f7 25%, transparent 25%, transparent 100%);
+	}
+}
+
+
+/**
+ * Navigation
+ */
+
+@media (max-width: 40em) {
+	.list-nav {
+		margin-left: -0.25em;
+		margin-right: -0.25em;
+		padding: 0;
+	}
+
+	.list-nav > li {
+		display: inline-block;
+		margin-left: 0.25em;
+		margin-right: 0.25em;
+	}
+
+	.list-nav > li:before {
+		content: "\00b7";
+		margin-right: 0.5em;
+	}
+
+	.list-nav > li:first-child:before {
+		content: "";
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 40em) {
+	.nav {
+		border-bottom: 1px solid #e5e5e5;
+	}
+}
+
+.nav-section a.active {
+	color: #808080;
+}
+
+/* Disable current page nav */
+a.nav-active {
+	pointer-events: none;
+	color: #808080;
+	cursor: not-allowed;
+}
+
+/* Sticky nav */
+@media (min-width: 40em) {
+	.sticky-header {
+		background-color: #f7f7f7;
+		bottom: 0;
+		overflow-y: auto;
+		position: fixed;
+		top: 0;
+		width: 22.2%;
+	}
+
+	.sticky-body {
+		margin-left: 27.8%;
+	}
+}
+
+@media (min-width: 80em) {
+	.sticky-header {
+		width: 17.75em;
+	}
+}
+
+
+/**
+ * Buttons
+ */
+
+.btn {
+	background-color: #f7272f;
+	border-color: #f7272f;
+}
+
+a.btn:active,
+a.btn:focus,
+a.btn:hover {
+	background-color: #cb070e;
+	border-color: #cb070e;
+}
+
+
+
+/**
+ * Prism
+ * Code syntax highlighting by Lea Verou.
+ * http://prismjs.com/
+ */
+
+@media screen {
+
+	.token.comment,
+	.token.prolog,
+	.token.doctype,
+	.token.cdata {
+		color: slategray;
+	}
+
+	.token.punctuation {
+		color: #999;
+	}
+
+	.token.property,
+	.token.tag,
+	.token.boolean,
+	.token.number,
+	.token.constant,
+	.token.symbol {
+		color: #905;
+	}
+
+	.token.selector,
+	.token.attr-name,
+	.token.string,
+	.token.builtin {
+		color: #690;
+	}
+
+	.token.operator,
+	.token.entity,
+	.token.url,
+	.language-css .token.string,
+	.style .token.string,
+	.token.variable {
+		color: #a67f59;
+	}
+
+	.token.atrule,
+	.token.attr-value,
+	.token.keyword {
+		color: #07a;
+	}
+
+
+	.token.regex,
+	.token.important {
+		color: #e90;
+	}
+
+	.token.important {
+		font-weight: bold;
+	}
+
+	.token.entity {
+		cursor: help;
+	}
+
+}

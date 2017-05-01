@@ -5,95 +5,160 @@
 		<meta charset="utf-8">
 		<title>Smooth Scroll</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="A lightweight script to animate scrolling to anchor links.">
 
 		<!-- stylesheets -->
-		<style type="text/css">
-			body {
-				max-width: 40em;
-				width: 88%;
-				margin-left: auto;
-				margin-right: auto;
-			}
-		</style>
+		<link rel="stylesheet" href="assets/css/main.css" type="text/css">
+		<link rel="stylesheet" href="assets/css/custom.css" type="text/css">
 	</head>
 
 	<body>
 
-		<main id="top">
+		<!-- Old Browser Warning -->
+		<!--[if lt IE 9]>
+		    <section class="container">
+		        Did you know that your web browser is a bit old? Some of the content on this site might not work right as a result. <a href="http://whatbrowser.org">Upgrade your browser</a> for a faster, better, and safer web experience.
+		    </section>
+		<![endif]-->
 
-			<nav>
-				<h1>Smooth Scroll</h1>
-				<p><a href="https://github.com/cferdinandi/smooth-scroll">GitHub</a></p>
-				<hr>
-			</nav>
+		<div class="container">
+			<div class="row">
 
-			<section>
-<p>
-    <strong>Linear</strong><br>
-    <a data-scroll data-options='{ "easing": "linear" }' href="#bazinga">Linear (no other options)</a><br>
-</p>
+					<header class="grid-fourth sticky-header padding-top ">
+						<!-- Skip Nav Link -->
+						<nav>
+							<a class="screen-reader screen-reader-focusable" href="#main">Skip to content</a>
+						</nav>
 
-<p>
-    <strong>Ease-In</strong><br>
-    <a data-scroll data-options='{ "easing": "easeInQuad" }' href="#bazinga">Quad</a><br>
-    <a data-scroll data-options='{ "easing": "easeInCubic" }' href="#bazinga">Cubic</a><br>
-    <a data-scroll data-options='{ "easing": "easeInQuart" }' href="#bazinga">Quart</a><br>
-    <a data-scroll data-options='{ "easing": "easeInQuint" }' href="#bazinga">Quint</a>
-</p>
+						<p>
+							<strong>
+								<a href="index">
+									<span class="text-large">Smooth Scroll</span>
+								</a>
+							</strong><br>
+							<span class="text-small text-muted">Version 11</span>
+						</p>
+						<nav class="nav">
+							<ul class="list-unstyled list-nav nav-primary" data-nav-highlight>
+								<li><a href="https://github.com/cferdinandi/smooth-scroll/archive/master.zip">Download</a></li>
+								<li><a href="index">Demo</a></li>
+								<li><a href="setup">Getting Started</a></li>
+								<li><a href="source">Working with Source</a></li>
+								<li><a href="options">Options &amp; Settings</a></li>
+								<li><a href="browsers">Browser Compatibility</a></li>
+								<li><a href="license">License</a></li>
+							</ul>
 
-<p>
-    <strong>Ease-In-Out</strong><br>
-    <a data-scroll data-options='{ "easing": "easeInOutQuad" }' href="#bazinga">Quad</a><br>
-    <a data-scroll data-options='{ "easing": "easeInOutCubic" }' href="#bazinga">Cubic</a><br>
-    <a data-scroll data-options='{ "easing": "easeInOutQuart" }' href="#bazinga">Quart</a><br>
-    <a data-scroll data-options='{ "easing": "easeInOutQuint" }' href="#bazinga">Quint</a>
-</p>
+							<div class="nav-section" data-toc data-gumshoe></div>
+						</nav>
+					</header>
 
-<p>
-    <strong>Ease-Out</strong><br>
-    <a data-scroll data-options='{ "easing": "easeOutQuad" }' href="#bazinga">Quad</a><br>
-    <a data-scroll data-options='{ "easing": "easeOutCubic" }' href="#bazinga">Cubic</a><br>
-    <a data-scroll data-options='{ "easing": "easeOutQuart" }' href="#bazinga">Quart</a><br>
-    <a data-scroll data-options='{ "easing": "easeOutQuint" }' href="#bazinga">Quint</a>
-</p>
+				<main id="main" class="grid-three-fourths padding-top sticky-body tabindex" tabindex="-1" data-toc-content><h1 id="kraken">Kraken</h1>
+<p>Kraken is a lightweight, mobile-first boilerplate for front-end web developers.</p>
+<h2 id="what-s-included-">What&#39;s included?</h2>
+<p>Designed to be lightweight and style agnostic, Kraken includes just the essentials.</p>
+<h3 id="essential-components">Essential Components</h3>
+<p>Lightweight, style-agnostic components to kick-start your next project.</p>
+<ul>
+<li>Normalize.css</li>
+<li>A responsive, mobile-first grid</li>
+<li>A well-designed, fluid typographic scale</li>
+<li>CSS buttons</li>
+<li>Simple table styling, with pure CSS responsive tables</li>
+<li>Common form components</li>
+</ul>
+<h3 id="developer-tools">Developer Tools</h3>
+<p>Kraken is powered by <a href="http://gulpjs.com/">Gulp.js</a>, a build system that minifies and concatenates your <a href="http://sass-lang.com/">Sass</a> and JavaScript, auto-prefixes your CSS, runs <a href="http://jasmine.github.io/">unit tests</a> on your scripts, optimizes your SVGs, and creates SVG sprites.</p>
+<p>It also includes a style guide generator to help you quickly bring your team or clients up-to-speed.</p>
+<h3 id="add-ons">Add-Ons</h3>
+<p>While the base boilerplate is deliberately lightweight, <a href="odds-and-ends.html#add-ons">a growing collection of add-ons</a> lets you make Kraken as robust—or simple—as you want it to be. Create custom-built sites and applications faster.</p>
+<hr>
 
-<p>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
-</p>
 
-<p>
-    <strong>Non-ASCII Characters</strong><br>
-    <a data-scroll href="#中文">中文</a>
-</p>
+<h2 id="the-kraken-approach">The Kraken Approach</h2>
+<p>Kraken is a lightweight boilerplate for front-end web developers. It&#39;s built to be flexible and modular, with performance and accessibility in mind.</p>
+<h3 id="ugly-on-purpose">Ugly on purpose</h3>
+<p>Out-of-the-box, Kraken is a bit ugly. That&#39;s intentional.</p>
+<p>Kraken isn&#39;t supposed to be a finished product. It&#39;s a starting point that you can adapt to any project you&#39;re working on. Add components. Remove components. Tweak the colors and font stack. Make Kraken your own.</p>
+<h3 id="mobile-first">Mobile-First</h3>
+<p>Kraken is built mobile-first. The base structure is a fully-fluid, single-column layout. It uses <code>@media (min-width: whatever)</code> to add a grid-based layout to bigger screens.</p>
+<p>Think of it as progressive enhancement for the layout.</p>
+<p>Kraken also includes feature detection for things like SVG support. Just like the layout, those are served to browsers that support them, while fallback text is supplied to older and less capable browsers.</p>
+<h3 id="object-oriented-css">Object Oriented CSS</h3>
+<p>Kraken takes an <a href="http://www.slideshare.net/stubbornella/object-oriented-css">OOCSS approach</a> to web development.</p>
+<p>Throughout the stylesheet, you&#39;ll see base styles and modifying styles. For example, <code>.btn</code> sets the default button styles and behavior, while <code>.btn-secondary</code> changes the color and <code>.btn-large</code> changes the size. A big button with secondary colors would look like this:</p>
+<button class="btn btn-secondary btn-large">A Big Button</button>
 
-<p>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
-</p>
+<pre><code class="lang-markup">&lt;button class=&quot;btn btn-secondary btn-large&quot;&gt;A Big Button&lt;/button&gt;
+</code></pre>
+<p>Classes can be mixed, matched and reused throughout a project.</p>
+<hr>
 
-<p id="中文">中文</p>
 
-<p id="bazinga"><a data-scroll href="#1@#%^-bottom">Bazinga!</a></p>
+<h2 id="what-s-new-in-kraken-7-">What&#39;s new in Kraken 7?</h2>
+<dl>
+    <dt>Switched to Normalize.css</dt>
+    <dd><a href="http://meyerweb.com/eric/tools/css/reset/">Meyer&#39;s CSS reset</a> is great, but it can create styling issues when doing things like <a href="http://gomakethings.com/inlining-critical-css-for-better-web-performance/">inlining critical path CSS</a>. <a href="https://necolas.github.io/normalize.css/">Normalize.css</a> is a lightweight alternative that nudges and tweaks browser styles instead of resetting everything to zero.</dd>
 
-<p>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
-    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
-</p>
+    <dt>Table Styles</dt>
+    <dd>In previous versions of Kraken, table styling was an optional add-on. Now, they&#39;re baked right in, and include CSS-only responsive tables for smaller viewports.</dd>
 
-<p id="1@#%^-bottom"><a data-scroll data-options='{ "easing": "easeOutCubic" }' href="#">Back to the top</a></p>
-			</section>
-		</main>
+    <dt>Search Form Styling</dt>
+    <dd>Kraken now includes <a href="components.html#search-forms">classes for custom search form styles</a>.</dd>
+
+    <dt>Switched to LibSass</dt>
+    <dd>Now that <a href="http://sass-lang.com/libsass">LibSass</a> supports most Sass 3 APIs, it&#39;s time to make the switch. This gets you faster builds, and no Ruby dependency.</dd>
+
+    <dt>Removed directionless space nudge-and-tweak classes</dt>
+    <dd>The <code>.no-margin</code> and <code>.no-padding</code> classes are gone. You should use <code>.no-padding-top</code>, <code>.no-margin-bottom</code>, <a href="components.html#alignment-spacing-visibility">and so on</a> to suite your needs.</dd>
+</dl>
+
+<hr>
+
+
+<h2 id="browser-compatibility">Browser Compatibility</h2>
+<p>The web is for everyone, but <a href="http://bradfrostweb.com/blog/mobile/support-vs-optimization/">support is not the same as optimization</a>.</p>
+<p>Rather than trying to provide the same level of functionality for older browsers, Kraken uses progressive enhancement to serve a basic experience to all browsers (even Netscape and IE 5). Newer browsers that support modern APIs and techniques get a better layout, more visually attractive elements, and an enhanced experience.</p>
+<p>Kraken works in all browsers, but it&#39;s optimized for modern browsers and IE 9+.</p>
+<h3 id="vendor-prefixing">Vendor Prefixing</h3>
+<p>Kraken uses <a href="https://github.com/postcss/autoprefixer">Autoprefixer</a>, and is configured to only add prefixes if required by the last two versions of a browser.</p>
+<p>If a feature isn&#39;t working (for example, the grid does not work in Firefox 28 and lower), it may simply need a vendor prefix. You can add these manually, or adjust the Autoprefixer settings in <code>gulpfile.js</code> if you&#39;re working with the source code.</p>
+<p>For more details on when support for specific features were added to different browsers, consult <a href="http://caniuse.com/">Can I Use</a>.</p>
+					</section><!-- /.container -->
+
+					<footer class="bg-muted padding-top padding-bottom">
+
+							<hr>
+
+							<p class="text-small text-muted">Built by <a href="https://gomakethings.com">Chris Ferdinandi</a>. Copyright Go Make Things, LLC. The code is available under the <a href="https://gomakethings.com/gpl/">GPLv3 License</a>. <a href="https://github.com/cferdinandi/smooth-scroll">Smooth Scroll on GitHub.</a></p>
+
+					</footer>
+				</main>
+			</div><!-- /.row -->
+		</div><!-- /.container -->
 
 		<!-- Javascript -->
+		<script src="assets/js/toc.js"></script>
+		<script src="assets/js/highlight-active-nav.js"></script>
 		<script src="dist/js/smooth-scroll.js"></script>
+		<script src="assets/js/gumshoe.min.js"></script>
+		<script src="assets/js/prism.js"></script>
 		<script>
-			smoothScroll.init();
+			tableOfContents.init({
+				heading: 'In This Section',
+				headingClass: 'h3',
+				navClass: 'list-unstyled list-nav',
+			});
+			smoothScroll.init({
+				selector: 'a[href*="#"]'
+			})
+			gumshoe.init({
+				offset: 5
+			});
+			highlightActiveNav.init({
+				urlPrefix: '/kraken/'
+			});
 		</script>
-
 
 	</body>
 </html>

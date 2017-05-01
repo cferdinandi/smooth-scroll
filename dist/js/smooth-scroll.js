@@ -1,7 +1,7 @@
 /*!
- * smooth-scroll v10.3.1: Animate scrolling to anchor links
+ * smooth-scroll v11.0.0: Animate scrolling to anchor links
  * (c) 2017 Chris Ferdinandi
- * MIT License
+ * GPL-3.0 License
  * http://github.com/cferdinandi/smooth-scroll
  */
 
