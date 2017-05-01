@@ -23,7 +23,7 @@ smoothScroll.init({
 	// Must be an object with the easing name as the key
 	// Each pattern must be a function, with `time` as the argument, that returns the pattern
 	easingPatterns: {
-	    fakeEasing: function (time) {
+	    myCustomEasingPattern: function (time) {
 	        return time * (2 - time);
 	    }
 	}
@@ -34,7 +34,7 @@ smoothScroll.init({
 });
 ```
 
-***Note:*** *To programatically add Smooth Scroll to all anchor links on a page, pass `selector: 'a[href*="#"]'` into `init`.*
+<em markdown="1">**Note:** To programatically add Smooth Scroll to all anchor links on a page, pass `selector: 'a[href*="#"]'` into `init`.</em>
 
 ### Easing Options
 

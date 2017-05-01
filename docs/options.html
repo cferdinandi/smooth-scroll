@@ -73,7 +73,7 @@
     // Must be an object with the easing name as the key
     // Each pattern must be a function, with `time` as the argument, that returns the pattern
     easingPatterns: {
-        fakeEasing: function (time) {
+        myCustomEasingPattern: function (time) {
             return time * (2 - time);
         }
     }
@@ -83,7 +83,7 @@
     after: function (anchor, toggle) {} // Function to run after scrolling completes
 });
 </code></pre>
-<p><strong><em>Note:</em></strong> <em>To programatically add Smooth Scroll to all anchor links on a page, pass `selector: &#39;a[href</em>=&quot;#&quot;]&#39;<code>into</code>init`.*</p>
+<p><em markdown="1"><strong>Note:</strong> To programatically add Smooth Scroll to all anchor links on a page, pass <code>selector: &#39;a[href*=&quot;#&quot;]&#39;</code> into <code>init</code>.</em></p>
 <h3 id="easing-options">Easing Options</h3>
 <p><strong>Linear</strong>
 <em>Moves at the same speed from start to finish.</em></p>
