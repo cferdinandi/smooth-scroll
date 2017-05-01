@@ -98,13 +98,7 @@
 				navClass: 'list-unstyled list-nav',
 			});
 			smoothScroll.init({
-				selector: 'a[href*="#"]',
-				before: function () {
-					alert('about to run!');
-				},
-				after: function () {
-					alert('finished!');
-				}
+				selector: 'a[href*="#"]'
 			})
 			gumshoe.init({
 				offset: 5

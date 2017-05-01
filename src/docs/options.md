@@ -10,11 +10,25 @@ You can pass options and callbacks into Smooth Scroll through the `init()` funct
 
 ```javascript
 smoothScroll.init({
+	// Selectors
 	selector: '[data-scroll]', // Selector for links (must be a valid CSS selector)
 	selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
+
+	// Speed & Easing
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
-	easing: 'easeInOutCubic', // Easing pattern to use
 	offset: 0, // Integer or Function returning an integer. How far to offset the scrolling anchor location in pixels
+	easing: 'easeInOutCubic', // Easing pattern to use
+
+	// Custom easing patterns.
+	// Must be an object with the easing name as the key
+	// Each pattern must be a function, with `time` as the argument, that returns the pattern
+	easingPatterns: {
+	    fakeEasing: function (time) {
+	        return time * (2 - time);
+	    }
+	}
+
+	// Callback API
 	before: function (anchor, toggle) {}, // Function to run before scrolling starts
 	after: function (anchor, toggle) {} // Function to run after scrolling completes
 });

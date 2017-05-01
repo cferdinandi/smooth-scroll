@@ -60,11 +60,25 @@
 <h2 id="global-settings">Global Settings</h2>
 <p>You can pass options and callbacks into Smooth Scroll through the <code>init()</code> function:</p>
 <pre><code class="lang-javascript">smoothScroll.init({
+    // Selectors
     selector: &#39;[data-scroll]&#39;, // Selector for links (must be a valid CSS selector)
     selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
+
+    // Speed &amp; Easing
     speed: 500, // Integer. How fast to complete the scroll in milliseconds
-    easing: &#39;easeInOutCubic&#39;, // Easing pattern to use
     offset: 0, // Integer or Function returning an integer. How far to offset the scrolling anchor location in pixels
+    easing: &#39;easeInOutCubic&#39;, // Easing pattern to use
+
+    // Custom easing patterns.
+    // Must be an object with the easing name as the key
+    // Each pattern must be a function, with `time` as the argument, that returns the pattern
+    easingPatterns: {
+        fakeEasing: function (time) {
+            return time * (2 - time);
+        }
+    }
+
+    // Callback API
     before: function (anchor, toggle) {}, // Function to run before scrolling starts
     after: function (anchor, toggle) {} // Function to run after scrolling completes
 });
@@ -213,13 +227,7 @@ smoothScroll.animateScroll( 750 );
 				navClass: 'list-unstyled list-nav',
 			});
 			smoothScroll.init({
-				selector: 'a[href*="#"]',
-				before: function () {
-					alert('about to run!');
-				},
-				after: function () {
-					alert('finished!');
-				}
+				selector: 'a[href*="#"]'
 			})
 			gumshoe.init({
 				offset: 5
