@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v11.0.1: Animate scrolling to anchor links
+ * smooth-scroll v11.0.2: Animate scrolling to anchor links
  * (c) 2017 Chris Ferdinandi
  * GPL-3.0 License
  * http://github.com/cferdinandi/smooth-scroll
@@ -224,26 +224,26 @@
 	 * @param {Number} time Time animation should take to complete
 	 * @returns {Number}
 	 */
-	var easingPattern = function ( type, time ) {
+	var easingPattern = function ( settings, time ) {
 		var pattern;
 
 		// Default Easing Patterns
-		if ( type === 'easeInQuad' ) pattern = time * time; // accelerating from zero velocity
-		if ( type === 'easeOutQuad' ) pattern = time * (2 - time); // decelerating to zero velocity
-		if ( type === 'easeInOutQuad' ) pattern = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
-		if ( type === 'easeInCubic' ) pattern = time * time * time; // accelerating from zero velocity
-		if ( type === 'easeOutCubic' ) pattern = (--time) * time * time + 1; // decelerating to zero velocity
-		if ( type === 'easeInOutCubic' ) pattern = time < 0.5 ? 4 * time * time * time : (time - 1) * (2 * time - 2) * (2 * time - 2) + 1; // acceleration until halfway, then deceleration
-		if ( type === 'easeInQuart' ) pattern = time * time * time * time; // accelerating from zero velocity
-		if ( type === 'easeOutQuart' ) pattern = 1 - (--time) * time * time * time; // decelerating to zero velocity
-		if ( type === 'easeInOutQuart' ) pattern = time < 0.5 ? 8 * time * time * time * time : 1 - 8 * (--time) * time * time * time; // acceleration until halfway, then deceleration
-		if ( type === 'easeInQuint' ) pattern = time * time * time * time * time; // accelerating from zero velocity
-		if ( type === 'easeOutQuint' ) pattern = 1 + (--time) * time * time * time * time; // decelerating to zero velocity
-		if ( type === 'easeInOutQuint' ) pattern = time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
+		if ( settings.easing === 'easeInQuad' ) pattern = time * time; // accelerating from zero velocity
+		if ( settings.easing === 'easeOutQuad' ) pattern = time * (2 - time); // decelerating to zero velocity
+		if ( settings.easing === 'easeInOutQuad' ) pattern = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
+		if ( settings.easing === 'easeInCubic' ) pattern = time * time * time; // accelerating from zero velocity
+		if ( settings.easing === 'easeOutCubic' ) pattern = (--time) * time * time + 1; // decelerating to zero velocity
+		if ( settings.easing === 'easeInOutCubic' ) pattern = time < 0.5 ? 4 * time * time * time : (time - 1) * (2 * time - 2) * (2 * time - 2) + 1; // acceleration until halfway, then deceleration
+		if ( settings.easing === 'easeInQuart' ) pattern = time * time * time * time; // accelerating from zero velocity
+		if ( settings.easing === 'easeOutQuart' ) pattern = 1 - (--time) * time * time * time; // decelerating to zero velocity
+		if ( settings.easing === 'easeInOutQuart' ) pattern = time < 0.5 ? 8 * time * time * time * time : 1 - 8 * (--time) * time * time * time; // acceleration until halfway, then deceleration
+		if ( settings.easing === 'easeInQuint' ) pattern = time * time * time * time * time; // accelerating from zero velocity
+		if ( settings.easing === 'easeOutQuint' ) pattern = 1 + (--time) * time * time * time * time; // decelerating to zero velocity
+		if ( settings.easing === 'easeInOutQuint' ) pattern = time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
 
 		// Custom Easing Patterns
-		if ( settings.easingPatterns[type] ) {
-			pattern = settings.easingPatterns[type]( time );
+		if ( settings.easingPatterns[settings.easing] ) {
+			pattern = settings.easingPatterns[settings.easing]( time );
 		}
 
 		return pattern || time; // no easing, no acceleration
@@ -394,7 +394,7 @@
 			timeLapsed += 16;
 			percentage = ( timeLapsed / parseInt(animateSettings.speed, 10) );
 			percentage = ( percentage > 1 ) ? 1 : percentage;
-			position = startLocation + ( distance * easingPattern(animateSettings.easing, percentage) );
+			position = startLocation + ( distance * easingPattern(animateSettings, percentage) );
 			root.scrollTo( 0, Math.floor(position) );
 			stopAnimateScroll(position, endLocation, animationInterval);
 		};

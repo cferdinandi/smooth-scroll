@@ -92,7 +92,7 @@ Smooth Scroll also lets you override global settings on a link-by-link basis usi
 </a>
 ```
 
-***Note:*** *You must use [valid JSON](http://jsonlint.com/) in order for the `data-options` feature to work. Does not support the `callback` method.*
+***Note:*** *You must use [valid JSON](http://jsonlint.com/) in order for the `data-options` feature to work. Does not support the `before` and `after` callback methods, or the `easingPatterns` object.*
 
 <hr>
 
@@ -106,8 +106,8 @@ Animate scrolling to an anchor.
 
 ```javascript
 smoothScroll.animateScroll(
-	anchor, // Node to scroll to. ex. document.querySelector( '#bazinga' )
-	toggle, // Node that toggles the animation, OR an integer. ex. document.querySelector( '#toggle' )
+	anchor, // Node to scroll to, OR an integer. ex. document.querySelector( '#bazinga' )
+	toggle, // Node that toggles the animation. ex. document.querySelector( '#toggle' )
 	options // Classes and callbacks. Same options as those passed into the init() function.
 );
 ```
@@ -162,30 +162,3 @@ If you have multiple fixed headers, pass in the last one in the markup.
 	});
 </script>
 ```
-
-<hr>
-
-
-## Animating links to other pages
-
-This is an often requested feature, but Smooth Scroll does not include an option to animate scrolling to links on other pages.
-
-You can attempt to implement it using the API, but it's very difficult to prevent the automatic browser jump when the page loads, and anything I've done to work around it results in weird, janky issues, so I've decided to leave this out of the core. Here's a potential workaround...
-
-1. Do *not* add the `data-scroll` attribute to links to other pages. Treat them like normal links, and include your anchor link hash as normal.
-
-    ```markup
-    <a href="some-page.html#example">
-    ```
-2. Add the following script to the footer of your page, after the `smoothScroll.init()` function.
-
-    ```markup
-    <script>
-        if ( window.location.hash ) {
-        	var anchor = document.querySelector( window.location.hash ); // Get the anchor
-        	var toggle = document.querySelector( 'a[href*="' + window.location.hash + '"]' ); // Get the toggle (if one exists)
-            var options = {}; // Any custom options you want to use would go here
-            smoothScroll.animateScroll( anchor, toggle, options );
-        }
-    </script>
-    ```
