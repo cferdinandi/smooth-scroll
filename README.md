@@ -2,7 +2,7 @@
 
 A lightweight script to animate scrolling to anchor links. Smooth Scroll works great with [Gumshoe](https://github.com/cferdinandi/gumshoe).
 
-[View the demo and documentation to get started](https://cferdinandi.github.io/smooth-scroll/).
+[View the demo and documentation to get started]().
 
 ## How to Contribute
 
