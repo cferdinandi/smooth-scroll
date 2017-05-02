@@ -7,6 +7,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="A lightweight script to animate scrolling to anchor links.">
 
+		<!-- favicon -->
+		<link rel="shortcut icon" href="assets/img/favicon.ico">
+		<link rel="icon" sizes="16x16 32x32" href="assets/img/favicon.ico">
+
 		<!-- stylesheets -->
 		<link rel="stylesheet" href="assets/css/main.css" type="text/css">
 		<link rel="stylesheet" href="assets/css/custom.css" type="text/css">
@@ -43,8 +47,8 @@
 								<li><a href="https://github.com/cferdinandi/smooth-scroll/archive/master.zip">Download</a></li>
 								<li><a href="index">Demo</a></li>
 								<li><a href="setup">Getting Started</a></li>
-								<li><a href="source">Working with Source</a></li>
 								<li><a href="options">Options &amp; Settings</a></li>
+								<li><a href="extras">Extras</a></li>
 								<li><a href="browsers">Browser Compatibility</a></li>
 								<li><a href="license">License</a></li>
 							</ul>
@@ -130,7 +134,7 @@
     Anchor Link
 &lt;/a&gt;
 </code></pre>
-<p><strong><em>Note:</em></strong> <em>You must use <a href="http://jsonlint.com/">valid JSON</a> in order for the <code>data-options</code> feature to work. Does not support the <code>callback</code> method.</em></p>
+<p><strong><em>Note:</em></strong> <em>You must use <a href="http://jsonlint.com/">valid JSON</a> in order for the <code>data-options</code> feature to work. Does not support the <code>before</code> and <code>after</code> callback methods, or the <code>easingPatterns</code> object.</em></p>
 <hr>
 
 
@@ -139,8 +143,8 @@
 <h3 id="animatescroll-">animateScroll()</h3>
 <p>Animate scrolling to an anchor.</p>
 <pre><code class="lang-javascript">smoothScroll.animateScroll(
-    anchor, // Node to scroll to. ex. document.querySelector( &#39;#bazinga&#39; )
-    toggle, // Node that toggles the animation, OR an integer. ex. document.querySelector( &#39;#toggle&#39; )
+    anchor, // Node to scroll to, OR an integer. ex. document.querySelector( &#39;#bazinga&#39; )
+    toggle, // Node that toggles the animation. ex. document.querySelector( &#39;#toggle&#39; )
     options // Classes and callbacks. Same options as those passed into the init() function.
 );
 </code></pre>
@@ -178,29 +182,6 @@ smoothScroll.animateScroll( 750 );
     });
 &lt;/script&gt;
 </code></pre>
-<hr>
-
-
-<h2 id="animating-links-to-other-pages">Animating links to other pages</h2>
-<p>This is an often requested feature, but Smooth Scroll does not include an option to animate scrolling to links on other pages.</p>
-<p>You can attempt to implement it using the API, but it&#39;s very difficult to prevent the automatic browser jump when the page loads, and anything I&#39;ve done to work around it results in weird, janky issues, so I&#39;ve decided to leave this out of the core. Here&#39;s a potential workaround...</p>
-<ol>
-<li><p>Do <em>not</em> add the <code>data-scroll</code> attribute to links to other pages. Treat them like normal links, and include your anchor link hash as normal.</p>
-<pre><code class="lang-markup"> &lt;a href=&quot;some-page.html#example&quot;&gt;
-</code></pre>
-</li>
-<li><p>Add the following script to the footer of your page, after the <code>smoothScroll.init()</code> function.</p>
-<pre><code class="lang-markup"> &lt;script&gt;
-     if ( window.location.hash ) {
-         var anchor = document.querySelector( window.location.hash ); // Get the anchor
-         var toggle = document.querySelector( &#39;a[href*=&quot;&#39; + window.location.hash + &#39;&quot;]&#39; ); // Get the toggle (if one exists)
-         var options = {}; // Any custom options you want to use would go here
-         smoothScroll.animateScroll( anchor, toggle, options );
-     }
- &lt;/script&gt;
-</code></pre>
-</li>
-</ol>
 					</section><!-- /.container -->
 
 					<footer class="bg-muted padding-top padding-bottom">
@@ -233,7 +214,7 @@ smoothScroll.animateScroll( 750 );
 				offset: 5
 			});
 			highlightActiveNav.init({
-				urlPrefix: '/smooth-scroll/'
+				urlPrefix: '/kraken/'
 			});
 		</script>
 

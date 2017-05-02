@@ -50,7 +50,7 @@ Commercial Licenses are priced based on the number of developers working on a pr
 		</tr>
 		<tr>
 			<td markdown="1">An **Organization License** can be used by an unlimited number of developers.</td>
-			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=3">Buy <span class="screen-reader">an Organization License</span> now for $999</a></td>
+			<td><a class="btn btn-large btn-block" chref="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=3">Buy <span class="screen-reader">an Organization License</span> now for $999</a></td>
 		</tr>
 	</tbody>
 </table>
@@ -73,7 +73,7 @@ This Software License Agreement (the **“Agreement”**) is between Go Make Thi
 #### 2. Commercial license grant
 
 Subject to the terms of this Agreement, Go Make Things grants to You a revocable, non-exclusive, non-transferable license:
-- for [n Licensed Developers&mdash;varies based on the license your purchase] to use the Software to create Modifications and Applications;
+- for [n licensed developers&mdash;varies based on the license your purchase] to use the Software to create Modifications and Applications;
 - for You to distribute the Software and/or Modifications to an unlimited number of End Users solely as integrated into the Applications;
 - and for End Users to use the Software as incorporated into Your Applications in accordance with the terms of this Agreement.
 

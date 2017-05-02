@@ -7,6 +7,10 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="A lightweight script to animate scrolling to anchor links.">
 
+		<!-- favicon -->
+		<link rel="shortcut icon" href="assets/img/favicon.ico">
+		<link rel="icon" sizes="16x16 32x32" href="assets/img/favicon.ico">
+
 		<!-- stylesheets -->
 		<link rel="stylesheet" href="assets/css/main.css" type="text/css">
 		<link rel="stylesheet" href="assets/css/custom.css" type="text/css">
@@ -43,8 +47,8 @@
 								<li><a href="https://github.com/cferdinandi/smooth-scroll/archive/master.zip">Download</a></li>
 								<li><a href="index">Demo</a></li>
 								<li><a href="setup">Getting Started</a></li>
-								<li><a href="source">Working with Source</a></li>
 								<li><a href="options">Options &amp; Settings</a></li>
+								<li><a href="extras">Extras</a></li>
 								<li><a href="browsers">Browser Compatibility</a></li>
 								<li><a href="license">License</a></li>
 							</ul>
@@ -55,21 +59,46 @@
 
 				<main id="main" class="grid-three-fourths padding-top sticky-body tabindex" tabindex="-1" data-toc-content><h1 id="getting-started">Getting Started</h1>
 <p>Compiled and production-ready code can be found in the <code>dist</code> directory. The <code>src</code> directory contains development code.</p>
-<h2 id="1-include-smooth-scroll-on-your-site-">1. Include Smooth Scroll on your site.</h2>
+<hr>
+
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="1-include-smooth-scroll-on-your-site-">1. Include Smooth Scroll on your site.</h3>
 <pre><code class="lang-markup">&lt;script src=&quot;dist/js/smooth-scroll.js&quot;&gt;&lt;/script&gt;
 </code></pre>
-<h2 id="2-add-the-markup-to-your-html-">2. Add the markup to your HTML.</h2>
+<h3 id="2-add-the-markup-to-your-html-">2. Add the markup to your HTML.</h3>
 <p>Turn anchor links into Smooth Scroll links by adding the <code>[data-scroll]</code> data attribute. Give the anchor location an ID just like you normally would.</p>
 <pre><code class="lang-markup">&lt;a data-scroll href=&quot;#bazinga&quot;&gt;Anchor Link&lt;/a&gt;
 ...
 &lt;span id=&quot;bazinga&quot;&gt;Bazinga!&lt;/span&gt;
 </code></pre>
-<h2 id="3-initialize-smooth-scroll-">3. Initialize Smooth Scroll.</h2>
+<h3 id="3-initialize-smooth-scroll-">3. Initialize Smooth Scroll.</h3>
 <p>In the footer of your page, after the content, initialize Smooth Scroll. And that&#39;s it, you&#39;re done. Nice work!</p>
 <pre><code class="lang-markup">&lt;script&gt;
     smoothScroll.init();
 &lt;/script&gt;
 </code></pre>
+<hr>
+
+
+<h2 id="working-with-the-source-files">Working with the Source Files</h2>
+<p>If you would prefer, you can work with the development code in the <code>src</code> directory using the included <a href="http://gulpjs.com/">Gulp build system</a>. This compiles, lints, and minifies code.</p>
+<h3 id="dependencies">Dependencies</h3>
+<p>Make sure these are installed first.</p>
+<ul>
+<li><a href="http://nodejs.org">Node.js</a></li>
+<li><a href="http://gulpjs.com">Gulp</a> <code>sudo npm install -g gulp</code></li>
+</ul>
+<h3 id="using-gulp">Using Gulp</h3>
+<ol>
+<li>In bash/terminal/command line, <code>cd</code> into your project directory.</li>
+<li>Run <code>npm install</code> to install required files.</li>
+<li>When it&#39;s done installing, run one of the task runners to get going:<ul>
+<li><code>gulp</code> manually compiles files.</li>
+<li><code>gulp watch</code> automatically compiles files when changes are made and applies changes using <a href="http://livereload.com/">LiveReload</a>.</li>
+</ul>
+</li>
+</ol>
+<p>Compiled and production-ready code can be found in the <code>dist</code> directory. The <code>src</code> directory contains development code.</p>
 					</section><!-- /.container -->
 
 					<footer class="bg-muted padding-top padding-bottom">
@@ -102,7 +131,7 @@
 				offset: 5
 			});
 			highlightActiveNav.init({
-				urlPrefix: '/smooth-scroll/'
+				urlPrefix: '/kraken/'
 			});
 		</script>
 
