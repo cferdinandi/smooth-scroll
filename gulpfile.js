@@ -37,7 +37,6 @@ var shell = require('gulp-shell');
  */
 
 var paths = {
-	package: './package.json',
 	input: 'src/**/*',
 	output: 'dist/',
 	scripts: {
