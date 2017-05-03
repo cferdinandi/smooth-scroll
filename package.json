@@ -12,6 +12,7 @@
 		"type": "git",
 		"url": "http://github.com/cferdinandi/smooth-scroll"
 	},
+	"development_branch": "test",
 	"devDependencies": {
 		"gulp": "^3.9.1",
 		"node-fs": "^0.1.7",
@@ -32,6 +33,7 @@
 		"gulp-uglify": "^2.1.2",
 		"gulp-optimize-js": "^1.1.0",
 		"gulp-markdown": "^1.2.0",
-		"gulp-file-include": "^0.14.0"
+		"gulp-file-include": "^0.14.0",
+		"gulp-shell": "^0.6.3"
 	}
 }
