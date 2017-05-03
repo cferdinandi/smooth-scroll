@@ -28,12 +28,16 @@ var optimizejs = require('gulp-optimize-js');
 var markdown = require('gulp-markdown');
 var fileinclude = require('gulp-file-include');
 
+// Deploy
+var shell = require('gulp-shell');
+
 
 /**
  * Paths to project folders
  */
 
 var paths = {
+	package: './package.json',
 	input: 'src/**/*',
 	output: 'dist/',
 	scripts: {
@@ -147,7 +151,6 @@ gulp.task('copy:assets', ['clean:docs'], function() {
 		.pipe(gulp.dest(paths.docs.output + '/assets'));
 });
 
-
 // Remove prexisting content from docs folder
 gulp.task('clean:docs', function () {
 	return del.sync(paths.docs.output);
@@ -198,3 +201,11 @@ gulp.task('watch', [
 	'listen',
 	'default'
 ]);
+
+// Deploy package to GitHub and NPM
+gulp.task('deploy', ['compile', 'docs'], shell.task([
+	'git push origin ' + package.development_branch,
+	'git tag -a v' + package.version,
+	'git push origin v' + package.version,
+	'npm publish'
+]));
