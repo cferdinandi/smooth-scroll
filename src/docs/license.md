@@ -50,7 +50,7 @@ Commercial Licenses are priced based on the number of developers working on a pr
 		</tr>
 		<tr>
 			<td markdown="1">An **Organization License** can be used by an unlimited number of developers.</td>
-			<td><a class="btn btn-large btn-block" chref="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=3">Buy <span class="screen-reader">an Organization License</span> now for $999</a></td>
+			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=3">Buy <span class="screen-reader">an Organization License</span> now for $999</a></td>
 		</tr>
 	</tbody>
 </table>
