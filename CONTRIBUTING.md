@@ -24,7 +24,9 @@ Before asking, please **make sure the question hasn't already been asked** by se
 
 ## Submitting a Pull Request
 
-Please make sure your code meets the following code standards:
+***Note:*** *By submitting a pull request to this project, you assign all rights to Chris Ferdinandi and Go Make Things, LLC.*
+
+Make sure your code meets the following code standards:
 
 - Camel case for JavaScript variables.
 - [Object-Oriented CSS](http://www.slideshare.net/stubbornella/object-oriented-css) for CSS selectors.
