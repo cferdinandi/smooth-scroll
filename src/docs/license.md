@@ -41,15 +41,15 @@ Commercial Licenses are priced based on the number of developers working on a pr
 	</thead>
 	<tbody>
 		<tr>
-			<td markdown="1">A **Single Developer License** can be used by 1 developer. Each individual developer needs to purchase a separate license.</td>
+			<td markdown="1">**Single Developer License**<br>Can be used by 1 developer. Each individual developer needs to purchase a separate license.</td>
 			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=1">Buy <span class="screen-reader">a Single Developer License</span> now for $49</a></td>
 		</tr>
 		<tr>
-			<td markdown="1">A **Team License** can be used by up to 8 developers.</td>
+			<td markdown="1">**Team License**<br>Can be used by up to 8 developers.</td>
 			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=2">Buy <span class="screen-reader">a Team License</span> now for $149</a></td>
 		</tr>
 		<tr>
-			<td markdown="1">An **Organization License** can be used by an unlimited number of developers.</td>
+			<td markdown="1">A**Organization License**<br>Can be used by an unlimited number of developers.</td>
 			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=3">Buy <span class="screen-reader">an Organization License</span> now for $499</a></td>
 		</tr>
 	</tbody>
