@@ -24,13 +24,13 @@ You can absolutely use the open source license for commercial projects, but thos
 
 The Commercial License let's you use Smooth Scroll in commercial projects and applications without the provisions of GPLv3. With this license, your code is kept proprietary.
 
-- You can use Smooth Scroll on as many websites or applications as you'd like.
+- You can modify the source code.
 - You can include it in your own commercial products and applications, such as premium CMS themes, plugins, or templates.
 - Customers and users of your products do not need to purchase their own license, as long as they're not developing their own commercial products with Smooth Scroll.
 
 ### Buy a Commercial License
 
-Commercial Licenses are priced based on the number of developers working on a project that uses Smooth Scroll. Pay by credit card and instantly receive a PDF of your Commercial License.
+Commercial Licenses are priced based on the number of websites, applications, or other products that use Smooth Scroll. Pay with credit card and instantly receive a PDF of your Commercial License.
 
 <table class="table-responsive">
 	<thead>
@@ -41,16 +41,16 @@ Commercial Licenses are priced based on the number of developers working on a pr
 	</thead>
 	<tbody>
 		<tr>
-			<td markdown="1">**Single Developer License**<br>Can be used by 1 developer. Each individual developer needs to purchase a separate license.</td>
-			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=1">Buy <span class="screen-reader">a Single Developer License</span> now for $49</a></td>
+			<td markdown="1">1 Site or App</td>
+			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=1">Buy <span class="screen-reader">a 1 Site License</span> now for $29</a></td>
 		</tr>
 		<tr>
-			<td markdown="1">**Team License**<br>Can be used by up to 8 developers.</td>
-			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=2">Buy <span class="screen-reader">a Team License</span> now for $149</a></td>
+			<td markdown="1">5 Sites or Apps</td>
+			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=2">Buy <span class="screen-reader">a 5 Site License</span> now for $59</a></td>
 		</tr>
 		<tr>
-			<td markdown="1">**Organization License**<br>Can be used by an unlimited number of developers.</td>
-			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=3">Buy <span class="screen-reader">an Organization License</span> now for $499</a></td>
+			<td markdown="1">25 Sites or Apps</td>
+			<td><a class="btn btn-large btn-block" href="https://gomakethings.com/checkout?edd_action=add_to_cart&download_id=11882&edd_options[price_id]=3">Buy <span class="screen-reader">a 25 Site License</span> now for $119</a></td>
 		</tr>
 	</tbody>
 </table>
@@ -73,7 +73,7 @@ This Software License Agreement (the **“Agreement”**) is between Go Make Thi
 #### 2. Commercial license grant
 
 Subject to the terms of this Agreement, Go Make Things grants to You a revocable, non-exclusive, non-transferable license:
-- for [n licensed developers&mdash;varies based on the license your purchase] to use the Software to create Modifications and Applications;
+- for Licensed Developers to use the Software to create Modifications and [n&mdash;varies based on the license you purchase]Applications;
 - for You to distribute the Software and/or Modifications to an unlimited number of End Users solely as integrated into the Applications;
 - and for End Users to use the Software as incorporated into Your Applications in accordance with the terms of this Agreement.
 
@@ -145,7 +145,7 @@ Software Updates and Upgrades. The license granted herein applies only to the ve
 
 **Severability.** In the event that any portion of this Agreement is held to be unenforceable, such portions shall not limit or otherwise modify or affect any other portion of this Agreement.
 
-**Modification; Waiver.** This Agreement cannot be amended except by a written instrument executed by Go Make Things.  Go Make Things reserves the right, at any time and from time to time, to update, revise, supplement, and otherwise modify this Agreement and to impose new or additional rules, policies, terms, or conditions on your use of the Software. Such updates, revisions, supplements, modifications, and additional rules, policies, terms, and conditions (collectively referred to in this Agreement as “Additional Terms”) will be effective immediately and incorporated into this Agreement. You will be notified of any Additional Terms in writing. Your continued use of the Software following will be deemed to constitute your acceptance of any and all such Additional Terms. All Additional Terms are hereby incorporated into this Agreement by this reference.   The failure of Go Make Things to enforce any provision of this Agreement may not be deemed a waiver of that or any other provision of this Agreement.
+**Modification; Waiver.** This Agreement cannot be amended except by a written instrument executed by Go Make Things.   All Additional Terms are hereby incorporated into this Agreement by this reference.   The failure of Go Make Things to enforce any provision of this Agreement may not be deemed a waiver of that or any other provision of this Agreement.
 
 **Governing Law.** This Agreement is subject to, and shall be interpreted and enforced in accordance with, the laws of the Commonwealth of Massachusetts in all respects without regard to conflict of law principles. The Courts of Bristol County, Massachusetts and Norfolk County, Massachusetts shall be the sole and exclusive Courts in which either party may attempt to enforce or establish the existence or scope of any rights, benefits or obligations under this Agreement. The UN Convention on Contracts for the International Sale of Goods is expressly excluded.
 
