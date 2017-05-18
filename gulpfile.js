@@ -297,56 +297,59 @@ gulp.task('refresh', ['compile', 'docs'], function () {
 	livereload.changed();
 });
 
-// Run deploy tasks
-gulp.task('run:deploy', function (cb) {
-	if ( !settings.deploy ) return;
+// Add to Git
+gulp.task('deploy:gitAdd', ['compile', 'docs'], function () {
+	if ( !settings.deploy || !settings.gitAdd ) return;
 
-	// if ( settings.gitAdd ) {
-	// 	exec('git add -A', function (err, stdout, stderr) {
-	// 		console.log(stdout);
-	// 		console.log(stderr);
-	// 		cb(err);
-	// 	});
-	// }
+	exec('git add -A', function (err, stdout, stderr) {
+		console.log(stdout);
+		console.log(stderr);
+		cb(err);
+	});
+});
 
-	// if ( settings.gitCommit ) {
-	// 	exec('git commit -a', function (err, stdout, stderr) {
-	// 		console.log(stdout);
-	// 		console.log(stderr);
-	// 		cb(err);
-	// 	});
-	// }
+// Commit to Git
+gulp.task('deploy:gitCommit', ['compile', 'docs', 'deploy:gitAdd'], function () {
+	if ( !settings.deploy || !settings.gitCommit ) return;
 
-	if ( settings.gitPush ) {
-		exec('BRANCH=$(git symbolic-ref -q HEAD); BRANCH=${BRANCH##refs/heads/}; BRANCH=${BRANCH:-HEAD}; git push origin $BRANCH', function (err, stdout, stderr) {
-			console.log(stdout);
-			console.log(stderr);
-			cb(err);
-		});
-	}
+	exec('git commit -a', function (err, stdout, stderr) {
+		console.log(stdout);
+		console.log(stderr);
+		cb(err);
+	});
+});
 
-	if ( settings.gitTag ) {
-		exec('git tag -a v' + package.version, function (err, stdout, stderr) {
-			console.log(stdout);
-			console.log(stderr);
-			cb(err);
-		});
+// Push to Git
+gulp.task('deploy:gitPush', ['compile', 'docs', 'deploy:gitAdd', 'deploy:gitCommit'], function () {
+	if ( !settings.deploy || !settings.gitPush ) return;
 
-		exec('git push origin v' + package.version, function (err, stdout, stderr) {
-			console.log(stdout);
-			console.log(stderr);
-			cb(err);
-		});
-	}
+	exec('BRANCH=$(git symbolic-ref -q HEAD); BRANCH=${BRANCH##refs/heads/}; BRANCH=${BRANCH:-HEAD}; git push origin $BRANCH', function (err, stdout, stderr) {
+		console.log(stdout);
+		console.log(stderr);
+		cb(err);
+	});
+});
 
-	if ( settings.npm ) {
-		exec('npm publish', function (err, stdout, stderr) {
-			console.log(stdout);
-			console.log(stderr);
-			cb(err);
-		});
-	}
+// Tag on Git
+gulp.task('deploy:gitTag', ['compile', 'docs', 'deploy:gitAdd', 'deploy:gitCommit', 'deploy:gitPush'], function () {
+	if ( !settings.deploy || !settings.gitTag ) return;
 
+	exec('git tag -a v' + package.version + '; git push origin v' + package.version, function (err, stdout, stderr) {
+		console.log(stdout);
+		console.log(stderr);
+		cb(err);
+	});
+});
+
+// Push to NPM
+gulp.task('deploy:npm', ['compile', 'docs', 'deploy:gitAdd', 'deploy:gitCommit', 'deploy:gitPush', 'deploy:gitTag'], function () {
+	if ( !settings.deploy || !settings.npm ) return;
+
+	exec('npm publish', function (err, stdout, stderr) {
+		console.log(stdout);
+		console.log(stderr);
+		cb(err);
+	});
 });
 
 
@@ -386,5 +389,9 @@ gulp.task('watch', [
 ]);
 
 gulp.task('deploy', [
-	'run:deploy'
+	'deploy:gitAdd',
+	'deploy:gitCommit',
+	'deploy:gitPush',
+	'deploy:gitTag',
+	'deploy:npm'
 ]);
