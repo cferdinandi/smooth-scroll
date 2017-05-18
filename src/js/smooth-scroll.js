@@ -22,6 +22,7 @@
 	var defaults = {
 		// Selectors
 		selector: '[data-scroll]',
+		ignore: '[data-scroll-ignore]',
 		selectorHeader: null,
 
 		// Speed & Easing
@@ -424,7 +425,6 @@
 	var hashChangeHandler = function (event) {
 
 		// Get hash from URL
-		// var hash = decodeURIComponent( escapeCharacters( root.location.hash ) );
 		var hash;
 		try {
 			hash = escapeCharacters( decodeURIComponent( root.location.hash ) );
@@ -458,14 +458,12 @@
 
 		// Check if a smooth scroll link was clicked
 		toggle = getClosest( event.target, settings.selector );
-		if ( !toggle || toggle.tagName.toLowerCase() !== 'a' ) return;
+		if ( !toggle || toggle.tagName.toLowerCase() !== 'a' || getClosest( event.target, settings.ignore ) ) return;
 
 		// Only run if link is an anchor and points to the current page
 		if ( toggle.hostname !== root.location.hostname || toggle.pathname !== root.location.pathname || !/#/.test(toggle.href) ) return;
 
 		// Get the sanitized hash
-		// var hash = decodeURIComponent( escapeCharacters( toggle.hash ) );
-		// console.log(hash);
 		var hash;
 		try {
 			hash = escapeCharacters( decodeURIComponent( toggle.hash ) );
