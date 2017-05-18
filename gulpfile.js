@@ -15,6 +15,8 @@ var settings = {
 	// Deploy-specific settings
 	branch: 'test',    // The git branch to push to
 	cacheBust: false,  // Turn on/off cache busting (adds a version number to minified files)
+	gitAdd: true,      // Turn on/off git add -A
+	gitCommit: true,   // Turn on/off git commit -a
 	gitPush: true,     // Turn on/off push to git
 	gitTag: false,     // Turn on/off add a git tag
 	npm: false         // Turn on/off push to NPM
@@ -302,6 +304,22 @@ gulp.task('refresh', ['compile', 'docs'], function () {
 // Run deploy tasks
 gulp.task('run:deploy', function (cb) {
 	if ( !settings.deploy ) return;
+
+	if ( settings.gitAdd ) {
+		exec('git add -A', function (err, stdout, stderr) {
+			console.log(stdout);
+			console.log(stderr);
+			cb(err);
+		});
+	}
+
+	if ( settings.gitCommit ) {
+		exec('git commit -a', function (err, stdout, stderr) {
+			console.log(stdout);
+			console.log(stderr);
+			cb(err);
+		});
+	}
 
 	if ( settings.gitPush ) {
 		exec('git push origin ' + settings.branch, function (err, stdout, stderr) {
