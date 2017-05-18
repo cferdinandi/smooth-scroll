@@ -69,6 +69,7 @@
 <pre><code class="lang-javascript">smoothScroll.init({
     // Selectors
     selector: &#39;[data-scroll]&#39;, // Selector for links (must be a valid CSS selector)
+    ignore: &#39;[data-scroll-ignore]&#39; // Selector to ignore (won&#39;t animate scrolling on links with this selector)
     selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
 
     // Speed &amp; Easing

@@ -3,19 +3,19 @@
  */
 
 var settings = {
-	scripts: true,     // Turn on/off script tasks
-	styles: false,     // Turn on/off style tasks
-	svgs: false,       // Turn on/off SVG tasks
-	images: false,     // Turn on/off image tasks
-	static: false,     // Turn on/off static file copying
-	docs: true,        // Turn on/off documentation generation
-	deploy: true,      // Turn on/off all deployment tasks
-	cacheBust: false,  // Turn on/off cache busting (adds a version number to minified files)
-	gitAdd: true,      // Turn on/off git add -A
-	gitCommit: true,   // Turn on/off git commit -a
-	gitPush: true,     // Turn on/off push to git
-	gitTag: false,     // Turn on/off add a git tag
-	npm: false         // Turn on/off push to NPM
+	scripts: true,		// Turn on/off script tasks
+	styles: false,		// Turn on/off style tasks
+	svgs: false,		// Turn on/off SVG tasks
+	images: false,		// Turn on/off image tasks
+	static: false,		// Turn on/off static file copying
+	docs: true,			// Turn on/off documentation generation
+	deploy: true,		// Turn on/off all deployment tasks
+	cacheBust: false,	// Turn on/off cache busting (adds a version number to minified files)
+	gitAdd: true,		// Turn on/off git add -A
+	gitCommit: true,	// Turn on/off git commit -a
+	gitPush: true,		// Turn on/off push to git
+	gitTag: true,		// Turn on/off add a git tag
+	npm: false			// Turn on/off push to NPM
 };
 
 
@@ -301,21 +301,21 @@ gulp.task('refresh', ['compile', 'docs'], function () {
 gulp.task('run:deploy', function (cb) {
 	if ( !settings.deploy ) return;
 
-	if ( settings.gitAdd ) {
-		exec('git add -A', function (err, stdout, stderr) {
-			console.log(stdout);
-			console.log(stderr);
-			cb(err);
-		});
-	}
+	// if ( settings.gitAdd ) {
+	// 	exec('git add -A', function (err, stdout, stderr) {
+	// 		console.log(stdout);
+	// 		console.log(stderr);
+	// 		cb(err);
+	// 	});
+	// }
 
-	if ( settings.gitCommit ) {
-		exec('git commit -a', function (err, stdout, stderr) {
-			console.log(stdout);
-			console.log(stderr);
-			cb(err);
-		});
-	}
+	// if ( settings.gitCommit ) {
+	// 	exec('git commit -a', function (err, stdout, stderr) {
+	// 		console.log(stdout);
+	// 		console.log(stderr);
+	// 		cb(err);
+	// 	});
+	// }
 
 	if ( settings.gitPush ) {
 		exec('BRANCH=$(git symbolic-ref -q HEAD); BRANCH=${BRANCH##refs/heads/}; BRANCH=${BRANCH:-HEAD}; git push origin $BRANCH', function (err, stdout, stderr) {

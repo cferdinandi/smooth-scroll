@@ -12,6 +12,7 @@ You can pass options and callbacks into Smooth Scroll through the `init()` funct
 smoothScroll.init({
 	// Selectors
 	selector: '[data-scroll]', // Selector for links (must be a valid CSS selector)
+	ignore: '[data-scroll-ignore]' // Selector to ignore (won't animate scrolling on links with this selector)
 	selectorHeader: null, // Selector for fixed headers (must be a valid CSS selector) [optional]
 
 	// Speed & Easing
