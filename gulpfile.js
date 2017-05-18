@@ -3,7 +3,6 @@
  */
 
 var settings = {
-	// Tasks
 	scripts: true,     // Turn on/off script tasks
 	styles: false,     // Turn on/off style tasks
 	svgs: false,       // Turn on/off SVG tasks
@@ -11,9 +10,6 @@ var settings = {
 	static: false,     // Turn on/off static file copying
 	docs: true,        // Turn on/off documentation generation
 	deploy: true,      // Turn on/off all deployment tasks
-
-	// Deploy-specific settings
-	branch: 'test',    // The git branch to push to
 	cacheBust: false,  // Turn on/off cache busting (adds a version number to minified files)
 	gitAdd: true,      // Turn on/off git add -A
 	gitCommit: true,   // Turn on/off git commit -a
@@ -322,7 +318,7 @@ gulp.task('run:deploy', function (cb) {
 	}
 
 	if ( settings.gitPush ) {
-		exec('git push origin ' + settings.branch, function (err, stdout, stderr) {
+		exec('BRANCH=$(git symbolic-ref -q HEAD); BRANCH=${BRANCH##refs/heads/}; BRANCH=${BRANCH:-HEAD}; git push origin $BRANCH', function (err, stdout, stderr) {
 			console.log(stdout);
 			console.log(stderr);
 			cb(err);
