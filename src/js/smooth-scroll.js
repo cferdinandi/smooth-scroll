@@ -541,6 +541,9 @@
 		document.removeEventListener( 'click', clickHandler, false );
 		root.removeEventListener( 'resize', resizeThrottler, false );
 
+		// Clear Animation loop
+		clearInterval(animationInterval);
+
 		// Reset varaibles
 		settings = null;
 		anchor = null;
