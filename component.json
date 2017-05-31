@@ -1,0 +1,11 @@
+{
+  "name": "smooth-scroll",
+  "repo": "cferdinandi/smooth-scroll",
+  "version": "7.1.0",
+  "scripts": [
+    "dist/js/smooth-scroll.js",
+    "dist/js/smooth-scroll.min.js"
+  ],
+  "author": "Chris Ferdinandi",
+  "license": "MIT"
+}
