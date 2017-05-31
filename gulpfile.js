@@ -304,7 +304,6 @@ gulp.task('deploy:gitAdd', ['compile', 'docs'], function () {
 	exec('git add -A', function (err, stdout, stderr) {
 		console.log(stdout);
 		console.log(stderr);
-		cb(err);
 	});
 });
 
@@ -315,7 +314,6 @@ gulp.task('deploy:gitCommit', ['compile', 'docs', 'deploy:gitAdd'], function () 
 	exec('git commit -a', function (err, stdout, stderr) {
 		console.log(stdout);
 		console.log(stderr);
-		cb(err);
 	});
 });
 
@@ -326,7 +324,6 @@ gulp.task('deploy:gitPush', ['compile', 'docs', 'deploy:gitAdd', 'deploy:gitComm
 	exec('BRANCH=$(git symbolic-ref -q HEAD); BRANCH=${BRANCH##refs/heads/}; BRANCH=${BRANCH:-HEAD}; git push origin $BRANCH', function (err, stdout, stderr) {
 		console.log(stdout);
 		console.log(stderr);
-		cb(err);
 	});
 });
 
@@ -337,7 +334,6 @@ gulp.task('deploy:gitTag', ['compile', 'docs', 'deploy:gitAdd', 'deploy:gitCommi
 	exec('git tag -a v' + package.version + '; git push origin v' + package.version, function (err, stdout, stderr) {
 		console.log(stdout);
 		console.log(stderr);
-		cb(err);
 	});
 });
 
@@ -348,7 +344,6 @@ gulp.task('deploy:npm', ['compile', 'docs', 'deploy:gitAdd', 'deploy:gitCommit',
 	exec('npm publish', function (err, stdout, stderr) {
 		console.log(stdout);
 		console.log(stderr);
-		cb(err);
 	});
 });
 

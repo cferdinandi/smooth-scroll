@@ -34,6 +34,16 @@ In the footer of your page, after the content, initialize Smooth Scroll. And tha
 
 <hr>
 
+## Using a Package Manager
+
+Install Smooth Scroll with your favorite package manager or module bundler directly from NPM.
+
+```bash
+npm install smooth-scroll
+```
+
+<hr>
+
 
 ## Working with the Source Files
 
