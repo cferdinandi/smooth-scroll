@@ -1,0 +1,7 @@
+{
+  "name": "smooth-scroll",
+  "version": "4.7.0",
+  "main": "smooth-scroll.js",
+  "keywords": ["scroll", "client", "browser"],
+  "ignore" : ["src", "test", ".gitignore", ".travis.yml", "gulpfile.js", "index.html", "package.json"]
+}
