@@ -1,0 +1,23 @@
+{
+  "name": "smooth-scroll.js",
+  "main": "smooth-scroll.js",
+  "version": "0.1.0",
+  "homepage": "https://cferdinandi.github.io/smooth-scroll",
+  "authors": [
+    "Chris Ferdinandi"
+  ],
+  "description": "A simple vanilla JS script to animate to anchor links.",
+  "keywords": [
+    "scroll",
+    "anchor-scroll",
+    "smooth-scroll"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
