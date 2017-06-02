@@ -1,0 +1,18 @@
+{
+  "name": "smooth-scroll.js",
+  "homepage": "https://github.com/cferdinandi/smooth-scroll",
+  "version": "5.3.7",
+  "_release": "5.3.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "v5.3.7",
+    "commit": "caddda80e022870648c183da499ba7a2b93ebf87"
+  },
+  "_source": "git://github.com/cferdinandi/smooth-scroll.git",
+  "_target": "~5.3.7",
+  "_originalSource": "smooth-scroll.js",
+  "_direct": true,
+  "main": [
+    "dist/js/smooth-scroll.js"
+  ]
+}
