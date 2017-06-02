@@ -1,0 +1,9 @@
+{
+  "name": "smooth-scroll",
+  "main": "smooth-scroll.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/cferdinandi/smooth-scroll",
+  "authors": [ "Chris Ferdinandi" ],
+  "license": "MIT",
+  "ignore": [ ".gitignore" ]
+}
