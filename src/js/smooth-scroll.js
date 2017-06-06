@@ -417,6 +417,29 @@
 		startAnimateScroll();
 
 	};
+	
+	/**
+	 * Returns components of a url for comparison with window location
+	 * @private
+	 * @param  {href}      The href of a link element
+	 * @return {Result}    Result object with components of href, similar to window.location
+	 */
+	var parseUri = function ( url ) {
+		var result = {};
+
+		var anchor = document.createElement('a');
+		anchor.href = url;
+		
+		var keys = 'protocol hostname host pathname port search hash href'.split(' ');
+		for (var keyIndex in keys) {
+		var currentKey = keys[keyIndex]; 
+		result[currentKey] = anchor[currentKey];
+		}
+		
+		result.toString = function() { return anchor.href; };
+		result.requestUri = result.pathname + result.search;  
+		return result;
+	};
 
 	/**
 	 * Handle has change event
@@ -455,6 +478,12 @@
 
 		// Don't run if right-click or command/control + click
 		if ( event.button !== 0 || event.metaKey || event.ctrlKey ) return;
+		
+		// Don't run if different urls
+		var cururl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+		var link = parseUri(event.target.href);
+		var linkurl = link.protocol + "//" + link.host + link.pathname;
+		if (cururl != linkurl) return;
 
 		// Check if a smooth scroll link was clicked
 		toggle = getClosest( event.target, settings.selector );
