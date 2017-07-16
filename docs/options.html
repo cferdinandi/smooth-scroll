@@ -88,7 +88,12 @@
 
     // Callback API
     before: function (anchor, toggle) {}, // Function to run before scrolling starts
-    after: function (anchor, toggle) {} // Function to run after scrolling completes
+    after: function (anchor, toggle) {}, // Function to run after scrolling completes
+
+    // This options controls if the element is scrolled to the upper viewport boundary (&#39;start&#39;)
+    // or to the lower viewport boundary (&#39;end&#39;). The value &#39;auto&#39; lets Smooth Scroll decide on
+    // the shortest distance.
+    block: &#39;start&#39;
 });
 </code></pre>
 <p><em markdown="1"><strong>Note:</strong> To programatically add Smooth Scroll to all anchor links on a page, pass <code>selector: &#39;a[href*=&quot;#&quot;]&#39;</code> into <code>init</code>.</em></p>

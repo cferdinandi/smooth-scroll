@@ -31,7 +31,12 @@ smoothScroll.init({
 
 	// Callback API
 	before: function (anchor, toggle) {}, // Function to run before scrolling starts
-	after: function (anchor, toggle) {} // Function to run after scrolling completes
+	after: function (anchor, toggle) {}, // Function to run after scrolling completes
+
+	// This options controls if the element is scrolled to the upper viewport boundary ('start')
+	// or to the lower viewport boundary ('end'). The value 'auto' lets Smooth Scroll decide on
+	// the shortest distance.
+	block: 'start'
 });
 ```
 
