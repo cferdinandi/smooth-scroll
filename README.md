@@ -310,6 +310,8 @@ A benefit of this approach is that it preserves browser history and let's users 
 Here's a relatively lightweight helper function that listens for click events and uses the `smoothScroll.animateScroll()` method to scroll to the anchor. If you use this, you **should not** need initialize Smooth Scroll with `smoothScroll.init()`.
 
 ```js
+var scroll = new SmoothScroll();
+
 var smoothScrollWithoutHash = function (selector, settings) {
 	/**
 	 * If smooth scroll element clicked, animate scroll
@@ -323,7 +325,7 @@ var smoothScrollWithoutHash = function (selector, settings) {
 		if ( !anchor ) return;
 
 		event.preventDefault(); // Prevent default click event
-		smoothScroll.animateScroll( anchor, toggle, settings || {} ); // Animate scroll
+		scroll.animateScroll( anchor, toggle, settings || {} ); // Animate scroll
 	};
 
 	window.addEventListener('click', clickHandler, false );
