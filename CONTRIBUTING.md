@@ -4,27 +4,24 @@ A few quick guidelines to make this an easier and better process for everyone.
 
 
 
-## Reporting a bug
+## Questions & Bug Reports
 
-First, **make sure the bug hasn't already been reported** by searching GitHub's issues section.
+You can ask questions and get help from a community of developers on [GitHub Issues](https://github.com/cferdinandi/smooth-scroll/issues).
 
-If no existing issue exists, go ahead and create one. **Please be sure to include all of the following:**
+**Before posting, do a search to make sure your issue or question hasn't already been reported or discussed.** If no matching issue exists, go ahead and create one. Please be sure to include all of the following:
 
-1. A clear, descriptive title (ie. "A bug" is *not* a good title).
-2. [A reduced test case.](https://css-tricks.com/reduced-test-cases/) In order to debug code issues, I need to see actual code in a browser.
+1. A clear, descriptive title (ie. "A bug" is not a good title).
+2. [A reduced test case.](https://css-tricks.com/reduced-test-cases/)
+	- Clearly demonstrate the bug or issue.
+	- Include the bare minimum HTML, CSS, and JavaScript required to demonstrate the bug.
+	- A link to your production site is not a reduced test case.
 3. The browser and OS that you're using.
 
-
-
-## Asking a question
-
-Before asking, please **make sure the question hasn't already been asked** by searching GitHub's issues section.
+Duplicates and issues without a reduced test case may be closed without comment.
 
 
 
 ## Submitting a Pull Request
-
-***Note:*** *By submitting a pull request to this project, you assign all rights to Chris Ferdinandi and Go Make Things, LLC.*
 
 Make sure your code meets the following code standards:
 
