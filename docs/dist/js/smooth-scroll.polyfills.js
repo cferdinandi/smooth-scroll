@@ -1,3 +1,61 @@
+/*!
+ * smooth-scroll v12.0.0: Animate scrolling to anchor links
+ * (c) 2017 Chris Ferdinandi
+ * MIT License
+ * http://github.com/cferdinandi/smooth-scroll
+ */
+
+/**
+ * closest() polyfill
+ * @link https://developer.mozilla.org/en-US/docs/Web/API/Element/closest#Polyfill
+ */
+if (window.Element && !Element.prototype.closest) {
+	Element.prototype.closest = function(s) {
+		var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+			i,
+			el = this;
+		do {
+			i = matches.length;
+			while (--i >= 0 && matches.item(i) !== el) {}
+		} while ((i < 0) && (el = el.parentElement));
+		return el;
+	};
+}
+
+/**
+ * requestAnimationFrame() polyfill
+ * By Erik Möller. Fixes from Paul Irish and Tino Zijdel.
+ * @link http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+ * @link http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+ * @license MIT
+ */
+(function() {
+	var lastTime = 0;
+	var vendors = ['ms', 'moz', 'webkit', 'o'];
+	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+		window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+		window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] ||
+		                              window[vendors[x]+'CancelRequestAnimationFrame'];
+	}
+
+	if (!window.requestAnimationFrame) {
+		window.requestAnimationFrame = function(callback, element) {
+			var currTime = new Date().getTime();
+			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+			var id = window.setTimeout((function() { callback(currTime + timeToCall); }),
+				timeToCall);
+			lastTime = currTime + timeToCall;
+			return id;
+		};
+	}
+
+	if (!window.cancelAnimationFrame) {
+		window.cancelAnimationFrame = function(id) {
+			clearTimeout(id);
+		};
+	}
+}());
+
 (function (window, factory) {
 	if ( typeof define === 'function' && define.amd ) {
 		define([], factory(window));
@@ -6,7 +64,7 @@
 	} else {
 		window.SmoothScroll = factory(window);
 	}
-})(typeof global !== 'undefined' ? global : this.window || this.global, function (window) {
+})(typeof global !== 'undefined' ? global : this.window || this.global, (function (window) {
 
 	'use strict';
 
@@ -475,10 +533,10 @@
 		 */
 		var resizeThrottler = function (event) {
 			if (!eventTimeout) {
-				eventTimeout = setTimeout(function() {
+				eventTimeout = setTimeout((function() {
 					eventTimeout = null; // Reset timeout
 					headerHeight = getHeaderHeight(fixedHeader); // Get the height of a fixed header if one exists
-				}, 66);
+				}), 66);
 			}
 		};
 
@@ -555,4 +613,4 @@
 
 	return SmoothScroll;
 
-});
+}));

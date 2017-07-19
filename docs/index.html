@@ -5,93 +5,58 @@
 		<meta charset="utf-8">
 		<title>Smooth Scroll</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="A lightweight script to animate scrolling to anchor links.">
-
-		<!-- favicon -->
-		<link rel="shortcut icon" href="assets/img/favicon.ico">
-		<link rel="icon" sizes="16x16 32x32" href="assets/img/favicon.ico">
 
 		<!-- stylesheets -->
-		<link rel="stylesheet" href="assets/css/main.css" type="text/css">
-		<link rel="stylesheet" href="assets/css/custom.css" type="text/css">
+		<style type="text/css">
+			body {
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+				font-size: 112.5%;
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 40em;
+				width: 88%;
+			}
+		</style>
 	</head>
 
 	<body>
 
-		<!-- Old Browser Warning -->
-		<!--[if lt IE 9]>
-		    <section class="container">
-		        Did you know that your web browser is a bit old? Some of the content on this site might not work right as a result. <a href="http://whatbrowser.org">Upgrade your browser</a> for a faster, better, and safer web experience.
-		    </section>
-		<![endif]-->
+		<main id="top">
 
-		<div class="container">
-			<div class="row">
+			<nav>
+				<h1>Smooth Scroll</h1>
+				<p><a href="https://github.com/cferdinandi/smooth-scroll">GitHub</a></p>
+				<hr>
+			</nav>
 
-					<header class="grid-fourth sticky-header padding-top ">
-						<!-- Skip Nav Link -->
-						<nav>
-							<a class="screen-reader screen-reader-focusable" href="#main">Skip to content</a>
-						</nav>
-
-						<p>
-							<strong>
-								<a href="index.html">
-									<span class="text-large">Smooth Scroll</span>
-								</a>
-							</strong><br>
-							<span class="text-small">GPLv3/Commercial License</span><br>
-							<span class="text-small text-muted">Version 11</span>
-						</p>
-						<nav class="nav">
-							<ul class="list-unstyled list-nav nav-primary" data-nav-highlight>
-								<li><a href="https://github.com/cferdinandi/smooth-scroll/archive/master.zip">Download</a></li>
-								<li><a href="index.html">Demo</a></li>
-								<li><a href="setup.html">Getting Started</a></li>
-								<li><a href="options.html">Options &amp; Settings</a></li>
-								<li><a href="extras.html">Extras</a></li>
-								<li><a href="browsers.html">Browser Compatibility</a></li>
-								<li><a href="support.html">Support</a></li>
-								<li><a href="license.html">Buy a License</a></li>
-							</ul>
-
-							<div class="nav-section" data-toc data-gumshoe></div>
-						</nav>
-						<p class="padding-top"><em><strong>Want to learn how to write your own vanilla JS plugins?</strong> Get my free <a href="https://gomakethings.com/newsletter/">daily developer tips</a> and level-up as a web developer.</em> 🚀</p>
-					</header>
-
-				<main id="main" class="grid-three-fourths padding-top sticky-body tabindex" tabindex="-1" data-toc-content><h1 id="smooth-scroll">Smooth Scroll</h1>
-<p>Smooth Scroll is a lightweight script to animate scrolling to anchor links. It works great with <a href="https://github.com/cferdinandi/gumshoe">Gumshoe</a>.</p>
-<hr>
-
-<h2 id="demo">Demo</h2>
+			<section>
 <p>
     <strong>Linear</strong><br>
-    <a data-scroll data-options='{ "easing": "linear" }' href="#bazinga">Linear (no other options)</a><br>
+    <a data-easing="linear" href="#bazinga">Linear (no other options)</a><br>
 </p>
 
 <p>
     <strong>Ease-In</strong><br>
-    <a data-scroll data-options='{ "easing": "easeInQuad" }' href="#bazinga">Quad</a><br>
-    <a data-scroll data-options='{ "easing": "easeInCubic" }' href="#bazinga">Cubic</a><br>
-    <a data-scroll data-options='{ "easing": "easeInQuart" }' href="#bazinga">Quart</a><br>
-    <a data-scroll data-options='{ "easing": "easeInQuint" }' href="#bazinga">Quint</a>
+    <a data-easing="easeInQuad" href="#bazinga">Quad</a><br>
+    <a data-easing="easeInCubic" href="#bazinga">Cubic</a><br>
+    <a data-easing="easeInQuart" href="#bazinga">Quart</a><br>
+    <a data-easing="easeInQuint" href="#bazinga">Quint</a>
 </p>
 
 <p>
     <strong>Ease-In-Out</strong><br>
-    <a data-scroll data-options='{ "easing": "easeInOutQuad" }' href="#bazinga">Quad</a><br>
-    <a data-scroll data-options='{ "easing": "easeInOutCubic" }' href="#bazinga">Cubic</a><br>
-    <a data-scroll data-options='{ "easing": "easeInOutQuart" }' href="#bazinga">Quart</a><br>
-    <a data-scroll data-options='{ "easing": "easeInOutQuint" }' href="#bazinga">Quint</a>
+    <a data-easing="easeInOutQuad" href="#bazinga">Quad</a><br>
+    <a data-easing="easeInOutCubic" href="#bazinga">Cubic</a><br>
+    <a data-easing="easeInOutQuart" href="#bazinga">Quart</a><br>
+    <a data-easing="easeInOutQuint" href="#bazinga">Quint</a>
 </p>
 
 <p>
     <strong>Ease-Out</strong><br>
-    <a data-scroll data-options='{ "easing": "easeOutQuad" }' href="#bazinga">Quad</a><br>
-    <a data-scroll data-options='{ "easing": "easeOutCubic" }' href="#bazinga">Cubic</a><br>
-    <a data-scroll data-options='{ "easing": "easeOutQuart" }' href="#bazinga">Quart</a><br>
-    <a data-scroll data-options='{ "easing": "easeOutQuint" }' href="#bazinga">Quint</a>
+    <a data-easing="easeOutQuad" href="#bazinga">Quad</a><br>
+    <a data-easing="easeOutCubic" href="#bazinga">Cubic</a><br>
+    <a data-easing="easeOutQuart" href="#bazinga">Quart</a><br>
+    <a data-easing="easeOutQuint" href="#bazinga">Quint</a>
 </p>
 
 <p>
@@ -102,7 +67,7 @@
 
 <p>
     <strong>Non-ASCII Characters</strong><br>
-    <a data-scroll href="#中文">中文</a>
+    <a href="#中文">中文</a>
 </p>
 
 <p>
@@ -113,7 +78,7 @@
 
 <p id="中文">中文</p>
 
-<p id="bazinga"><a data-scroll href="#1@#%^-bottom">Bazinga!</a></p>
+<p id="bazinga"><a href="#1@#%^-bottom">Bazinga!</a></p>
 
 <p>
     .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
@@ -121,41 +86,33 @@
     .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
 </p>
 
-<p id="1@#%^-bottom"><a data-scroll data-options='{ "easing": "easeOutCubic" }' href="#">Back to the top</a></p>					</section><!-- /.container -->
-
-					<footer class="bg-muted padding-top padding-bottom">
-
-							<hr>
-
-							<p class="text-small text-muted">Built by <a href="https://gomakethings.com">Chris Ferdinandi</a>. Copyright Go Make Things, LLC. The code is available under the <a href="https://gomakethings.com/gpl/">GPLv3 License</a>. <a href="https://github.com/cferdinandi/smooth-scroll">Smooth Scroll on GitHub.</a></p>
-
-					</footer>
-				</main>
-			</div><!-- /.row -->
-		</div><!-- /.container -->
+<p id="1@#%^-bottom"><a href="#">Back to the top</a></p>
+			</section>
+		</main>
 
 		<!-- Javascript -->
-		<script src="assets/js/toc.js"></script>
-		<script src="assets/js/highlight-active-nav.js"></script>
 		<script src="dist/js/smooth-scroll.js"></script>
-		<script src="assets/js/gumshoe.min.js"></script>
-		<script src="assets/js/prism.js"></script>
 		<script>
-			tableOfContents.init({
-				heading: 'In This Section',
-				headingClass: 'h3',
-				navClass: 'list-unstyled list-nav',
-			});
-			smoothScroll.init({
-				selector: 'a[href*="#"]'
-			})
-			gumshoe.init({
-				offset: 5
-			});
-			highlightActiveNav.init({
-				urlPrefix: '/smooth-scroll/'
-			});
+			var scroll = new SmoothScroll('a[href*="#"]:not([data-easing])');
+
+			var linear = new SmoothScroll('[data-easing="linear"]', {easing: 'linear'});
+
+			var easeInQuad = new SmoothScroll('[data-easing="easeInQuad"]', {easing: 'easeInQuad'});
+			var easeInCubic = new SmoothScroll('[data-easing="easeInCubic"]', {easing: 'easeInCubic'});
+			var easeInQuart = new SmoothScroll('[data-easing="easeInQuart"]', {easing: 'easeInQuart'});
+			var easeInQuint = new SmoothScroll('[data-easing="easeInQuint"]', {easing: 'easeInQuint'});
+
+			var easeInOutQuad = new SmoothScroll('[data-easing="easeInOutQuad"]', {easing: 'easeInOutQuad'});
+			var easeInOutCubic = new SmoothScroll('[data-easing="easeInOutCubic"]', {easing: 'easeInOutCubic'});
+			var easeInOutQuart = new SmoothScroll('[data-easing="easeInOutQuart"]', {easing: 'easeInOutQuart'});
+			var easeInOutQuint = new SmoothScroll('[data-easing="easeInOutQuint"]', {easing: 'easeInOutQuint'});
+
+			var easeOutQuad = new SmoothScroll('[data-easing="easeOutQuad"]', {easing: 'easeOutQuad'});
+			var easeOutCubic = new SmoothScroll('[data-easing="easeOutCubic"]', {easing: 'easeOutCubic'});
+			var easeOutQuart = new SmoothScroll('[data-easing="easeOutQuart"]', {easing: 'easeOutQuart'});
+			var easeOutQuint = new SmoothScroll('[data-easing="easeOutQuint"]', {easing: 'easeOutQuint'});
 		</script>
+
 
 	</body>
 </html>

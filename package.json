@@ -1,13 +1,13 @@
 {
 	"name": "smooth-scroll",
-	"version": "11.1.0",
+	"version": "12.0.0",
 	"description": "Animate scrolling to anchor links",
 	"main": "./dist/js/smooth-scroll.min.js",
 	"author": {
 		"name": "Chris Ferdinandi",
 		"url": "http://gomakethings.com"
 	},
-	"license": "GPL-3.0",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "http://github.com/cferdinandi/smooth-scroll"

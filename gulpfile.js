@@ -4,6 +4,7 @@
 
 var settings = {
 	scripts: true,		// Turn on/off script tasks
+	polyfills: true,	// Turn on/off polyfill tasks
 	styles: false,		// Turn on/off style tasks
 	svgs: false,		// Turn on/off SVG tasks
 	images: false,		// Turn on/off image tasks
@@ -11,11 +12,6 @@ var settings = {
 	docs: true,			// Turn on/off documentation generation
 	deploy: true,		// Turn on/off all deployment tasks
 	cacheBust: false,	// Turn on/off cache busting (adds a version number to minified files)
-	gitAdd: true,		// Turn on/off git add -A
-	gitCommit: true,	// Turn on/off git commit -a
-	gitPush: true,		// Turn on/off push to git
-	gitTag: true,		// Turn on/off add a git tag
-	npm: false			// Turn on/off push to NPM
 };
 
 
@@ -69,6 +65,7 @@ var paths = {
 	output: 'dist/',
 	scripts: {
 		input: 'src/js/*',
+		polyfills: '!src/js/*.polyfill.js',
 		output: 'dist/js/'
 	},
 	styles: {
@@ -119,26 +116,31 @@ var banner = {
 
 
 /**
+ * File Version
+ */
+
+var fileVersion = settings.cacheBust ? '.' + package.version : '';
+
+
+/**
  * Gulp Tasks
  */
+
+var jsTasks = lazypipe()
+	.pipe(header, banner.full, { package : package })
+	.pipe(optimizejs)
+	.pipe(gulp.dest, paths.scripts.output)
+	.pipe(rename, { suffix: '.min' + fileVersion })
+	.pipe(uglify)
+	.pipe(optimizejs)
+	.pipe(header, banner.min, { package : package })
+	.pipe(gulp.dest, paths.scripts.output);
 
 // Lint, minify, and concatenate scripts
 gulp.task('build:scripts', ['clean:dist'], function() {
 	if ( !settings.scripts ) return;
 
-	var fileVersion = settings.cacheBust ? '.' + package.version : '';
-
-	var jsTasks = lazypipe()
-		.pipe(header, banner.full, { package : package })
-		.pipe(optimizejs)
-		.pipe(gulp.dest, paths.scripts.output)
-		.pipe(rename, { suffix: '.min' + fileVersion })
-		.pipe(uglify)
-		.pipe(optimizejs)
-		.pipe(header, banner.min, { package : package })
-		.pipe(gulp.dest, paths.scripts.output);
-
-	return gulp.src(paths.scripts.input)
+	return gulp.src([paths.scripts.input, paths.scripts.polyfills])
 		.pipe(plumber())
 		.pipe(tap(function (file, t) {
 			if ( file.isDirectory() ) {
@@ -151,11 +153,22 @@ gulp.task('build:scripts', ['clean:dist'], function() {
 		.pipe(jsTasks());
 });
 
+// Create scripts with polyfills
+gulp.task('build:polyfills', ['clean:dist'], function() {
+	if ( !settings.polyfills ) return;
+
+	return gulp.src(paths.scripts.input)
+		.pipe(plumber())
+		.pipe(concat(package.name + '.js'))
+		.pipe(rename({
+			suffix: ".polyfills"
+		}))
+		.pipe(jsTasks());
+});
+
 // Process, lint, and minify Sass files
 gulp.task('build:styles', ['clean:dist'], function() {
 	if ( !settings.styles ) return;
-
-	var fileVersion = settings.cacheBust ? '.' + package.version : '';
 
 	return gulp.src(paths.styles.input)
 		.pipe(plumber())
@@ -297,56 +310,6 @@ gulp.task('refresh', ['compile', 'docs'], function () {
 	livereload.changed();
 });
 
-// Add to Git
-gulp.task('deploy:gitAdd', ['compile', 'docs'], function () {
-	if ( !settings.deploy || !settings.gitAdd ) return;
-
-	exec('git add -A', function (err, stdout, stderr) {
-		console.log(stdout);
-		console.log(stderr);
-	});
-});
-
-// Commit to Git
-gulp.task('deploy:gitCommit', ['compile', 'docs', 'deploy:gitAdd'], function () {
-	if ( !settings.deploy || !settings.gitCommit ) return;
-
-	exec('git commit -a', function (err, stdout, stderr) {
-		console.log(stdout);
-		console.log(stderr);
-	});
-});
-
-// Push to Git
-gulp.task('deploy:gitPush', ['compile', 'docs', 'deploy:gitAdd', 'deploy:gitCommit'], function () {
-	if ( !settings.deploy || !settings.gitPush ) return;
-
-	exec('BRANCH=$(git symbolic-ref -q HEAD); BRANCH=${BRANCH##refs/heads/}; BRANCH=${BRANCH:-HEAD}; git push origin $BRANCH', function (err, stdout, stderr) {
-		console.log(stdout);
-		console.log(stderr);
-	});
-});
-
-// Tag on Git
-gulp.task('deploy:gitTag', ['compile', 'docs', 'deploy:gitAdd', 'deploy:gitCommit', 'deploy:gitPush'], function () {
-	if ( !settings.deploy || !settings.gitTag ) return;
-
-	exec('git tag -a v' + package.version + '; git push origin v' + package.version, function (err, stdout, stderr) {
-		console.log(stdout);
-		console.log(stderr);
-	});
-});
-
-// Push to NPM
-gulp.task('deploy:npm', ['compile', 'docs', 'deploy:gitAdd', 'deploy:gitCommit', 'deploy:gitPush', 'deploy:gitTag'], function () {
-	if ( !settings.deploy || !settings.npm ) return;
-
-	exec('npm publish', function (err, stdout, stderr) {
-		console.log(stdout);
-		console.log(stderr);
-	});
-});
-
 
 /**
  * Task Runners
@@ -357,6 +320,7 @@ gulp.task('compile', [
 	'lint:scripts',
 	'clean:dist',
 	'build:scripts',
+	'build:polyfills',
 	'build:styles',
 	'build:images',
 	'build:static',
@@ -381,12 +345,4 @@ gulp.task('default', [
 gulp.task('watch', [
 	'listen',
 	'default'
-]);
-
-gulp.task('deploy', [
-	'deploy:gitAdd',
-	'deploy:gitCommit',
-	'deploy:gitPush',
-	'deploy:gitTag',
-	'deploy:npm'
 ]);

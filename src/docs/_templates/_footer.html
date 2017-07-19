@@ -1,38 +1,30 @@
-					</section><!-- /.container -->
 
-					<footer class="bg-muted padding-top padding-bottom">
-
-							<hr>
-
-							<p class="text-small text-muted">Built by <a href="https://gomakethings.com">Chris Ferdinandi</a>. Copyright Go Make Things, LLC. The code is available under the <a href="https://gomakethings.com/gpl/">GPLv3 License</a>. <a href="https://github.com/cferdinandi/smooth-scroll">Smooth Scroll on GitHub.</a></p>
-
-					</footer>
-				</main>
-			</div><!-- /.row -->
-		</div><!-- /.container -->
+			</section>
+		</main>
 
 		<!-- Javascript -->
-		<script src="assets/js/toc.js"></script>
-		<script src="assets/js/highlight-active-nav.js"></script>
 		<script src="dist/js/smooth-scroll.js"></script>
-		<script src="assets/js/gumshoe.min.js"></script>
-		<script src="assets/js/prism.js"></script>
 		<script>
-			tableOfContents.init({
-				heading: 'In This Section',
-				headingClass: 'h3',
-				navClass: 'list-unstyled list-nav',
-			});
-			smoothScroll.init({
-				selector: 'a[href*="#"]'
-			})
-			gumshoe.init({
-				offset: 5
-			});
-			highlightActiveNav.init({
-				urlPrefix: '/smooth-scroll/'
-			});
+			var scroll = new SmoothScroll('a[href*="#"]:not([data-easing])');
+
+			var linear = new SmoothScroll('[data-easing="linear"]', {easing: 'linear'});
+
+			var easeInQuad = new SmoothScroll('[data-easing="easeInQuad"]', {easing: 'easeInQuad'});
+			var easeInCubic = new SmoothScroll('[data-easing="easeInCubic"]', {easing: 'easeInCubic'});
+			var easeInQuart = new SmoothScroll('[data-easing="easeInQuart"]', {easing: 'easeInQuart'});
+			var easeInQuint = new SmoothScroll('[data-easing="easeInQuint"]', {easing: 'easeInQuint'});
+
+			var easeInOutQuad = new SmoothScroll('[data-easing="easeInOutQuad"]', {easing: 'easeInOutQuad'});
+			var easeInOutCubic = new SmoothScroll('[data-easing="easeInOutCubic"]', {easing: 'easeInOutCubic'});
+			var easeInOutQuart = new SmoothScroll('[data-easing="easeInOutQuart"]', {easing: 'easeInOutQuart'});
+			var easeInOutQuint = new SmoothScroll('[data-easing="easeInOutQuint"]', {easing: 'easeInOutQuint'});
+
+			var easeOutQuad = new SmoothScroll('[data-easing="easeOutQuad"]', {easing: 'easeOutQuad'});
+			var easeOutCubic = new SmoothScroll('[data-easing="easeOutCubic"]', {easing: 'easeOutCubic'});
+			var easeOutQuart = new SmoothScroll('[data-easing="easeOutQuart"]', {easing: 'easeOutQuart'});
+			var easeOutQuint = new SmoothScroll('[data-easing="easeOutQuint"]', {easing: 'easeOutQuint'});
 		</script>
+
 
 	</body>
 </html>
