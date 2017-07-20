@@ -12,6 +12,17 @@
 
 
 	//
+	// Feature Test
+	//
+
+	var supports =
+		'querySelector' in document &&
+		'addEventListener' in window &&
+		'requestAnimationFrame' in window &&
+		'closest' in window.Element.prototype;
+
+
+	//
 	// Default settings
 	//
 
@@ -25,7 +36,6 @@
 		offset: 0,
 		easing: 'easeInOutCubic',
 		customEasing: null,
-		reducedMotionSupport: true,
 
 		// Callback API
 		before: function () {},
@@ -253,6 +263,17 @@
 
 	};
 
+	/**
+	 * Check to see if user prefers reduced motion
+	 * @param  {Object} settings Script settings
+	 */
+	var reduceMotion = function (settings) {
+		if ('matchMedia' in window && window.matchMedia('(prefers-reduced-motion)').matches) {
+			return true;
+		}
+		return false;
+	};
+
 
 	//
 	// SmoothScroll Constructor
@@ -265,7 +286,6 @@
 		//
 
 		var smoothScroll = {}; // Object for public APIs
-		var supports = 'querySelector' in document && 'addEventListener' in window; // Feature test
 		var settings, anchor, toggle, fixedHeader, headerHeight, eventTimeout, animationInterval;
 
 
@@ -409,6 +429,9 @@
 		 * If smooth scroll element clicked, animate scroll
 		 */
 		var clickHandler = function (event) {
+
+			// Don't run if the user prefers reduced motion
+			if (reduceMotion(settings)) return;
 
 			// Don't run if right-click or command/control + click
 			if (event.button !== 0 || event.metaKey || event.ctrlKey) return;

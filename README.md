@@ -245,6 +245,7 @@ If you have multiple fixed headers, pass in the last one in the markup.
 	```
 - The new `cancelScroll()` method lets you programatically cancel a scroll-in-progress.
 - Scrolling animation is now powered by `requestAnimationFrame()`, resulting in smoother scrolling and better performance.
+- Smooth Scroll now supports Reduced Motion (currently a Safari-only feature). If the visitor has indicated that they [prefer reduced motion](https://css-tricks.com/smooth-scrolling-accessibility/), Smooth Scroll will jump to the anchor link as normal instead of animating the scroll.
 
 ### Breaking Changes
 
