@@ -184,7 +184,8 @@ scroll.animateScroll( anchor, toggle, options );
 
 ```javascript
 // You can optionally pass in a y-position to scroll to as an integer
-smoothScroll.animateScroll( 750 );
+var scroll = new SmoothScroll();
+scroll.animateScroll( 750 );
 ```
 
 #### cancelScroll()
@@ -196,6 +197,14 @@ scroll.cancelScroll();
 ```
 
 ***Note:*** *This does not handle focus management. The user will stop in place, and focus will remain on the anchor link that triggered the scroll.*
+
+#### init()
+Initialize Smooth Scroll. This is called automatically when you setup your `new SmoothScroll` object, but can be used to reinitialize your instance.
+
+```javascript
+var scroll = new SmoothScroll();
+scroll.init('.some-selector');
+```
 
 #### destroy()
 Destroy the current `smoothScroll.init()`. This is called automatically during the `init` function to remove any existing initializations.
@@ -218,8 +227,8 @@ If you have multiple fixed headers, pass in the last one in the markup.
 </nav>
 ...
 <script>
-	smoothScroll.init({
-		selectorHeader: '[data-scroll-header]'
+	var scroll = new SmoothScroll('.some-selector',{
+		header: '[data-scroll-header]'
 	});
 </script>
 ```
@@ -297,7 +306,7 @@ Frequently asked questions, code snippets, and more to help you get the most out
 
 This, unfortunately, cannot be done well.
 
-Most browsers instantly jump you to the anchor location when you load a page. You could use `scrollTo(0, 0)` to pull users back up to the top, and then manually use the `smoothScroll.animateScroll()` method, but in my experience, it results in a visible jump on the page that's a worse experience than the default browser behavior.
+Most browsers instantly jump you to the anchor location when you load a page. You could use `scrollTo(0, 0)` to pull users back up to the top, and then manually use the `animateScroll()` method, but in my experience, it results in a visible jump on the page that's a worse experience than the default browser behavior.
 
 ### Scrolling without updating the URL
 
@@ -307,7 +316,7 @@ A benefit of this approach is that it preserves browser history and let's users 
 
 *However*, I know certain front-end frameworks also use URL hashes for their own internal processes. While I view this as an anti-pattern, and won't bake hashless anchor links into Smooth Scroll's core, you can enable scrolling without updating the URL via the Smooth Scroll API.
 
-Here's a relatively lightweight helper function that listens for click events and uses the `smoothScroll.animateScroll()` method to scroll to the anchor. If you use this, you **should not** need initialize Smooth Scroll with `smoothScroll.init()`.
+Here's a relatively lightweight helper function that listens for click events and uses the `animateScroll()` method to scroll to the anchor. If you use this, you **should not** pass a selector into `new SmoothScroll()`.
 
 ```js
 var scroll = new SmoothScroll();
