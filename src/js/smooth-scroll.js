@@ -8,13 +8,9 @@
 	} else {
 		root.SmoothScroll = factory(root);
 	}
-})(typeof global !== 'undefined' ? global : this.window || this.global, function (root) {
+})(typeof global !== 'undefined' ? global : typeof window !== 'undefined' ? window : this, function (window) {
 
 	'use strict';
-
-	// Reset window
-	var window = root;
-
 
 	//
 	// Feature Test
