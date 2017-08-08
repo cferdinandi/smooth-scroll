@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v12.1.3: Animate scrolling to anchor links
+ * smooth-scroll v12.1.4: Animate scrolling to anchor links
  * (c) 2017 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -206,14 +206,6 @@
 	};
 
 	/**
-	 * Determine the viewport's height
-	 * @returns {Number}
-	 */
-	var getViewportHeight = function() {
-		return Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-	};
-
-	/**
 	 * Determine the document's height
 	 * @returns {Number}
 	 */
@@ -237,7 +229,7 @@
 			} while (anchor);
 		}
 		location = Math.max(location - headerHeight - offset, 0);
-		return Math.min(location, getDocumentHeight() - getViewportHeight());
+		return location;
 	};
 
 	/**
@@ -409,14 +401,6 @@
 		 * Handle has change event
 		 */
 		var hashChangeHandler = function (event) {
-
-			// Get hash from URL
-			var hash;
-			try {
-				hash = escapeCharacters(decodeURIComponent(window.location.hash));
-			} catch(e) {
-				hash = escapeCharacters(window.location.hash);
-			}
 
 			// Only run if there's an anchor element to scroll to
 			if (!anchor) return;
