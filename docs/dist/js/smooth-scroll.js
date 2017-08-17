@@ -390,7 +390,6 @@
 			animateSettings.before(anchor, toggle);
 
 			// Start scrolling animation
-			// startAnimateScroll();
 			smoothScroll.cancelScroll();
 			window.requestAnimationFrame(loopAnimateScroll);
 

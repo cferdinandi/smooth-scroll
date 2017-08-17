@@ -6,7 +6,7 @@ A lightweight script to animate scrolling to anchor links. Smooth Scroll works g
 
 <hr>
 
-### Want to learn how to write your own vanilla JS plugins? Check out my ["Vanilla JS Pocket Guides series"](https://gomakethings.com/guides/) and level-up as a web developer. 🚀
+### Want to learn how to write your own vanilla JS plugins? Check out my [Vanilla JS Pocket Guides series](https://gomakethings.com/guides/) and level-up as a web developer. 🚀
 
 <hr>
 
@@ -54,11 +54,11 @@ In the footer of your page, after the content, initialize Smooth Scroll by passi
 
 ## Installing with Package Managers
 
-You can install Smooth Scroll with your favorite package manager.
+You can install Smooth Scroll with your favorite package manager or module loader directly from  NPM.
 
-* **[NPM](https://www.npmjs.org/):** `npm install cferdinandi/smooth-scroll`
-* **[Bower](http://bower.io/):** `bower install https://github.com/cferdinandi/smooth-scroll.git`
-* **[Component](http://component.io/):** `component install cferdinandi/smooth-scroll`
+```
+npm install smooth-scroll
+```
 
 
 
