@@ -349,7 +349,7 @@ smoothScrollWithoutHash( 'a[href*="#"]' );
 
 ## Support
 
-Please review the [support guidelines](CONTRIBUTING.md).
+Please review the [support guidelines](SUPPORT.md).
 
 
 
