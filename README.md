@@ -98,7 +98,7 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 
 	// Speed & Easing
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
-	offset: 0, // Integer or Function returning an integer. How far to offset the scrolling anchor location in pixels
+	offset: 0, // Integer or Function returning an integer. How far to offset the scrolling anchor location in pixels. Function has two parameters `anchor` and `toggle`.
 	easing: 'easeInOutCubic', // Easing pattern to use
 	customEasing: function (time) {}, // Function. Custom easing pattern
 
@@ -345,7 +345,17 @@ var smoothScrollWithoutHash = function (selector, settings) {
 smoothScrollWithoutHash( 'a[href*="#"]' );
 ```
 
+### Dynamic offset
 
+Offset can be defined as function with two parameters `anchor` and `toggle`. Here's example of storing offset value as data property on toggle element.
+
+```js
+	new SmoothScroll('a[href*="#"]', {
+		offset: function (anchor, toggle) {
+			return toggle.getAttribute('data-offset') || 0;
+		}
+	});
+```
 
 ## Support
 
