@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v12.1.4: Animate scrolling to anchor links
+ * smooth-scroll v12.1.5: Animate scrolling to anchor links
  * (c) 2017 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -210,7 +210,11 @@
 	 * @returns {Number}
 	 */
 	var getDocumentHeight = function () {
-		return parseInt(window.getComputedStyle(document.documentElement).height, 10);
+		return Math.max(
+			document.body.scrollHeight, document.documentElement.scrollHeight,
+			document.body.offsetHeight, document.documentElement.offsetHeight,
+			document.body.clientHeight, document.documentElement.clientHeight
+		);
 	};
 
 	/**
