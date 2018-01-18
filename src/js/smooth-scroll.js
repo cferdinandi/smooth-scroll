@@ -425,7 +425,7 @@
 			if (event.button !== 0 || event.metaKey || event.ctrlKey) return;
 
 			// Check if event.target has closest method
-			if(!'closest' in event.target)return;
+			if(!('closest' in event.target))return;
 			
 			// Check if a smooth scroll link was clicked
 			toggle = event.target.closest(selector);
