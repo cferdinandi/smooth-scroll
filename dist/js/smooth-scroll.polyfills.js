@@ -1,6 +1,6 @@
 /*!
  * smooth-scroll v12.1.5: Animate scrolling to anchor links
- * (c) 2017 Chris Ferdinandi
+ * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
  */
@@ -284,6 +284,8 @@ if (window.Element && !Element.prototype.closest) {
 			} while (anchor);
 		}
 		location = Math.max(location - headerHeight - offset, 0);
+		var maxScrollAmount = document.documentElement.scrollHeight - window.innerHeight;
+    location = Math.min(location, maxScrollAmount);
 		return location;
 	};
 

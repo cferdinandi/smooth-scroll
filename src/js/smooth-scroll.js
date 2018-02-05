@@ -225,6 +225,8 @@
 			} while (anchor);
 		}
 		location = Math.max(location - headerHeight - offset, 0);
+		var maxScrollAmount = document.documentElement.scrollHeight - window.innerHeight;
+    location = Math.min(location, maxScrollAmount);
 		return location;
 	};
 
