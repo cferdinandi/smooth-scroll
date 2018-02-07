@@ -100,11 +100,21 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
 	offset: 0, // Integer or Function returning an integer. How far to offset the scrolling anchor location in pixels
 	easing: 'easeInOutCubic', // Easing pattern to use
-	customEasing: function (time) {}, // Function. Custom easing pattern
+	customEasing: function (time) {
+
+		// Function. Custom easing pattern
+		// If this is set to anything other than null, will override the easing option above
+
+		// return <your formulate with time as a multiplier>
+
+		// Example: easeInOut Quad
+		return time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time;
+
+	},
 
 	// Callback API
-	before: function () {}, // Callback to run before scroll
-	after: function () {} // Callback to run after scroll
+	before: function (anchor, toggle) {}, // Callback to run before scroll
+	after: function (anchor, toggle) {} // Callback to run after scroll
 });
 ```
 
