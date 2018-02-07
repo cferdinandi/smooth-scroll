@@ -57,7 +57,6 @@
 
 		// Variables
 		var extended = {};
-		var deep = false;
 		var i = 0;
 		var length = arguments.length;
 
