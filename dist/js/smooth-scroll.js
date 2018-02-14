@@ -1,6 +1,6 @@
 /*!
  * smooth-scroll v12.1.5: Animate scrolling to anchor links
- * (c) 2017 Chris Ferdinandi
+ * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
  */
@@ -431,6 +431,9 @@
 			// Don't run if right-click or command/control + click
 			if (event.button !== 0 || event.metaKey || event.ctrlKey) return;
 
+			// Check if event.target has closest method
+			if(!('closest' in event.target))return;
+			
 			// Check if a smooth scroll link was clicked
 			toggle = event.target.closest(selector);
 			if (!toggle || toggle.tagName.toLowerCase() !== 'a' || event.target.closest(settings.ignore)) return;
