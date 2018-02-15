@@ -438,6 +438,11 @@
 				hash = escapeCharacters(toggle.hash);
 			}
 
+			// If anchor is not empty, protect the anchor element's ID from overwrite
+			if (anchor) {
+				anchor.id = anchor.getAttribute('data-scroll-id');
+			}
+
 			// If the hash is empty, scroll to the top of the page
 			if (hash === '#') {
 
