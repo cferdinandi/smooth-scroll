@@ -1,6 +1,6 @@
 /*!
  * smooth-scroll v12.1.5: Animate scrolling to anchor links
- * (c) 2017 Chris Ferdinandi
+ * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
  */
@@ -95,6 +95,7 @@ if (window.Element && !Element.prototype.closest) {
 		offset: 0,
 		easing: 'easeInOutCubic',
 		customEasing: null,
+		clip: true,
 
 		// Callback API
 		before: function () {},
@@ -273,9 +274,10 @@ if (window.Element && !Element.prototype.closest) {
 	 * @param {Element} anchor The anchor element to scroll to
 	 * @param {Number} headerHeight Height of a fixed header, if any
 	 * @param {Number} offset Number of pixels by which to offset scroll
+	 * @param {Boolean} clip Wether to clip result to maximum scroll amount
 	 * @returns {Number}
 	 */
-	var getEndLocation = function (anchor, headerHeight, offset) {
+	var getEndLocation = function (anchor, headerHeight, offset, clip) {
 		var location = 0;
 		if (anchor.offsetParent) {
 			do {
@@ -284,6 +286,10 @@ if (window.Element && !Element.prototype.closest) {
 			} while (anchor);
 		}
 		location = Math.max(location - headerHeight - offset, 0);
+		if (clip) {
+			var maxScrollAmount = document.documentElement.scrollHeight - window.innerHeight;
+			location = Math.min(location, maxScrollAmount);
+		}
 		return location;
 	};
 
@@ -380,7 +386,7 @@ if (window.Element && !Element.prototype.closest) {
 				// Get the height of a fixed header if one exists and not already set
 				headerHeight = getHeaderHeight(fixedHeader);
 			}
-			var endLocation = isNum ? anchor : getEndLocation(anchorElem, headerHeight, parseInt((typeof animateSettings.offset === 'function' ? animateSettings.offset() : animateSettings.offset), 10)); // Location to scroll to
+			var endLocation = isNum ? anchor : getEndLocation(anchorElem, headerHeight, parseInt((typeof animateSettings.offset === 'function' ? animateSettings.offset() : animateSettings.offset), 10), animateSettings.clip); // Location to scroll to
 			var distance = endLocation - startLocation; // distance to travel
 			var documentHeight = getDocumentHeight();
 			var timeLapsed = 0;
