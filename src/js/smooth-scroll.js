@@ -13,17 +13,6 @@
 	'use strict';
 
 	//
-	// Feature Test
-	//
-
-	var supports =
-		'querySelector' in document &&
-		'addEventListener' in window &&
-		'requestAnimationFrame' in window &&
-		'closest' in window.Element.prototype;
-
-
-	//
 	// Default settings
 	//
 
@@ -523,7 +512,16 @@
 		 */
 		smoothScroll.init = function (options) {
 
-			// feature test
+			//
+			// Feature Test
+			//
+
+			var supports =
+				'querySelector' in document &&
+				'addEventListener' in window &&
+				'requestAnimationFrame' in window &&
+				'closest' in window.Element.prototype;
+
 			if (!supports) return;
 
 			// Destroy any existing initializations
