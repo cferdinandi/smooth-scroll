@@ -23,6 +23,25 @@ if (window.Element && !Element.prototype.closest) {
 }
 
 /**
+ * CustomEvent() polyfill
+ * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+ */
+(function () {
+
+	if (typeof window.CustomEvent === "function") return false;
+
+	function CustomEvent(event, params) {
+		params = params || { bubbles: false, cancelable: false, detail: undefined };
+		var evt = document.createEvent('CustomEvent');
+		evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+		return evt;
+	}
+
+	CustomEvent.prototype = window.Event.prototype;
+
+	window.CustomEvent = CustomEvent;
+})();
+/**
  * requestAnimationFrame() polyfill
  * By Erik Möller. Fixes from Paul Irish and Tino Zijdel.
  * @link http://paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -101,9 +120,8 @@ if (window.Element && !Element.prototype.closest) {
 		updateURL: true,
 		popstate: true,
 
-		// Callback API
-		before: function () {},
-		after: function () {}
+		// Custom Events
+		emitEvents: true
 	};
 
 
@@ -352,6 +370,11 @@ if (window.Element && !Element.prototype.closest) {
 
 	};
 
+	/**
+	 * Update the URL
+	 * @param  {Node}   anchor  The anchor that was scrolled to
+	 * @param  {Object} options Settings for Smooth Scroll
+	 */
 	var updateURL = function (anchor, options) {
 
 		// Verify that pushState is supported and the updateURL option is enabled
@@ -367,6 +390,24 @@ if (window.Element && !Element.prototype.closest) {
 			anchor === 0 ? '#top' : '#' + anchor.id
 		);
 
+	};
+
+	/**
+	 * Emit a custom event
+	 * @todo  feature test before emitting
+	 * @todo  make optional with a setting
+	 * @param  {String} type The event type
+	 */
+	var emitEvent = function (type, anchor, toggle, options) {
+		if (!options.emitEvents || typeof window.CustomEvent !== 'function') return;
+		var event = new CustomEvent(type, {
+			bubbles: true,
+			detail: {
+				anchor: anchor,
+				toggle: toggle
+			}
+		});
+		document.dispatchEvent(event);
 	};
 
 
@@ -391,9 +432,11 @@ if (window.Element && !Element.prototype.closest) {
 		/**
 		 * Cancel a scroll-in-progress
 		 */
-		smoothScroll.cancelScroll = function () {
+		smoothScroll.cancelScroll = function (noEvent) {
 			cancelAnimationFrame(animationInterval);
 			animationInterval = null;
+			if (noEvent) return;
+			emitEvent('scrollCancel');
 		};
 
 		/**
@@ -441,13 +484,13 @@ if (window.Element && !Element.prototype.closest) {
 				if (position == endLocation || currentLocation == endLocation || ((startLocation < endLocation && window.innerHeight + currentLocation) >= documentHeight)) {
 
 					// Clear the animation timer
-					smoothScroll.cancelScroll();
+					smoothScroll.cancelScroll(true);
 
 					// Bring the anchored element into focus
 					adjustFocus(anchor, endLocation, isNum);
 
-					// Run callback after animation complete
-					animateSettings.after(anchor, toggle);
+					// Emit a custom event
+					emitEvent('scrollStop', anchor, toggle);
 
 					// Reset start
 					start = null;
@@ -482,14 +525,14 @@ if (window.Element && !Element.prototype.closest) {
 				window.scrollTo(0, 0);
 			}
 
-			// Run callback before animation starts
-			animateSettings.before(anchor, toggle);
-
 			// Update the URL
 			updateURL(anchor, animateSettings);
 
+			// Emit a custom event
+			emitEvent('scrollStart', anchor, toggle);
+
 			// Start scrolling animation
-			smoothScroll.cancelScroll();
+			smoothScroll.cancelScroll(true);
 			window.requestAnimationFrame(loopAnimateScroll);
 
 		};

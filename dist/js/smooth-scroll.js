@@ -50,9 +50,8 @@
 		updateURL: true,
 		popstate: true,
 
-		// Callback API
-		before: function () {},
-		after: function () {}
+		// Custom Events
+		emitEvents: true
 	};
 
 
@@ -301,6 +300,11 @@
 
 	};
 
+	/**
+	 * Update the URL
+	 * @param  {Node}   anchor  The anchor that was scrolled to
+	 * @param  {Object} options Settings for Smooth Scroll
+	 */
 	var updateURL = function (anchor, options) {
 
 		// Verify that pushState is supported and the updateURL option is enabled
@@ -316,6 +320,24 @@
 			anchor === 0 ? '#top' : '#' + anchor.id
 		);
 
+	};
+
+	/**
+	 * Emit a custom event
+	 * @todo  feature test before emitting
+	 * @todo  make optional with a setting
+	 * @param  {String} type The event type
+	 */
+	var emitEvent = function (type, anchor, toggle, options) {
+		if (!options.emitEvents || typeof window.CustomEvent !== 'function') return;
+		var event = new CustomEvent(type, {
+			bubbles: true,
+			detail: {
+				anchor: anchor,
+				toggle: toggle
+			}
+		});
+		document.dispatchEvent(event);
 	};
 
 
@@ -340,9 +362,11 @@
 		/**
 		 * Cancel a scroll-in-progress
 		 */
-		smoothScroll.cancelScroll = function () {
+		smoothScroll.cancelScroll = function (noEvent) {
 			cancelAnimationFrame(animationInterval);
 			animationInterval = null;
+			if (noEvent) return;
+			emitEvent('scrollCancel');
 		};
 
 		/**
@@ -390,13 +414,13 @@
 				if (position == endLocation || currentLocation == endLocation || ((startLocation < endLocation && window.innerHeight + currentLocation) >= documentHeight)) {
 
 					// Clear the animation timer
-					smoothScroll.cancelScroll();
+					smoothScroll.cancelScroll(true);
 
 					// Bring the anchored element into focus
 					adjustFocus(anchor, endLocation, isNum);
 
-					// Run callback after animation complete
-					animateSettings.after(anchor, toggle);
+					// Emit a custom event
+					emitEvent('scrollStop', anchor, toggle);
 
 					// Reset start
 					start = null;
@@ -431,14 +455,14 @@
 				window.scrollTo(0, 0);
 			}
 
-			// Run callback before animation starts
-			animateSettings.before(anchor, toggle);
-
 			// Update the URL
 			updateURL(anchor, animateSettings);
 
+			// Emit a custom event
+			emitEvent('scrollStart', anchor, toggle);
+
 			// Start scrolling animation
-			smoothScroll.cancelScroll();
+			smoothScroll.cancelScroll(true);
 			window.requestAnimationFrame(loopAnimateScroll);
 
 		};
