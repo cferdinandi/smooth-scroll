@@ -54,4 +54,4 @@
 	.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
 </p>
 
-<p id="1@#%^-bottom"><a href="#">Back to the top</a></p>
+<p id="1@#%^-bottom"><a href="#top">Back to the top</a></p>
