@@ -22,22 +22,31 @@ There are two versions of Smooth Scroll: the standalone version, and one that co
 
 If you're including your own polyfills or don't want to enable this feature for older browsers, use the standalone version. Otherwise, use the version with polyfills.
 
-**Direct `<script>` include**
+**Direct Download**
 
-[Download the files directly](https://github.com/cferdinandi/smooth-scroll/archive/master.zip) or use the [jsDelivr CDN](https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/).
+You can [download the files directly from GitHub](https://github.com/cferdinandi/smooth-scroll/archive/master.zip).
 
 ```html
-<!-- Direct Download -->
 <script src="path/to/smooth-scroll.polyfills.min.js"></script>
-
-<!-- CDN -->
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@12.1.5/dist/smooth-scroll.polyfills.min.js"></script>
 ```
 
-**NPM**
+**CDN**
 
-```bash
-npm install smooth-scroll
+You can also use the [jsDelivr CDN](https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/). I recommend linking to a specific version number or version range to prevent major updates from breaking your site. Smooth Scroll uses semantic versioning.
+
+```html
+<!-- Always get the latest version -->
+<!-- Not recommended for production sites! -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Get minor updates and patch fixes within a major version -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Get patch fixes within a minor version -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14.0/dist/smooth-scroll.polyfills.min.js"></script>
+
+<!-- Get a specific version -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14.0.0/dist/smooth-scroll.polyfills.min.js"></script>
 ```
 
 ### 2. Add the markup to your HTML.
@@ -63,6 +72,20 @@ In the footer of your page, after the content, initialize Smooth Scroll by passi
 ```
 
 ***Note:*** *The `a[href*="#"]` selector will apply Smooth Scroll to all anchor links. You can selectively target links using any other selector(s) you'd like. Smooth Scroll accepts multiple selectors as a comma separated list. Example: `'.js-scroll, [data-scroll], #some-link'`.*
+
+
+## ES6 Modules
+
+Smooth Scroll does not have a default export, but does support CommonJS and can be used with native ES6 module imports.
+
+```js
+import('/path/to/smooth-scroll.polyfills.min.js')
+	.then(function () {
+		var scroll = new SmoothScroll('a[href*="#"]');
+	});
+```
+
+It uses a UMD pattern, and should also work in most major module bundlers and package managers.
 
 
 
