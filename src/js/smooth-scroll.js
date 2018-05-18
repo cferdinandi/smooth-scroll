@@ -281,12 +281,17 @@
 	 */
 	var adjustFocus = function (anchor, endLocation, isNum) {
 
+		// Is scrolling to top of page, blur
+		if (anchor === 0) {
+			document.body.focus();
+		}
+
 		// Don't run if scrolling to a number on the page
 		if (isNum) return;
 
 		// Otherwise, bring anchor element into focus
 		anchor.focus();
-		if (document.activeElement.id !== anchor.id) {
+		if (document.activeElement !== anchor) {
 			anchor.setAttribute('tabindex', '-1');
 			anchor.focus();
 			anchor.style.outline = 'none';
@@ -297,10 +302,14 @@
 
 	/**
 	 * Update the URL
-	 * @param  {Node}   anchor  The anchor that was scrolled to
-	 * @param  {Object} options Settings for Smooth Scroll
+	 * @param  {Node}    anchor  The anchor that was scrolled to
+	 * @param  {Boolean} isNum   If true, anchor is a number
+	 * @param  {Object}  options Settings for Smooth Scroll
 	 */
-	var updateURL = function (anchor, options) {
+	var updateURL = function (anchor, isNum, options) {
+
+		// Bail if the anchor is a number
+		if (isNum) return;
 
 		// Verify that pushState is supported and the updateURL option is enabled
 		if (!history.pushState || !options.updateURL) return;
@@ -312,7 +321,7 @@
 				anchor: anchor.id
 			},
 			document.title,
-			anchor === 0 ? '#top' : '#' + anchor.id
+			anchor === document.documentElement ? '#top' : '#' + anchor.id
 		);
 
 	};
@@ -452,7 +461,7 @@
 			}
 
 			// Update the URL
-			updateURL(anchor, animateSettings);
+			updateURL(anchor, isNum, animateSettings);
 
 			// Emit a custom event
 			emitEvent('scrollStart', animateSettings, anchor, toggle);
@@ -484,21 +493,9 @@
 			// Get an escaped version of the hash
 			var hash = escapeCharacters(decode(toggle.hash));
 
-			// If the hash is empty, scroll to the top of the page
-			if (settings.topOnEmptyHash && ['#', '#top'].indexOf(hash) !== -1) {
-
-				// Prevent default link behavior
-				event.preventDefault();
-
-				// Scroll to the top of the page
-				smoothScroll.animateScroll(0, toggle);
-
-				return;
-
-			}
-
 			// Get the anchored element
-			anchor = document.querySelector(hash);
+			var anchor = settings.topOnEmptyHash && hash === '#' ? document.documentElement : document.querySelector(hash);
+			anchor = !anchor && hash === '#top' ? document.documentElement : anchor;
 
 			// If anchored element exists, scroll to it
 			if (!anchor) return;
