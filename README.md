@@ -127,7 +127,19 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 
 	// Speed & Easing
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
-	offset: 0, // Integer or Function returning an integer. How far to offset the scrolling anchor location in pixels
+	offset: function (anchor, toggle) {
+
+		// Integer or Function returning an integer. How far to offset the scrolling anchor location in pixels
+		// This example is a function, but you could do something as simple as `offset: 25`
+
+		// An example returning different values based on whether the clicked link was in the header nav or not
+		if (toggle.classList.closest('.my-header-nav')) {
+			return 25;
+		} else {
+			return 50;
+		}
+
+	},
 	easing: 'easeInOutCubic', // Easing pattern to use
 	customEasing: function (time) {
 
@@ -317,6 +329,7 @@ If you have multiple fixed headers, pass in the last one in the markup.
 - Custom events let you more easily hook into Smooth Scroll from other scripts.
 - The feature test is scoped to a function, allowing for server-side implementations.
 - The loss of styling with IDs experienced in earlier versions has been eliminated.
+- The `anchor` and `toggle` elements are now passed into the `offset()` function, allowing for more customization [v14.1.0 and up].
 
 ### Breaking Changes
 
