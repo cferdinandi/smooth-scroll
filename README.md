@@ -230,8 +230,8 @@ Animate scrolling to an anchor.
 ```javascript
 var scroll = new SmoothScroll();
 scroll.animateScroll(
-	anchor, // Node to scroll to. ex. document.querySelector( '#bazinga' )
-	toggle, // Node that toggles the animation, OR an integer. ex. document.querySelector( '#toggle' )
+	anchor, // Node to scroll to. ex. document.querySelector('#bazinga')
+	toggle, // Node that toggles the animation, OR an integer. ex. document.querySelector('#toggle')
 	options // Classes and callbacks. Same options as those passed into the init() function.
 );
 ```
@@ -240,18 +240,18 @@ scroll.animateScroll(
 
 ```javascript
 var scroll = new SmoothScroll();
-var anchor = document.querySelector( '#bazinga' );
-scroll.animateScroll( anchor );
+var anchor = document.querySelector('#bazinga');
+scroll.animateScroll(anchor);
 ```
 
 **Example 2**
 
 ```javascript
 var scroll = new SmoothScroll();
-var anchor = document.querySelector( '#bazinga' );
+var anchor = document.querySelector('#bazinga');
 var toggle = document.querySelector('#toggle');
 var options = { speed: 1000, easing: 'easeOutCubic' };
-scroll.animateScroll( anchor, toggle, options );
+scroll.animateScroll(anchor, toggle, options);
 ```
 
 **Example 3**
@@ -259,7 +259,7 @@ scroll.animateScroll( anchor, toggle, options );
 ```javascript
 // You can optionally pass in a y-position to scroll to as an integer
 var scroll = new SmoothScroll();
-scroll.animateScroll( 750 );
+scroll.animateScroll(750);
 ```
 
 #### cancelScroll()
