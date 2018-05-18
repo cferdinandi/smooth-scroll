@@ -317,11 +317,12 @@
 
 	/**
 	 * Emit a custom event
-	 * @todo  feature test before emitting
-	 * @todo  make optional with a setting
-	 * @param  {String} type The event type
+	 * @param  {String} type    The event type
+	 * @param  {Object} options The settings object
+	 * @param  {Node}   anchor  The anchor element
+	 * @param  {Node}   toggle  The toggle element
 	 */
-	var emitEvent = function (type, anchor, toggle, options) {
+	var emitEvent = function (type, options, anchor, toggle) {
 		if (!options.emitEvents || typeof window.CustomEvent !== 'function') return;
 		var event = new CustomEvent(type, {
 			bubbles: true,
@@ -359,7 +360,7 @@
 			cancelAnimationFrame(animationInterval);
 			animationInterval = null;
 			if (noEvent) return;
-			emitEvent('scrollCancel');
+			emitEvent('scrollCancel', settings);
 		};
 
 		/**
@@ -413,7 +414,7 @@
 					adjustFocus(anchor, endLocation, isNum);
 
 					// Emit a custom event
-					emitEvent('scrollStop', anchor, toggle);
+					emitEvent('scrollStop', animateSettings, anchor, toggle);
 
 					// Reset start
 					start = null;
@@ -452,7 +453,7 @@
 			updateURL(anchor, animateSettings);
 
 			// Emit a custom event
-			emitEvent('scrollStart', anchor, toggle);
+			emitEvent('scrollStart', animateSettings, anchor, toggle);
 
 			// Start scrolling animation
 			smoothScroll.cancelScroll(true);
