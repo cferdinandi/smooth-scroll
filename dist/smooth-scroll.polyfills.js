@@ -1,6 +1,6 @@
 /*!
- * smooth-scroll v12.1.5: Animate scrolling to anchor links
- * (c) 2017 Chris Ferdinandi
+ * smooth-scroll v14.0.0: Animate scrolling to anchor links
+ * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
  */
@@ -22,6 +22,25 @@ if (window.Element && !Element.prototype.closest) {
 	};
 }
 
+/**
+ * CustomEvent() polyfill
+ * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#Polyfill
+ */
+(function () {
+
+	if (typeof window.CustomEvent === "function") return false;
+
+	function CustomEvent(event, params) {
+		params = params || { bubbles: false, cancelable: false, detail: undefined };
+		var evt = document.createEvent('CustomEvent');
+		evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+		return evt;
+	}
+
+	CustomEvent.prototype = window.Event.prototype;
+
+	window.CustomEvent = CustomEvent;
+})();
 /**
  * requestAnimationFrame() polyfill
  * By Erik Möller. Fixes from Paul Irish and Tino Zijdel.
@@ -57,11 +76,11 @@ if (window.Element && !Element.prototype.closest) {
 }());
 
 (function (root, factory) {
-	if ( typeof define === 'function' && define.amd ) {
+	if (typeof define === 'function' && define.amd) {
 		define([], (function () {
 			return factory(root);
 		}));
-	} else if ( typeof exports === 'object' ) {
+	} else if (typeof exports === 'object') {
 		module.exports = factory(root);
 	} else {
 		root.SmoothScroll = factory(root);
@@ -71,17 +90,6 @@ if (window.Element && !Element.prototype.closest) {
 	'use strict';
 
 	//
-	// Feature Test
-	//
-
-	var supports =
-		'querySelector' in document &&
-		'addEventListener' in window &&
-		'requestAnimationFrame' in window &&
-		'closest' in window.Element.prototype;
-
-
-	//
 	// Default settings
 	//
 
@@ -89,6 +97,7 @@ if (window.Element && !Element.prototype.closest) {
 		// Selectors
 		ignore: '[data-scroll-ignore]',
 		header: null,
+		topOnEmptyHash: true,
 
 		// Speed & Easing
 		speed: 500,
@@ -96,15 +105,31 @@ if (window.Element && !Element.prototype.closest) {
 		easing: 'easeInOutCubic',
 		customEasing: null,
 
-		// Callback API
-		before: function () {},
-		after: function () {}
+		// History
+		updateURL: true,
+		popstate: true,
+
+		// Custom Events
+		emitEvents: true
 	};
 
 
 	//
 	// Utility Methods
 	//
+
+	/**
+	 * Check if browser supports required methods
+	 * @return {Boolean} Returns true if all required methods are supported
+	 */
+	var supports = function () {
+		return (
+			'querySelector' in document &&
+			'addEventListener' in window &&
+			'requestAnimationFrame' in window &&
+			'closest' in window.Element.prototype
+		);
+	};
 
 	/**
 	 * Merge two or more objects. Returns a new object.
@@ -115,9 +140,6 @@ if (window.Element && !Element.prototype.closest) {
 
 		// Variables
 		var extended = {};
-		var deep = false;
-		var i = 0;
-		var length = arguments.length;
 
 		// Merge the object into the extended object
 		var merge = function (obj) {
@@ -129,13 +151,23 @@ if (window.Element && !Element.prototype.closest) {
 		};
 
 		// Loop through each object and conduct a merge
-		for ( ; i < length; i++ ) {
-			var obj = arguments[i];
-			merge(obj);
+		for (var i = 0; i < arguments.length; i++) {
+			merge(arguments[i]);
 		}
 
 		return extended;
 
+	};
+
+	/**
+	 * Check to see if user prefers reduced motion
+	 * @param  {Object} settings Script settings
+	 */
+	var reduceMotion = function (settings) {
+		if ('matchMedia' in window && window.matchMedia('(prefers-reduced-motion)').matches) {
+			return true;
+		}
+		return false;
 	};
 
 	/**
@@ -148,10 +180,25 @@ if (window.Element && !Element.prototype.closest) {
 	};
 
 	/**
+	 * Decode a URI, with error check
+	 * @param  {String} hash The URI to decode
+	 * @return {String}      A decoded URI (or the original string if an error is thrown)
+	 */
+	var decode = function (hash) {
+		var decoded;
+		try {
+			decoded = decodeURIComponent(hash);
+		} catch(e) {
+			decoded = hash;
+		}
+		return decoded;
+	};
+
+	/**
 	 * Escape special characters for use with querySelector
-	 * @param {String} id The anchor ID to escape
 	 * @author Mathias Bynens
 	 * @link https://github.com/mathiasbynens/CSS.escape
+	 * @param {String} id The anchor ID to escape
 	 */
 	var escapeCharacters = function (id) {
 
@@ -222,7 +269,14 @@ if (window.Element && !Element.prototype.closest) {
 
 		}
 
-		return '#' + result;
+		// Return sanitized hash
+		var hash;
+		try {
+			hash = decodeURIComponent('#' + result);
+		} catch(e) {
+			hash = '#' + result;
+		}
+		return hash;
 
 	};
 
@@ -319,14 +373,44 @@ if (window.Element && !Element.prototype.closest) {
 	};
 
 	/**
-	 * Check to see if user prefers reduced motion
-	 * @param  {Object} settings Script settings
+	 * Update the URL
+	 * @param  {Node}   anchor  The anchor that was scrolled to
+	 * @param  {Object} options Settings for Smooth Scroll
 	 */
-	var reduceMotion = function (settings) {
-		if ('matchMedia' in window && window.matchMedia('(prefers-reduced-motion)').matches) {
-			return true;
-		}
-		return false;
+	var updateURL = function (anchor, options) {
+
+		// Verify that pushState is supported and the updateURL option is enabled
+		if (!history.pushState || !options.updateURL) return;
+
+		// Update URL
+		history.pushState(
+			{
+				smoothScroll: JSON.stringify(options),
+				anchor: anchor.id
+			},
+			document.title,
+			anchor === 0 ? '#top' : '#' + anchor.id
+		);
+
+	};
+
+	/**
+	 * Emit a custom event
+	 * @param  {String} type    The event type
+	 * @param  {Object} options The settings object
+	 * @param  {Node}   anchor  The anchor element
+	 * @param  {Node}   toggle  The toggle element
+	 */
+	var emitEvent = function (type, options, anchor, toggle) {
+		if (!options.emitEvents || typeof window.CustomEvent !== 'function') return;
+		var event = new CustomEvent(type, {
+			bubbles: true,
+			detail: {
+				anchor: anchor,
+				toggle: toggle
+			}
+		});
+		document.dispatchEvent(event);
 	};
 
 
@@ -351,9 +435,11 @@ if (window.Element && !Element.prototype.closest) {
 		/**
 		 * Cancel a scroll-in-progress
 		 */
-		smoothScroll.cancelScroll = function () {
-			// clearInterval(animationInterval);
+		smoothScroll.cancelScroll = function (noEvent) {
 			cancelAnimationFrame(animationInterval);
+			animationInterval = null;
+			if (noEvent) return;
+			emitEvent('scrollCancel', settings);
 		};
 
 		/**
@@ -374,7 +460,7 @@ if (window.Element && !Element.prototype.closest) {
 			var startLocation = window.pageYOffset; // Current location on the page
 			if (animateSettings.header && !fixedHeader) {
 				// Get the fixed header if not already set
-				fixedHeader = document.querySelector( animateSettings.header );
+				fixedHeader = document.querySelector(animateSettings.header);
 			}
 			if (!headerHeight) {
 				// Get the height of a fixed header if one exists and not already set
@@ -398,19 +484,20 @@ if (window.Element && !Element.prototype.closest) {
 				var currentLocation = window.pageYOffset;
 
 				// Check if the end location has been reached yet (or we've hit the end of the document)
-				if ( position == endLocation || currentLocation == endLocation || ((startLocation < endLocation && window.innerHeight + currentLocation) >= documentHeight )) {
+				if (position == endLocation || currentLocation == endLocation || ((startLocation < endLocation && window.innerHeight + currentLocation) >= documentHeight)) {
 
 					// Clear the animation timer
-					smoothScroll.cancelScroll();
+					smoothScroll.cancelScroll(true);
 
 					// Bring the anchored element into focus
 					adjustFocus(anchor, endLocation, isNum);
 
-					// Run callback after animation complete
-					animateSettings.after(anchor, toggle);
+					// Emit a custom event
+					emitEvent('scrollStop', animateSettings, anchor, toggle);
 
 					// Reset start
 					start = null;
+					animationInterval = null;
 
 					return true;
 
@@ -428,7 +515,7 @@ if (window.Element && !Element.prototype.closest) {
 				position = startLocation + (distance * easingPattern(animateSettings, percentage));
 				window.scrollTo(0, Math.floor(position));
 				if (!stopAnimateScroll(position, endLocation)) {
-					window.requestAnimationFrame(loopAnimateScroll);
+					animationInterval = window.requestAnimationFrame(loopAnimateScroll);
 					start = timestamp;
 				}
 			};
@@ -438,36 +525,18 @@ if (window.Element && !Element.prototype.closest) {
 			 * @link https://github.com/cferdinandi/smooth-scroll/issues/45
 			 */
 			if (window.pageYOffset === 0) {
-				window.scrollTo( 0, 0 );
+				window.scrollTo(0, 0);
 			}
 
-			// Run callback before animation starts
-			animateSettings.before(anchor, toggle);
+			// Update the URL
+			updateURL(anchor, animateSettings);
+
+			// Emit a custom event
+			emitEvent('scrollStart', animateSettings, anchor, toggle);
 
 			// Start scrolling animation
-			smoothScroll.cancelScroll();
+			smoothScroll.cancelScroll(true);
 			window.requestAnimationFrame(loopAnimateScroll);
-
-
-		};
-
-		/**
-		 * Handle has change event
-		 */
-		var hashChangeHandler = function (event) {
-
-			// Only run if there's an anchor element to scroll to
-			if (!anchor) return;
-
-			// Reset the anchor element's ID
-			anchor.id = anchor.getAttribute('data-scroll-id');
-
-			// Scroll to the anchored content
-			smoothScroll.animateScroll(anchor, toggle);
-
-			// Reset anchor and toggle
-			anchor = null;
-			toggle = null;
 
 		};
 
@@ -489,35 +558,17 @@ if (window.Element && !Element.prototype.closest) {
 			// Only run if link is an anchor and points to the current page
 			if (toggle.hostname !== window.location.hostname || toggle.pathname !== window.location.pathname || !/#/.test(toggle.href)) return;
 
-			// Get the sanitized hash
-			var hash;
-			try {
-				hash = escapeCharacters(decodeURIComponent(toggle.hash));
-			} catch(e) {
-				hash = escapeCharacters(toggle.hash);
-			}
+			// Get an escaped version of the hash
+			var hash = escapeCharacters(decode(toggle.hash));
 
 			// If the hash is empty, scroll to the top of the page
-			if (hash === '#') {
+			if (settings.topOnEmptyHash && ['#', '#top'].indexOf(hash) !== -1) {
 
 				// Prevent default link behavior
 				event.preventDefault();
 
-				// Set the anchored element
-				anchor = document.body;
-
-				// Save or create the ID as a data attribute and remove it (prevents scroll jump)
-				var id = anchor.id ? anchor.id : 'smooth-scroll-top';
-				anchor.setAttribute('data-scroll-id', id);
-				anchor.id = '';
-
-				// If no hash change event will happen, fire manually
-				// Otherwise, update the hash
-				if (window.location.hash.substring(1) === id) {
-					hashChangeHandler();
-				} else {
-					window.location.hash = id;
-				}
+				// Scroll to the top of the page
+				smoothScroll.animateScroll(0, toggle);
 
 				return;
 
@@ -526,16 +577,30 @@ if (window.Element && !Element.prototype.closest) {
 			// Get the anchored element
 			anchor = document.querySelector(hash);
 
-			// If anchored element exists, save the ID as a data attribute and remove it (prevents scroll jump)
+			// If anchored element exists, scroll to it
 			if (!anchor) return;
-			anchor.setAttribute('data-scroll-id', anchor.id);
-			anchor.id = '';
+			event.preventDefault();
+			smoothScroll.animateScroll(anchor, toggle);
 
-			// If no hash change event will happen, fire manually
-			if (toggle.hash === window.location.hash) {
-				event.preventDefault();
-				hashChangeHandler();
-			}
+		};
+
+		/**
+		 * Animate scroll on popstate events
+		 */
+		var popstateHandler = function (event) {
+
+			// Only run if state is a popstate record for this instantiation
+			if (!history.state.smoothScroll || history.state.smoothScroll !== JSON.stringify(settings)) return;
+
+			// Only run if state includes an anchor
+			if (!history.state.anchor) return;
+
+			// Get the anchor
+			var anchor = document.querySelector(escapeCharacters(decode(history.state.anchor)));
+			if (!anchor) return;
+
+			// Animate scroll to anchor link
+			smoothScroll.animateScroll(anchor, null, {updateURL: false});
 
 		};
 
@@ -562,6 +627,7 @@ if (window.Element && !Element.prototype.closest) {
 			// Remove event listeners
 			document.removeEventListener('click', clickHandler, false);
 			window.removeEventListener('resize', resizeThrottler, false);
+			window.removeEventListener('popstate', popstateHandler, false);
 
 			// Cancel any scrolls-in-progress
 			smoothScroll.cancelScroll();
@@ -574,6 +640,7 @@ if (window.Element && !Element.prototype.closest) {
 			headerHeight = null;
 			eventTimeout = null;
 			animationInterval = null;
+
 		};
 
 		/**
@@ -583,7 +650,7 @@ if (window.Element && !Element.prototype.closest) {
 		smoothScroll.init = function (options) {
 
 			// feature test
-			if (!supports) return;
+			if (!supports()) return;
 
 			// Destroy any existing initializations
 			smoothScroll.destroy();
@@ -596,12 +663,14 @@ if (window.Element && !Element.prototype.closest) {
 			// When a toggle is clicked, run the click handler
 			document.addEventListener('click', clickHandler, false);
 
-			// Listen for hash changes
-			window.addEventListener('hashchange', hashChangeHandler, false);
-
 			// If window is resized and there's a fixed header, recalculate its size
 			if (fixedHeader) {
 				window.addEventListener('resize', resizeThrottler, false);
+			}
+
+			// If updateURL and popState are enabled, listen for pop events
+			if (settings.updateURL && settings.popstate) {
+				window.addEventListener('popstate', popstateHandler, false);
 			}
 
 		};

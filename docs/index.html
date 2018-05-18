@@ -86,13 +86,15 @@
     .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
 </p>
 
-<p id="1@#%^-bottom"><a href="#">Back to the top</a></p>
+<p id="1@#%^-bottom"><a href="#top">Back to the top</a></p>
 			</section>
 		</main>
 
 		<!-- Javascript -->
 		<script src="dist/js/smooth-scroll.polyfills.min.js"></script>
 		<script>
+
+			// Instantiate Scrolls
 			var scroll = new SmoothScroll('a[href*="#"]:not([data-easing])');
 
 			var linear = new SmoothScroll('[data-easing="linear"]', {easing: 'linear'});
@@ -111,6 +113,16 @@
 			var easeOutCubic = new SmoothScroll('[data-easing="easeOutCubic"]', {easing: 'easeOutCubic'});
 			var easeOutQuart = new SmoothScroll('[data-easing="easeOutQuart"]', {easing: 'easeOutQuart'});
 			var easeOutQuint = new SmoothScroll('[data-easing="easeOutQuint"]', {easing: 'easeOutQuint'});
+
+			// Log scroll events
+			var logScrollEvent = function (event) {
+				console.log('type:', event.type);
+				console.log('anchor:', event.detail.anchor);
+				console.log('toggle:', event.detail.toggle);
+			};
+			document.addEventListener('scrollStart', logScrollEvent, false);
+			document.addEventListener('scrollStop', logScrollEvent, false);
+			document.addEventListener('scrollCancel', logScrollEvent, false);
 		</script>
 
 
