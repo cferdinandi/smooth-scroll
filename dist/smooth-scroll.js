@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v14.1.1: Animate scrolling to anchor links
+ * smooth-scroll v14.2.0: Animate scrolling to anchor links
  * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -31,6 +31,7 @@
 
 		// Speed & Easing
 		speed: 500,
+		clip: true,
 		offset: 0,
 		easing: 'easeInOutCubic',
 		customEasing: null,
@@ -254,12 +255,14 @@
 
 	/**
 	 * Calculate how far to scroll
-	 * @param {Element} anchor The anchor element to scroll to
-	 * @param {Number} headerHeight Height of a fixed header, if any
-	 * @param {Number} offset Number of pixels by which to offset scroll
+	 * Clip support added by robjtede - https://github.com/cferdinandi/smooth-scroll/issues/405
+	 * @param {Element} anchor       The anchor element to scroll to
+	 * @param {Number}  headerHeight Height of a fixed header, if any
+	 * @param {Number}  offset       Number of pixels by which to offset scroll
+	 * @param {Boolean} clip         If true, adjust scroll distance to prevent abrupt stops near the bottom of the page
 	 * @returns {Number}
 	 */
-	var getEndLocation = function (anchor, headerHeight, offset) {
+	var getEndLocation = function (anchor, headerHeight, offset, clip) {
 		var location = 0;
 		if (anchor.offsetParent) {
 			do {
@@ -268,7 +271,10 @@
 			} while (anchor);
 		}
 		location = Math.max(location - headerHeight - offset, 0);
-		return location;
+		if (clip) {
+			location = Math.min(location, getDocumentHeight() - window.innerHeight);
+		}
+ 		return location;
 	};
 
 	/**
@@ -405,7 +411,7 @@
 				// Get the height of a fixed header if one exists and not already set
 				headerHeight = getHeaderHeight(fixedHeader);
 			}
-			var endLocation = isNum ? anchor : getEndLocation(anchorElem, headerHeight, parseInt((typeof animateSettings.offset === 'function' ? animateSettings.offset(anchor, toggle) : animateSettings.offset), 10)); // Location to scroll to
+			var endLocation = isNum ? anchor : getEndLocation(anchorElem, headerHeight, parseInt((typeof animateSettings.offset === 'function' ? animateSettings.offset(anchor, toggle) : animateSettings.offset), 10), animateSettings.clip); // Location to scroll to
 			var distance = endLocation - startLocation; // distance to travel
 			var documentHeight = getDocumentHeight();
 			var timeLapsed = 0;
