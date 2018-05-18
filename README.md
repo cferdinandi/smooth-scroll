@@ -127,6 +127,7 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 
 	// Speed & Easing
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
+	clip: true, // If true, adjust scroll distance to prevent abrupt stops near the bottom of the page
 	offset: function (anchor, toggle) {
 
 		// Integer or Function returning an integer. How far to offset the scrolling anchor location in pixels
