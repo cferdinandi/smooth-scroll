@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v14.1.0: Animate scrolling to anchor links
+ * smooth-scroll v14.1.1: Animate scrolling to anchor links
  * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -351,6 +351,32 @@ if (window.Element && !Element.prototype.closest) {
 	};
 
 	/**
+	 * Update the URL
+	 * @param  {Node}    anchor  The anchor that was scrolled to
+	 * @param  {Boolean} isNum   If true, anchor is a number
+	 * @param  {Object}  options Settings for Smooth Scroll
+	 */
+	var updateURL = function (anchor, isNum, options) {
+
+		// Bail if the anchor is a number
+		if (isNum) return;
+
+		// Verify that pushState is supported and the updateURL option is enabled
+		if (!history.pushState || !options.updateURL) return;
+
+		// Update URL
+		history.pushState(
+			{
+				smoothScroll: JSON.stringify(options),
+				anchor: anchor.id
+			},
+			document.title,
+			anchor === document.documentElement ? '#top' : '#' + anchor.id
+		);
+
+	};
+
+	/**
 	 * Bring the anchored element into focus
 	 * @param {Node}     anchor      The anchor element
 	 * @param {Number}   endLocation The end location to scroll to
@@ -374,32 +400,6 @@ if (window.Element && !Element.prototype.closest) {
 			anchor.style.outline = 'none';
 		}
 		window.scrollTo(0 , endLocation);
-
-	};
-
-	/**
-	 * Update the URL
-	 * @param  {Node}    anchor  The anchor that was scrolled to
-	 * @param  {Boolean} isNum   If true, anchor is a number
-	 * @param  {Object}  options Settings for Smooth Scroll
-	 */
-	var updateURL = function (anchor, isNum, options) {
-
-		// Bail if the anchor is a number
-		if (isNum) return;
-
-		// Verify that pushState is supported and the updateURL option is enabled
-		if (!history.pushState || !options.updateURL) return;
-
-		// Update URL
-		history.pushState(
-			{
-				smoothScroll: JSON.stringify(options),
-				anchor: anchor.id
-			},
-			document.title,
-			anchor === document.documentElement ? '#top' : '#' + anchor.id
-		);
 
 	};
 
@@ -560,6 +560,10 @@ if (window.Element && !Element.prototype.closest) {
 			// Don't run if right-click or command/control + click
 			if (event.button !== 0 || event.metaKey || event.ctrlKey) return;
 
+			// Check if event.target has closest() method
+			// By @totegi - https://github.com/cferdinandi/smooth-scroll/pull/401/
+			if(!('closest' in event.target))return;
+
 			// Check if a smooth scroll link was clicked
 			toggle = event.target.closest(selector);
 			if (!toggle || toggle.tagName.toLowerCase() !== 'a' || event.target.closest(settings.ignore)) return;
@@ -647,7 +651,7 @@ if (window.Element && !Element.prototype.closest) {
 		smoothScroll.init = function (options) {
 
 			// feature test
-			if (!supports()) return;
+			if (!supports()) throw 'Smooth Scroll: This browser does not support the required JavaScript methods and browser APIs.';
 
 			// Destroy any existing initializations
 			smoothScroll.destroy();
