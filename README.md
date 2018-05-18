@@ -1,12 +1,12 @@
 # Smooth Scroll [![Build Status](https://travis-ci.org/cferdinandi/smooth-scroll.svg)](https://travis-ci.org/cferdinandi/smooth-scroll)
 A lightweight script to animate scrolling to anchor links. Smooth Scroll works great with [Gumshoe](https://github.com/cferdinandi/gumshoe).
 
-[Download Smooth Scroll](https://github.com/cferdinandi/smooth-scroll/archive/master.zip) / [View the demo](http://cferdinandi.github.io/smooth-scroll/)
+[Demo](http://cferdinandi.github.io/smooth-scroll/)
 
 
 <hr>
 
-### Want to learn how to write your own vanilla JS plugins? Check out my [Vanilla JS Pocket Guides series](https://gomakethings.com/guides/) and level-up as a web developer. 🚀
+### Want to learn how to write your own vanilla JS plugins? Check out my [Vanilla JS Pocket Guides](https://vanillajsguides.com/) or join the [Vanilla JS Academy](https://vanillajsacademy.com) and level-up as a web developer. 🚀
 
 <hr>
 
@@ -18,12 +18,26 @@ Compiled and production-ready code can be found in the `dist` directory. The `sr
 
 ### 1. Include Smooth Scroll on your site.
 
-There are two versions of Smooth Scroll: the standalone version, and one that comes preloaded with polyfills for the `closest()` and `requestAnimationFrame()` methods, which are only supported in newer browsers.
+There are two versions of Smooth Scroll: the standalone version, and one that comes preloaded with polyfills for `closest()`, `requestAnimationFrame()`, and `CustomEvent()`, which are only supported in newer browsers.
 
 If you're including your own polyfills or don't want to enable this feature for older browsers, use the standalone version. Otherwise, use the version with polyfills.
 
+**Direct `<script>` include**
+
+[Download the files directly](https://github.com/cferdinandi/smooth-scroll/archive/master.zip) or use the [jsDelivr CDN](https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/).
+
 ```html
-<script src="dist/js/smooth-scroll.js"></script>
+<!-- Direct Download -->
+<script src="path/to/smooth-scroll.polyfills.min.js"></script>
+
+<!-- CDN -->
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@12.1.5/dist/smooth-scroll.polyfills.min.js"></script>
+```
+
+**NPM**
+
+```bash
+npm install smooth-scroll
 ```
 
 ### 2. Add the markup to your HTML.
@@ -49,16 +63,6 @@ In the footer of your page, after the content, initialize Smooth Scroll by passi
 ```
 
 ***Note:*** *The `a[href*="#"]` selector will apply Smooth Scroll to all anchor links. You can selectively target links using any other selector(s) you'd like. Smooth Scroll accepts multiple selectors as a comma separated list. Example: `'.js-scroll, [data-scroll], #some-link'`.*
-
-
-
-## Installing with Package Managers
-
-You can install Smooth Scroll with your favorite package manager or module loader directly from  NPM.
-
-```
-npm install smooth-scroll
-```
 
 
 
@@ -92,9 +96,11 @@ You can pass options and callbacks into Smooth Scroll through the `init()` funct
 
 ```javascript
 var scroll = new SmoothScroll('a[href*="#"]', {
+
 	// Selectors
 	ignore: '[data-scroll-ignore]', // Selector for links to ignore (must be a valid CSS selector)
 	header: null, // Selector for fixed headers (must be a valid CSS selector)
+	topOnEmptyHash: true, // Scroll to the top of the page for links with href="#"
 
 	// Speed & Easing
 	speed: 500, // Integer. How fast to complete the scroll in milliseconds
@@ -112,9 +118,13 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 
 	},
 
-	// Callback API
-	before: function (anchor, toggle) {}, // Callback to run before scroll
-	after: function (anchor, toggle) {} // Callback to run after scroll
+	// History
+	updateURL: true, // Update the URL on scroll
+	popstate: true, // Animate scrolling with the forward/backward browser buttons (requires updateURL to be true)
+
+	// Custom Events
+	emitEvents: true // Emit custom events
+
 });
 ```
 
@@ -155,6 +165,37 @@ Some common easing patterns are included by default, but you can also pass in yo
 * `easeOutQuint`
 
 Learn more about the different easing patterns and what they do at [easings.net](http://easings.net/).
+
+### Custom Events
+
+Smooth Scroll emits three custom events:
+
+- `scrollStart` is emitted when the scrolling animation starts.
+- `scrollStop` is emitted when the scrolling animation stops.
+- `scrollCancel` is emitted if the scrolling animation is canceled.
+
+All three events are emitted on the `document` element and bubble up. You can listen for them with the `addEventListener()` method. The `event.detail` object includes the `anchor` and `toggle` elements for the animation.
+
+```js
+// Log scroll events
+var logScrollEvent = function (event) {
+
+	// The event type
+	console.log('type:', event.type);
+
+	// The anchor element being scrolled to
+	console.log('anchor:', event.detail.anchor);
+
+	// The anchor link that triggered the scroll
+	console.log('toggle:', event.detail.toggle);
+
+};
+
+// Listen for scroll events
+document.addEventListener('scrollStart', logScrollEvent, false);
+document.addEventListener('scrollStop', logScrollEvent, false);
+document.addEventListener('scrollCancel', logScrollEvent, false);
+```
 
 ### Use Smooth Scroll events in your own scripts
 
@@ -244,24 +285,19 @@ If you have multiple fixed headers, pass in the last one in the markup.
 ```
 
 
-## Migrating to Smooth Scroll 12 from Older Versions
+## Migrating to Smooth Scroll 14 from Older Versions
 
 ### New Features
 
-- You can now initialize multiple instances of Smooth Scroll with different selectors and options:
-	```js
-	var scrollFast = new SmoothScroll('.scroll-fast', {speed: 100});
-	var scrollSlow = new SmoothScroll('.scroll-slow', {speed: 5000});
-	```
-- The new `cancelScroll()` method lets you programatically cancel a scroll-in-progress.
-- Scrolling animation is now powered by `requestAnimationFrame()`, resulting in smoother scrolling and better performance.
-- Smooth Scroll now supports Reduced Motion (currently a Safari-only feature). If the visitor has indicated that they [prefer reduced motion](https://css-tricks.com/smooth-scrolling-accessibility/), Smooth Scroll will jump to the anchor link as normal instead of animating the scroll.
+- You can now choose not to update the URL as a native feature. No more hacks using the API.
+- You can choose not to scroll to top on `href="#"`, providing more flexibility for some CMS implementations.
+- Custom events let you more easily hook into Smooth Scroll from other scripts.
+- The feature test is scoped to a function, allowing for server-side implementations.
+- The loss of styling with IDs experienced in earlier versions has been eliminated.
 
 ### Breaking Changes
 
-- You no longer initialize Smooth Scroll via `smoothScroll.init()`. You must now instantiate a new JavaScript object: `new SmoothScroll()`.
-- There is no longer a default selector. You should pass in a selector as the first argument when setting up your constructor: `new SmoothScroll('.my-selector')`.
-- The `data-options` feature has been deprecated, as the same effect can be achieved by initializing the plugin with different selectors.
+- Callback methods have been removed in favor of events.
 
 
 
@@ -273,7 +309,7 @@ Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhance
 
 ### Polyfills
 
-Support back to IE9 requires polyfills for the `closest()` and `requestAnimationFrame()` methods. Without them, support starts with Edge.
+Support back to IE9 requires polyfills for `closest()`, `requestAnimationFrame()`, and `CustomEvent()`. Without them, support starts with Edge.
 
 Use the included polyfills version of Smooth Scroll, or include your own.
 
@@ -289,77 +325,11 @@ If the `<body>` element has been assigned a height of `100%` or `overflow: hidde
 
 Animated scrolling links at the very bottom of the page (example: a "scroll to top" link) will stop animated almost immediately after they start when using certain easing patterns. This is an issue that's been around for a while and I've yet to find a good fix for it. I've found that `easeOut*` easing patterns work as expected, but other patterns can cause issues. [See this discussion for more details.](https://github.com/cferdinandi/smooth-scroll/issues/49)
 
-### Styling with IDs
-
-If you use an ID to style an element in your CSS, and that same element is targeted by an anchor link that you're scrolling to with Smooth Scroll, you will experience a temporary loss of styling.
-
-Smooth Scroll temporarily removes the ID to prevent the page from jumping when the URL changes, and then adds it back. Use a class instead of an ID to avoid this issue.
-
-```css
-/* Instead of this */
-#some-element {
-	background-color: purple;
-}
-
-/* Do this */
-.some-element {
-	background-color: purple;
-}
-```
-
-
-
-## Extras
-
-Frequently asked questions, code snippets, and more to help you get the most out of Smooth Scroll.
-
 ### Scrolling to an anchor link on another page
 
 This, unfortunately, cannot be done well.
 
 Most browsers instantly jump you to the anchor location when you load a page. You could use `scrollTo(0, 0)` to pull users back up to the top, and then manually use the `animateScroll()` method, but in my experience, it results in a visible jump on the page that's a worse experience than the default browser behavior.
-
-### Scrolling without updating the URL
-
-Smooth Scroll is designed to progressively enhance anchor links while offloading as much to the browser as possible. In it's current implementation, it relies on `hashchange` events (which occur whenever a `#` changes in the URL) to trigger the scrolling behavior.
-
-A benefit of this approach is that it preserves browser history and let's users navigate between anchors with the forward and back buttons on the browsers, just like you would normally.
-
-*However*, I know certain front-end frameworks also use URL hashes for their own internal processes. While I view this as an anti-pattern, and won't bake hashless anchor links into Smooth Scroll's core, you can enable scrolling without updating the URL via the Smooth Scroll API.
-
-Here's a relatively lightweight helper function that listens for click events and uses the `animateScroll()` method to scroll to the anchor. If you use this, you **should not** pass a selector into `new SmoothScroll()`.
-
-```js
-var scroll = new SmoothScroll();
-
-var smoothScrollWithoutHash = function (selector, settings) {
-	/**
-	 * If smooth scroll element clicked, animate scroll
-	 */
-	var clickHandler = function (event) {
-		var toggle = event.target.closest( selector );
-		console.log(toggle);
-		if ( !toggle || toggle.tagName.toLowerCase() !== 'a' ) return;
-		console.log(toggle.hash);
-		var anchor = document.querySelector( toggle.hash );
-		if ( !anchor ) return;
-
-		event.preventDefault(); // Prevent default click event
-		scroll.animateScroll( anchor, toggle, settings || {} ); // Animate scroll
-	};
-
-	window.addEventListener('click', clickHandler, false );
-};
-
-// Run our function
-smoothScrollWithoutHash( 'a[href*="#"]' );
-```
-
-
-
-## Support
-
-Please review the [support guidelines](SUPPORT.md).
 
 
 
