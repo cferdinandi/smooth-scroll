@@ -20,17 +20,6 @@
 	'use strict';
 
 	//
-	// Feature Test
-	//
-
-	var supports =
-		'querySelector' in document &&
-		'addEventListener' in window &&
-		'requestAnimationFrame' in window &&
-		'closest' in window.Element.prototype;
-
-
-	//
 	// Default settings
 	//
 
@@ -58,6 +47,19 @@
 	//
 	// Utility Methods
 	//
+
+	/**
+	 * Check if browser supports required methods
+	 * @return {Boolean} Returns true if all required methods are supported
+	 */
+	var supports = function () {
+		return (
+			'querySelector' in document &&
+			'addEventListener' in window &&
+			'requestAnimationFrame' in window &&
+			'closest' in window.Element.prototype
+		);
+	};
 
 	/**
 	 * Merge two or more objects. Returns a new object.
@@ -578,7 +580,7 @@
 		smoothScroll.init = function (options) {
 
 			// feature test
-			if (!supports) return;
+			if (!supports()) return;
 
 			// Destroy any existing initializations
 			smoothScroll.destroy();
