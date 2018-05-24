@@ -588,6 +588,9 @@
 		 * @param {Object} options User settings
 		 */
 		smoothScroll.init = function (options) {
+			// Destroy any existing initializations
+			smoothScroll.destroy();
+
 			// base settings
 			settings = extend(defaults, options || {}); // Merge user options with defaults
 
@@ -601,9 +604,6 @@
 					throw 'Smooth Scroll: This browser does not support the required JavaScript methods and browser APIs.';
 				}
 			}
-
-			// Destroy any existing initializations
-			smoothScroll.destroy();
 
 			// Selectors and variables
 			fixedHeader = settings.header ? document.querySelector(settings.header) : null; // Get the fixed header
