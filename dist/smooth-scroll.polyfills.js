@@ -111,7 +111,10 @@ if (window.Element && !Element.prototype.closest) {
 		popstate: true,
 
 		// Custom Events
-		emitEvents: true
+		emitEvents: true,
+
+		// Error Logging
+		silent: false
 	};
 
 
@@ -655,15 +658,24 @@ if (window.Element && !Element.prototype.closest) {
 		 * @param {Object} options User settings
 		 */
 		smoothScroll.init = function (options) {
+			// base settings
+			settings = extend(defaults, options || {}); // Merge user options with defaults
 
 			// feature test
-			if (!supports()) throw 'Smooth Scroll: This browser does not support the required JavaScript methods and browser APIs.';
+			if (!supports()) {
+				// if silent is set to true, no error but it won't work in unsupported
+				// browsers
+				if (settings.silent) {
+					return;
+				} else {
+					throw 'Smooth Scroll: This browser does not support the required JavaScript methods and browser APIs.';
+				}
+			}
 
 			// Destroy any existing initializations
 			smoothScroll.destroy();
 
 			// Selectors and variables
-			settings = extend(defaults, options || {}); // Merge user options with defaults
 			fixedHeader = settings.header ? document.querySelector(settings.header) : null; // Get the fixed header
 			headerHeight = getHeaderHeight(fixedHeader);
 

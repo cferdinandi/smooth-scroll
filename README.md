@@ -161,6 +161,9 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 	// Custom Events
 	emitEvents: true // Emit custom events
 
+	// Logging & Errors
+	silent: false // if set to true, if the browser does not support necessary features, the library will not work, and no error will be thrown
+
 });
 ```
 
