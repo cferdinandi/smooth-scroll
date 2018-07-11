@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v14.2.0: Animate scrolling to anchor links
+ * smooth-scroll v14.2.1: Animate scrolling to anchor links
  * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -525,6 +525,9 @@
 		 * Animate scroll on popstate events
 		 */
 		var popstateHandler = function (event) {
+			// Stop if history.state doesn't exist (ex. if clicking on a broken anchor link).
+			// fixes `Cannot read property 'smoothScroll' of null` error getting thrown.
+			if (history.state === null) return; 
 
 			// Only run if state is a popstate record for this instantiation
 			if (!history.state.smoothScroll || history.state.smoothScroll !== JSON.stringify(settings)) return;
