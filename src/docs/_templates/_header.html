@@ -10,11 +10,38 @@
 		<style type="text/css">
 			body {
 				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-				font-size: 112.5%;
 				margin-left: auto;
 				margin-right: auto;
 				max-width: 40em;
 				width: 88%;
+				background: #eee;
+			}
+			nav {
+				text-align: center;
+				font-size: 1.25em;
+			}
+			h2 {
+				text-align: center;
+				margin-top: 3em;
+			}
+			.ease-block {
+				display: inline-block;
+				margin: 0 1em;
+				padding: 1em;
+				line-height: 1.4em;
+			}
+			.rightblock,
+			.leftblock {
+				display: inline;
+				fill: #666;
+				margin: 1em;
+			}
+			.rightblock { float: right; }
+			.leftblock { float: left; }
+			.bigblock{
+				fill: #666;
+				margin: auto;
+				width: 50%;
 			}
 		</style>
 	</head>
@@ -26,6 +53,38 @@
 			<nav>
 				<h1>Smooth Scroll</h1>
 				<p><a href="https://github.com/cferdinandi/smooth-scroll">GitHub</a></p>
+				<hr>
+				<p>
+					<strong>Linear</strong><br>
+					<a data-easing="linear" href="#bazinga">Linear (no other options)</a><br>
+				</p>
+				<div class="eases">
+					<div class="ease-block">
+						<strong>Ease-In</strong><br>
+						<a data-easing="easeInQuad" href="#bazinga">Quad</a><br>
+						<a data-easing="easeInCubic" href="#bazinga">Cubic</a><br>
+						<a data-easing="easeInQuart" href="#bazinga">Quart</a><br>
+						<a data-easing="easeInQuint" href="#bazinga">Quint</a>
+					</div>
+
+					<div class="ease-block">
+						<strong>Ease-In-Out</strong><br>
+						<a data-easing="easeInOutQuad" href="#bazinga">Quad</a><br>
+						<a data-easing="easeInOutCubic" href="#bazinga">Cubic</a><br>
+						<a data-easing="easeInOutQuart" href="#bazinga">Quart</a><br>
+						<a data-easing="easeInOutQuint" href="#bazinga">Quint</a>
+					</div>
+
+					<div class="ease-block">
+						<strong>Ease-Out</strong><br>
+						<a data-easing="easeOutQuad" href="#bazinga">Quad</a><br>
+						<a data-easing="easeOutCubic" href="#bazinga">Cubic</a><br>
+						<a data-easing="easeOutQuart" href="#bazinga">Quart</a><br>
+						<a data-easing="easeOutQuint" href="#bazinga">Quint</a>
+					</div>
+				</div>
+				</div>
+				<hr>
 				<hr>
 			</nav>
 
