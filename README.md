@@ -1,7 +1,7 @@
 # Smooth Scroll [![Build Status](https://travis-ci.org/cferdinandi/smooth-scroll.svg)](https://travis-ci.org/cferdinandi/smooth-scroll)
 A lightweight script to animate scrolling to anchor links. Smooth Scroll works great with [Gumshoe](https://github.com/cferdinandi/gumshoe).
 
-[Demo](http://cferdinandi.github.io/smooth-scroll/)
+[View the Demo](https://codepen.io/cferdinandi/pen/wQzrdM)
 
 
 <hr>
@@ -9,7 +9,6 @@ A lightweight script to animate scrolling to anchor links. Smooth Scroll works g
 ### Want to learn how to write your own vanilla JS plugins? Check out my [Vanilla JS Pocket Guides](https://vanillajsguides.com/) or join the [Vanilla JS Academy](https://vanillajsacademy.com) and level-up as a web developer. 🚀
 
 <hr>
-
 
 
 ## Getting Started
@@ -74,38 +73,83 @@ In the footer of your page, after the content, initialize Smooth Scroll by passi
 ***Note:*** *The `a[href*="#"]` selector will apply Smooth Scroll to all anchor links. You can selectively target links using any other selector(s) you'd like. Smooth Scroll accepts multiple selectors as a comma separated list. Example: `'.js-scroll, [data-scroll], #some-link'`.*
 
 
-## ES6 Modules
 
-Smooth Scroll does not have a default export, but does support CommonJS and can be used with native ES6 module imports.
+## Scroll Speed
+
+Smooth Scroll allows you to adjust the speed of your animations with the `speed` option.
+
+This a number representing the amount of time in milliseconds that it should take to scroll 1000px. Scroll distances shorter than that will take less time, and scroll distances longer than that will take more time. The default is 300ms.
 
 ```js
-import('/path/to/smooth-scroll.polyfills.min.js')
-	.then(function () {
-		var scroll = new SmoothScroll('a[href*="#"]');
-	});
+var scroll = new SmoothScroll('a[href*="#"]', {
+	speed: 300
+});
 ```
 
-It uses a UMD pattern, and should also work in most major module bundlers and package managers.
+If you want all of your animations to take exactly the same amount of time (the value you set for `speed`), set the `speedAsDuration` option to `true`.
+
+```js
+// All animations will take exactly 500ms
+var scroll = new SmoothScroll('a[href*="#"]', {
+	speed: 500,
+	speedAsDuration: true
+});
+```
 
 
+## Easing Options
 
-## Working with the Source Files
+Smooth Scroll comes with about a dozen common easing patterns. [Here's a demo of the different patterns.](https://codepen.io/cferdinandi/pen/jQMGaB)
 
-If you would prefer, you can work with the development code in the `src` directory using the included [Gulp build system](http://gulpjs.com/). This compiles, lints, and minifies code.
+**Linear**
+*Moves at the same speed from start to finish.*
 
-### Dependencies
-Make sure these are installed first.
+- `Linear`
 
-* [Node.js](http://nodejs.org)
-* [Gulp](http://gulpjs.com) `sudo npm install -g gulp`
 
-### Quick Start
+**Ease-In**
+*Gradually increases in speed.*
 
-1. In bash/terminal/command line, `cd` into your project directory.
-2. Run `npm install` to install required files.
-3. When it's done installing, run one of the task runners to get going:
-	* `gulp` manually compiles files.
-	* `gulp watch` automatically compiles files when changes are made and applies changes using [LiveReload](http://livereload.com/).
+- `easeInQuad`
+- `easeInCubic`
+- `easeInQuart`
+- `easeInQuint`
+
+
+**Ease-In-Out**
+*Gradually increases in speed, peaks, and then gradually slows down.*
+
+- `easeInOutQuad`
+- `easeInOutCubic`
+- `easeInOutQuart`
+- `easeInOutQuint`
+
+
+**Ease-Out**
+*Gradually decreases in speed.*
+
+- `easeOutQuad`
+- `easeOutCubic`
+- `easeOutQuart`
+- `easeOutQuint`
+
+
+You can also pass in your own custom easing pattern [using the `customEasing` option](#global-settings).
+
+```js
+var scroll = new SmoothScroll('a[href*="#"]', {
+	// Function. Custom easing pattern
+	// If this is set to anything other than null, will override the easing option above
+	customEasing: function (time) {
+
+		// return <your formulate with time as a multiplier>
+
+		// Example: easeInOut Quad
+		return time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time;
+
+	}
+});
+```
 
 
 
@@ -125,8 +169,11 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 	header: null, // Selector for fixed headers (must be a valid CSS selector)
 	topOnEmptyHash: true, // Scroll to the top of the page for links with href="#"
 
-	// Speed & Easing
-	speed: 500, // Integer. How fast to complete the scroll in milliseconds
+	// Speed & Duration
+	speed: 500, // Integer. Amount of time in milliseconds it should take to scroll 1000px
+	speedAsDuration: false, // If true, use speed as the total duration of the scroll animation
+	durationMax: null, // Integer. The maximum amount of time the scroll animation should take
+	durationMin: null, // Integer. The minimum amount of time the scroll animation should take
 	clip: true, // If true, adjust scroll distance to prevent abrupt stops near the bottom of the page
 	offset: function (anchor, toggle) {
 
@@ -141,6 +188,8 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 		}
 
 	},
+
+	// Easing
 	easing: 'easeInOutCubic', // Easing pattern to use
 	customEasing: function (time) {
 
@@ -163,44 +212,6 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 
 });
 ```
-
-#### Easing Options
-
-Some common easing patterns are included by default, but you can also pass in your own custom easing pattern using the `customEasing` option noted above.
-
-**Linear**
-*Moves at the same speed from start to finish.*
-
-* `Linear`
-
-
-**Ease-In**
-*Gradually increases in speed.*
-
-* `easeInQuad`
-* `easeInCubic`
-* `easeInQuart`
-* `easeInQuint`
-
-
-**Ease-In-Out**
-*Gradually increases in speed, peaks, and then gradually slows down.*
-
-* `easeInOutQuad`
-* `easeInOutCubic`
-* `easeInOutQuart`
-* `easeInOutQuint`
-
-
-**Ease-Out**
-*Gradually decreases in speed.*
-
-* `easeOutQuad`
-* `easeOutCubic`
-* `easeOutQuart`
-* `easeOutQuint`
-
-Learn more about the different easing patterns and what they do at [easings.net](http://easings.net/).
 
 ### Custom Events
 
@@ -233,7 +244,7 @@ document.addEventListener('scrollStop', logScrollEvent, false);
 document.addEventListener('scrollCancel', logScrollEvent, false);
 ```
 
-### Use Smooth Scroll events in your own scripts
+### Methods
 
 You can also call Smooth Scroll's methods in your own scripts.
 
@@ -321,34 +332,31 @@ If you have multiple fixed headers, pass in the last one in the markup.
 ```
 
 
-## Migrating to Smooth Scroll 14 from Older Versions
 
-### New Features
+## Working with the Source Files
 
-- You can now choose not to update the URL as a native feature. No more hacks using the API.
-- You can choose not to scroll to top on `href="#"`, providing more flexibility for some CMS implementations.
-- Custom events let you more easily hook into Smooth Scroll from other scripts.
-- The feature test is scoped to a function, allowing for server-side implementations.
-- The loss of styling with IDs experienced in earlier versions has been eliminated.
-- The `anchor` and `toggle` elements are now passed into the `offset()` function, allowing for more customization [v14.1.0 and up].
+If you would prefer, you can work with the development code in the `src` directory using the included [Gulp build system](http://gulpjs.com/). This compiles, lints, and minifies code.
 
-### Breaking Changes
+### Dependencies
+Make sure these are installed first.
 
-- Callback methods have been removed in favor of events.
+* [Node.js](http://nodejs.org)
+* [Gulp](http://gulpjs.com) `sudo npm install -g gulp`
+
+### Quick Start
+
+1. In bash/terminal/command line, `cd` into your project directory.
+2. Run `npm install` to install required files.
+3. When it's done installing, run one of the task runners to get going:
+	* `gulp` manually compiles files.
+	* `gulp watch` automatically compiles files when changes are made and applies changes using [LiveReload](http://livereload.com/).
 
 
 
-## Browser Compatibility
 
-Smooth Scroll works in all modern browsers, and IE 9 and above.
+## Migrating to Smooth Scroll 15 from Older Versions
 
-Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhancement. If the JavaScript file fails to load, or if your site is viewed on older and less capable browsers, anchor links will jump the way they normally would.
-
-### Polyfills
-
-Support back to IE9 requires polyfills for `closest()`, `requestAnimationFrame()`, and `CustomEvent()`. Without them, support starts with Edge.
-
-Use the included polyfills version of Smooth Scroll, or include your own.
+Scroll duration now varies based on distance traveled. If you want to maintain the old scroll animation duration behavior, set the `speedAsDuration` option to `true`.
 
 
 
@@ -367,6 +375,20 @@ Animated scrolling links at the very bottom of the page (example: a "scroll to t
 This, unfortunately, cannot be done well.
 
 Most browsers instantly jump you to the anchor location when you load a page. You could use `scrollTo(0, 0)` to pull users back up to the top, and then manually use the `animateScroll()` method, but in my experience, it results in a visible jump on the page that's a worse experience than the default browser behavior.
+
+
+
+## Browser Compatibility
+
+Smooth Scroll works in all modern browsers, and IE 9 and above.
+
+Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhancement. If the JavaScript file fails to load, or if your site is viewed on older and less capable browsers, anchor links will jump the way they normally would.
+
+### Polyfills
+
+Support back to IE9 requires polyfills for `closest()`, `requestAnimationFrame()`, and `CustomEvent()`. Without them, support starts with Edge.
+
+Use the included polyfills version of Smooth Scroll, or include your own.
 
 
 

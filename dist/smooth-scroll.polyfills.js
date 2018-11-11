@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v14.2.1: Animate scrolling to anchor links
+ * smooth-scroll v15.0.0: Animate scrolling to anchor links
  * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -94,15 +94,21 @@ if (window.Element && !Element.prototype.closest) {
 	//
 
 	var defaults = {
+
 		// Selectors
 		ignore: '[data-scroll-ignore]',
 		header: null,
 		topOnEmptyHash: true,
 
-		// Speed & Easing
+		// Speed & Duration
 		speed: 500,
+		speedAsDuration: false,
+		durationMax: null,
+		durationMin: null,
 		clip: true,
 		offset: 0,
+
+		// Easing
 		easing: 'easeInOutCubic',
 		customEasing: null,
 
@@ -112,6 +118,7 @@ if (window.Element && !Element.prototype.closest) {
 
 		// Custom Events
 		emitEvents: true
+
 	};
 
 
@@ -133,31 +140,19 @@ if (window.Element && !Element.prototype.closest) {
 	};
 
 	/**
-	 * Merge two or more objects. Returns a new object.
-	 * @param {Object}   objects  The objects to merge together
-	 * @returns {Object}          Merged values of defaults and options
+	 * Merge two or more objects together.
+	 * @param   {Object}   objects  The objects to merge together
+	 * @returns {Object}            Merged values of defaults and options
 	 */
 	var extend = function () {
-
-		// Variables
-		var extended = {};
-
-		// Merge the object into the extended object
-		var merge = function (obj) {
-			for (var prop in obj) {
-				if (obj.hasOwnProperty(prop)) {
-					extended[prop] = obj[prop];
-				}
+		var merged = {};
+		Array.prototype.forEach.call(arguments, (function (obj) {
+			for (var key in obj) {
+				if (!obj.hasOwnProperty(key)) return;
+				merged[key] = obj[key];
 			}
-		};
-
-		// Loop through each object and conduct a merge
-		for (var i = 0; i < arguments.length; i++) {
-			merge(arguments[i]);
-		}
-
-		return extended;
-
+		}));
+		return merged;
 	};
 
 	/**
@@ -357,6 +352,19 @@ if (window.Element && !Element.prototype.closest) {
 	};
 
 	/**
+	 * Calculate the speed to use for the animation
+	 * @param  {Number} distance The distance to travel
+	 * @param  {Object} settings The plugin settings
+	 * @return {Number}          How fast to animate
+	 */
+	var getSpeed = function (distance, settings) {
+		var speed = settings.speedAsDuration ? settings.speed : Math.abs(distance / 1000 * settings.speed);
+		if (settings.durationMax && speed > settings.durationMax) return settings.durationMax;
+		if (settings.durationMin && speed < settings.durationMin) return settings.durationMin;
+		return speed;
+	};
+
+	/**
 	 * Update the URL
 	 * @param  {Node}    anchor  The anchor that was scrolled to
 	 * @param  {Boolean} isNum   If true, anchor is a number
@@ -466,25 +474,26 @@ if (window.Element && !Element.prototype.closest) {
 		smoothScroll.animateScroll = function (anchor, toggle, options) {
 
 			// Local settings
-			var animateSettings = extend(settings || defaults, options || {}); // Merge user options with defaults
+			var _settings = extend(settings || defaults, options || {}); // Merge user options with defaults
 
 			// Selectors and variables
 			var isNum = Object.prototype.toString.call(anchor) === '[object Number]' ? true : false;
 			var anchorElem = isNum || !anchor.tagName ? null : anchor;
 			if (!isNum && !anchorElem) return;
 			var startLocation = window.pageYOffset; // Current location on the page
-			if (animateSettings.header && !fixedHeader) {
+			if (_settings.header && !fixedHeader) {
 				// Get the fixed header if not already set
-				fixedHeader = document.querySelector(animateSettings.header);
+				fixedHeader = document.querySelector(_settings.header);
 			}
 			if (!headerHeight) {
 				// Get the height of a fixed header if one exists and not already set
 				headerHeight = getHeaderHeight(fixedHeader);
 			}
-			var endLocation = isNum ? anchor : getEndLocation(anchorElem, headerHeight, parseInt((typeof animateSettings.offset === 'function' ? animateSettings.offset(anchor, toggle) : animateSettings.offset), 10), animateSettings.clip); // Location to scroll to
+			var endLocation = isNum ? anchor : getEndLocation(anchorElem, headerHeight, parseInt((typeof _settings.offset === 'function' ? _settings.offset(anchor, toggle) : _settings.offset), 10), _settings.clip); // Location to scroll to
 			var distance = endLocation - startLocation; // distance to travel
 			var documentHeight = getDocumentHeight();
 			var timeLapsed = 0;
+			var speed = getSpeed(distance, _settings);
 			var start, percentage, position;
 
 			/**
@@ -508,7 +517,7 @@ if (window.Element && !Element.prototype.closest) {
 					adjustFocus(anchor, endLocation, isNum);
 
 					// Emit a custom event
-					emitEvent('scrollStop', animateSettings, anchor, toggle);
+					emitEvent('scrollStop', _settings, anchor, toggle);
 
 					// Reset start
 					start = null;
@@ -525,9 +534,9 @@ if (window.Element && !Element.prototype.closest) {
 			var loopAnimateScroll = function (timestamp) {
 				if (!start) { start = timestamp; }
 				timeLapsed += timestamp - start;
-				percentage = (timeLapsed / parseInt(animateSettings.speed, 10));
+				percentage = (timeLapsed / parseInt(speed, 10));
 				percentage = (percentage > 1) ? 1 : percentage;
-				position = startLocation + (distance * easingPattern(animateSettings, percentage));
+				position = startLocation + (distance * easingPattern(_settings, percentage));
 				window.scrollTo(0, Math.floor(position));
 				if (!stopAnimateScroll(position, endLocation)) {
 					animationInterval = window.requestAnimationFrame(loopAnimateScroll);
@@ -544,10 +553,10 @@ if (window.Element && !Element.prototype.closest) {
 			}
 
 			// Update the URL
-			updateURL(anchor, isNum, animateSettings);
+			updateURL(anchor, isNum, _settings);
 
 			// Emit a custom event
-			emitEvent('scrollStart', animateSettings, anchor, toggle);
+			emitEvent('scrollStart', _settings, anchor, toggle);
 
 			// Start scrolling animation
 			smoothScroll.cancelScroll(true);
@@ -595,9 +604,10 @@ if (window.Element && !Element.prototype.closest) {
 		 * Animate scroll on popstate events
 		 */
 		var popstateHandler = function (event) {
+
 			// Stop if history.state doesn't exist (ex. if clicking on a broken anchor link).
 			// fixes `Cannot read property 'smoothScroll' of null` error getting thrown.
-			if (history.state === null) return; 
+			if (history.state === null) return;
 
 			// Only run if state is a popstate record for this instantiation
 			if (!history.state.smoothScroll || history.state.smoothScroll !== JSON.stringify(settings)) return;
