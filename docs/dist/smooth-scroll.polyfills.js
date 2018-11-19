@@ -367,7 +367,7 @@ if (window.Element && !Element.prototype.closest) {
 	var setHistory = function (options) {
 
 		// Make sure this should run
-		if (!history.replaceState || history.state) return;
+		if (!history.replaceState || !options.updateURL || history.state) return;
 
 		// Get the hash to use
 		var hash = window.location.hash;
