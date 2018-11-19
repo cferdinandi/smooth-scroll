@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v15.0.1: Animate scrolling to anchor links
+ * smooth-scroll v15.0.2: Animate scrolling to anchor links
  * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -367,7 +367,7 @@ if (window.Element && !Element.prototype.closest) {
 	var setHistory = function (options) {
 
 		// Make sure this should run
-		if (!history.replaceState || !options.updateURL || history.state) return;
+		if (!history.replaceState || history.state) return;
 
 		// Get the hash to use
 		var hash = window.location.hash;
