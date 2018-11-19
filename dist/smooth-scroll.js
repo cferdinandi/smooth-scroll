@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v15.0.0: Animate scrolling to anchor links
+ * smooth-scroll v15.0.1: Animate scrolling to anchor links
  * (c) 2018 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
@@ -294,6 +294,27 @@
 		return speed;
 	};
 
+	var setHistory = function (options) {
+
+		// Make sure this should run
+		if (!history.replaceState || !options.updateURL || history.state) return;
+
+		// Get the hash to use
+		var hash = window.location.hash;
+		hash = hash ? hash : window.pageYOffset;
+
+		// Set a default history
+		history.replaceState(
+			{
+				smoothScroll: JSON.stringify(options),
+				anchor: hash ? hash : window.pageYOffset
+			},
+			document.title,
+			hash ? hash : window.location.href
+		);
+
+	};
+
 	/**
 	 * Update the URL
 	 * @param  {Node}    anchor  The anchor that was scrolled to
@@ -526,6 +547,7 @@
 			// If anchored element exists, scroll to it
 			if (!anchor) return;
 			event.preventDefault();
+			setHistory(settings);
 			smoothScroll.animateScroll(anchor, toggle);
 
 		};
@@ -543,11 +565,15 @@
 			if (!history.state.smoothScroll || history.state.smoothScroll !== JSON.stringify(settings)) return;
 
 			// Only run if state includes an anchor
-			if (!history.state.anchor) return;
+
+			// if (!history.state.anchor && history.state.anchor !== 0) return;
 
 			// Get the anchor
-			var anchor = document.querySelector(escapeCharacters(decode(history.state.anchor)));
-			if (!anchor) return;
+			var anchor = history.state.anchor;
+			if (anchor && anchor !== 0) {
+				anchor = document.querySelector(escapeCharacters(decode(history.state.anchor)));
+				if (!anchor) return;
+			}
 
 			// Animate scroll to anchor link
 			smoothScroll.animateScroll(anchor, null, {updateURL: false});
