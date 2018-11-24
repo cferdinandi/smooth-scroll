@@ -392,7 +392,7 @@
 		//
 
 		var smoothScroll = {}; // Object for public APIs
-		var settings, anchor, toggle, fixedHeader, headerHeight, eventTimeout, animationInterval;
+		var settings, anchor, toggle, fixedHeader, eventTimeout, animationInterval;
 
 
 		//
@@ -429,10 +429,7 @@
 				// Get the fixed header if not already set
 				fixedHeader = document.querySelector(_settings.header);
 			}
-			if (!headerHeight) {
-				// Get the height of a fixed header if one exists and not already set
-				headerHeight = getHeaderHeight(fixedHeader);
-			}
+			var headerHeight = getHeaderHeight(fixedHeader);
 			var endLocation = isNum ? anchor : getEndLocation(anchorElem, headerHeight, parseInt((typeof _settings.offset === 'function' ? _settings.offset(anchor, toggle) : _settings.offset), 10), _settings.clip); // Location to scroll to
 			var distance = endLocation - startLocation; // distance to travel
 			var documentHeight = getDocumentHeight();
@@ -574,18 +571,6 @@
 		};
 
 		/**
-		 * On window scroll and resize, only run events at a rate of 15fps for better performance
-		 */
-		var resizeThrottler = function (event) {
-			if (!eventTimeout) {
-				eventTimeout = setTimeout(function() {
-					eventTimeout = null; // Reset timeout
-					headerHeight = getHeaderHeight(fixedHeader); // Get the height of a fixed header if one exists
-				}, 66);
-			}
-		};
-
-		/**
 		 * Destroy the current initialization.
 		 */
 		smoothScroll.destroy = function () {
@@ -595,7 +580,6 @@
 
 			// Remove event listeners
 			document.removeEventListener('click', clickHandler, false);
-			window.removeEventListener('resize', resizeThrottler, false);
 			window.removeEventListener('popstate', popstateHandler, false);
 
 			// Cancel any scrolls-in-progress
@@ -606,7 +590,6 @@
 			anchor = null;
 			toggle = null;
 			fixedHeader = null;
-			headerHeight = null;
 			eventTimeout = null;
 			animationInterval = null;
 
@@ -627,15 +610,9 @@
 			// Selectors and variables
 			settings = extend(defaults, options || {}); // Merge user options with defaults
 			fixedHeader = settings.header ? document.querySelector(settings.header) : null; // Get the fixed header
-			headerHeight = getHeaderHeight(fixedHeader);
 
 			// When a toggle is clicked, run the click handler
 			document.addEventListener('click', clickHandler, false);
-
-			// If window is resized and there's a fixed header, recalculate its size
-			if (fixedHeader) {
-				window.addEventListener('resize', resizeThrottler, false);
-			}
 
 			// If updateURL and popState are enabled, listen for pop events
 			if (settings.updateURL && settings.popstate) {
