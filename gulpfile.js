@@ -1,59 +1,17 @@
 /**
  * Settings
+ * Turn on/off build features
  */
 
 var settings = {
-	scripts: true,		// Turn on/off script tasks
-	polyfills: true,	// Turn on/off polyfill tasks
-	styles: false,		// Turn on/off style tasks
-	svgs: false,		// Turn on/off SVG tasks
-	images: false,		// Turn on/off image tasks
-	static: false,		// Turn on/off static file copying
-	docs: true,			// Turn on/off documentation generation
-	deploy: true,		// Turn on/off all deployment tasks
-	cacheBust: false,	// Turn on/off cache busting (adds a version number to minified files)
+	clean: true,
+	scripts: true,
+	polyfills: true,
+	styles: false,
+	svgs: false,
+	copy: true,
+	reload: true
 };
-
-
-/**
- * Gulp Packages
- */
-
-// General
-var gulp = require('gulp');
-var fs = require('fs');
-var del = require('del');
-var exec = require('child_process').exec;
-var lazypipe = require('lazypipe');
-var plumber = require('gulp-plumber');
-var flatten = require('gulp-flatten');
-var tap = require('gulp-tap');
-var rename = require('gulp-rename');
-var header = require('gulp-header');
-var footer = require('gulp-footer');
-var watch = require('gulp-watch');
-var livereload = require('gulp-livereload');
-var package = require('./package.json');
-
-// Scripts
-var jshint = settings.scripts ? require('gulp-jshint') : null;
-var stylish = settings.scripts ? require('jshint-stylish') : null;
-var concat = settings.scripts ? require('gulp-concat') : null;
-var uglify = settings.scripts ? require('gulp-uglify') : null;
-var optimizejs = settings.scripts ? require('gulp-optimize-js') : null;
-
-// Styles
-var sass = settings.styles ? require('gulp-sass') : null;
-var prefix = settings.styles ? require('gulp-autoprefixer') : null;
-var minify = settings.styles ? require('gulp-cssnano') : null;
-
-// SVGs
-var svgmin = settings.svgs ? require('gulp-svgmin') : null;
-var svgstore = settings.svgs ? require('gulp-svgstore') : null;
-
-// Docs
-var markdown = settings.docs ? require('gulp-markdown') : null;
-var fileinclude = settings.docs ? require('gulp-file-include') : null;
 
 
 /**
@@ -61,11 +19,11 @@ var fileinclude = settings.docs ? require('gulp-file-include') : null;
  */
 
 var paths = {
-	input: 'src/**/*',
+	input: 'src/',
 	output: 'dist/',
 	scripts: {
 		input: 'src/js/*',
-		polyfills: '!src/js/*.polyfill.js',
+		polyfills: '.polyfill.js',
 		output: 'dist/'
 	},
 	styles: {
@@ -73,23 +31,14 @@ var paths = {
 		output: 'dist/css/'
 	},
 	svgs: {
-		input: 'src/svg/*',
+		input: 'src/svg/*.svg',
 		output: 'dist/svg/'
 	},
-	images: {
-		input: 'src/img/*',
-		output: 'dist/img/'
+	copy: {
+		input: 'src/copy/*',
+		output: 'docs/'
 	},
-	static: {
-		input: 'src/static/*',
-		output: 'dist/'
-	},
-	docs: {
-		input: 'src/docs/*.{html,md,markdown}',
-		output: 'docs/',
-		templates: 'src/docs/_templates/',
-		assets: 'src/docs/assets/**'
-	}
+	reload: './docs'
 };
 
 
@@ -98,14 +47,15 @@ var paths = {
  */
 
 var banner = {
-	full :
+	full:
 		'/*!\n' +
-		' * <%= package.name %> v<%= package.version %>: <%= package.description %>\n' +
+		' * <%= package.name %> v<%= package.version %>\n' +
+		' * <%= package.description %>\n' +
 		' * (c) ' + new Date().getFullYear() + ' <%= package.author.name %>\n' +
 		' * <%= package.license %> License\n' +
 		' * <%= package.repository.url %>\n' +
 		' */\n\n',
-	min :
+	min:
 		'/*!' +
 		' <%= package.name %> v<%= package.version %>' +
 		' | (c) ' + new Date().getFullYear() + ' <%= package.author.name %>' +
@@ -116,233 +66,250 @@ var banner = {
 
 
 /**
- * File Version
+ * Gulp Packages
  */
 
-var fileVersion = settings.cacheBust ? '.' + package.version : '';
+// General
+var {gulp, src, dest, watch, series, parallel} = require('gulp');
+var del = require('del');
+var flatmap = require('gulp-flatmap');
+var lazypipe = require('lazypipe');
+var rename = require('gulp-rename');
+var header = require('gulp-header');
+var package = require('./package.json');
+
+// Scripts
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var optimizejs = require('gulp-optimize-js');
+
+// Styles
+var sass = require('gulp-sass');
+var prefix = require('gulp-autoprefixer');
+var minify = require('gulp-cssnano');
+
+// SVGs
+var svgmin = require('gulp-svgmin');
+
+// BrowserSync
+var browserSync = require('browser-sync');
 
 
 /**
  * Gulp Tasks
  */
 
+// Remove pre-existing content from output folders
+var cleanDist = function (done) {
+
+	// Make sure this feature is activated before running
+	if (!settings.clean) return done();
+
+	// Clean the dist folder
+	del.sync([
+		paths.output
+	]);
+
+	// Signal completion
+	return done();
+
+};
+
+// Repeated JavaScript tasks
 var jsTasks = lazypipe()
-	.pipe(header, banner.full, { package : package })
+	.pipe(header, banner.full, {package: package})
 	.pipe(optimizejs)
-	.pipe(gulp.dest, paths.scripts.output)
-	.pipe(rename, { suffix: '.min' + fileVersion })
+	.pipe(dest, paths.scripts.output)
+	.pipe(rename, {suffix: '.min'})
 	.pipe(uglify)
 	.pipe(optimizejs)
-	.pipe(header, banner.min, { package : package })
-	.pipe(gulp.dest, paths.scripts.output);
+	.pipe(header, banner.min, {package: package})
+	.pipe(dest, paths.scripts.output);
 
 // Lint, minify, and concatenate scripts
-gulp.task('build:scripts', ['clean:dist'], function() {
-	if ( !settings.scripts ) return;
+var buildScripts = function (done) {
 
-	return gulp.src([paths.scripts.input, paths.scripts.polyfills])
-		.pipe(plumber())
-		.pipe(tap(function (file, t) {
-			if ( file.isDirectory() ) {
-				var name = file.relative + '.js';
-				return gulp.src(file.path + '/*.js')
-					.pipe(concat(name))
+	// Make sure this feature is activated before running
+	if (!settings.scripts) return done();
+
+	// Run tasks on script files
+	src(paths.scripts.input)
+		.pipe(flatmap(function(stream, file) {
+
+			// If the file is a directory
+			if (file.isDirectory()) {
+
+				// Setup a suffix variable
+				var suffix = '';
+
+				// If separate polyfill files enabled
+				if (settings.polyfills) {
+
+					// Update the suffix
+					suffix = '.polyfills';
+
+					// Grab files that aren't polyfills, concatenate them, and process them
+					src([file.path + '/*.js', '!' + file.path + '/*' + paths.scripts.polyfills])
+						.pipe(concat(file.relative + '.js'))
+						.pipe(jsTasks());
+
+				}
+
+				// Grab all files and concatenate them
+				// If separate polyfills enabled, this will have .polyfills in the filename
+				src(file.path + '/*.js')
+					.pipe(concat(file.relative + suffix + '.js'))
 					.pipe(jsTasks());
+
+				return stream;
+
 			}
-		}))
-		.pipe(jsTasks());
-});
 
-// Create scripts with polyfills
-gulp.task('build:polyfills', ['clean:dist'], function() {
-	if ( !settings.polyfills ) return;
+			// Otherwise, process the file
+			return stream.pipe(jsTasks());
 
-	return gulp.src(paths.scripts.input)
-		.pipe(plumber())
-		.pipe(concat(package.name + '.js'))
-		.pipe(rename({
-			suffix: ".polyfills"
-		}))
-		.pipe(jsTasks());
-});
+		}));
+
+	// Signal completion
+	done();
+
+};
+
+// Lint scripts
+var lintScripts = function (done) {
+
+	// Make sure this feature is activated before running
+	if (!settings.scripts) return done();
+
+	// Lint scripts
+	src(paths.scripts.input)
+		.pipe(jshint())
+		.pipe(jshint.reporter('jshint-stylish'));
+
+	// Signal completion
+	done();
+
+};
 
 // Process, lint, and minify Sass files
-gulp.task('build:styles', ['clean:dist'], function() {
-	if ( !settings.styles ) return;
+var buildStyles = function (done) {
 
-	return gulp.src(paths.styles.input)
-		.pipe(plumber())
+	// Make sure this feature is activated before running
+	if (!settings.styles) return done();
+
+	// Run tasks on all Sass files
+	src(paths.styles.input)
 		.pipe(sass({
 			outputStyle: 'expanded',
 			sourceComments: true
 		}))
-		.pipe(flatten())
 		.pipe(prefix({
-			browsers: ['last 2 version', '> 1%'],
+			browsers: ['last 2 version', '> 0.25%'],
 			cascade: true,
 			remove: true
 		}))
 		.pipe(header(banner.full, { package : package }))
-		.pipe(gulp.dest(paths.styles.output))
-		.pipe(rename({ suffix: '.min' + fileVersion }))
+		.pipe(dest(paths.styles.output))
+		.pipe(rename({suffix: '.min'}))
 		.pipe(minify({
 			discardComments: {
 				removeAll: true
 			}
 		}))
 		.pipe(header(banner.min, { package : package }))
-		.pipe(gulp.dest(paths.styles.output));
-});
+		.pipe(dest(paths.styles.output));
 
-// Generate SVG sprites
-gulp.task('build:svgs', ['clean:dist'], function () {
-	if ( !settings.svgs ) return;
+	// Signal completion
+	done();
 
-	return gulp.src(paths.svgs.input)
-		.pipe(plumber())
-		.pipe(tap(function (file, t) {
-			if ( file.isDirectory() ) {
-				var name = file.relative + '.svg';
-				return gulp.src(file.path + '/*.svg')
-					.pipe(svgmin())
-					.pipe(svgstore({
-						fileName: name,
-						prefix: 'icon-',
-						inlineSvg: true
-					}))
-					.pipe(gulp.dest(paths.svgs.output));
-			}
-		}))
+};
+
+// Optimize SVG files
+var buildSVGs = function (done) {
+
+	// Make sure this feature is activated before running
+	if (!settings.svgs) return done();
+
+	// Optimize SVG files
+	src(paths.svgs.input)
 		.pipe(svgmin())
-		.pipe(gulp.dest(paths.svgs.output));
-});
+		.pipe(dest(paths.svgs.output));
 
-// Copy image files into output folder
-gulp.task('build:images', ['clean:dist'], function() {
-	if ( !settings.images ) return;
+	// Signal completion
+	done();
 
-	return gulp.src(paths.images.input)
-		.pipe(plumber())
-		.pipe(gulp.dest(paths.images.output));
-});
+};
 
 // Copy static files into output folder
-gulp.task('build:static', ['clean:dist'], function() {
-	if ( !settings.static ) return;
+var copyFiles = function (done) {
 
-	return gulp.src(paths.static.input)
-		.pipe(plumber())
-		.pipe(gulp.dest(paths.static.output));
-});
+	// Make sure this feature is activated before running
+	if (!settings.copy) return done();
 
-// Lint scripts
-gulp.task('lint:scripts', function () {
-	if ( !settings.scripts ) return;
+	// Copy static files
+	src(paths.copy.input)
+		.pipe(dest(paths.copy.output));
 
-	return gulp.src(paths.scripts.input)
-		.pipe(plumber())
-		.pipe(jshint())
-		.pipe(jshint.reporter('jshint-stylish'));
-});
+	// Signal completion
+	done();
 
-// Remove pre-existing content from output folders
-gulp.task('clean:dist', function () {
-	del.sync([
-		paths.output
-	]);
-});
+};
 
-// Generate documentation
-gulp.task('build:docs', ['compile', 'clean:docs'], function() {
-	if ( !settings.docs ) return;
+// Watch for changes to the src directory
+var startServer = function (done) {
 
-	return gulp.src(paths.docs.input)
-		.pipe(plumber())
-		.pipe(fileinclude({
-			prefix: '@@',
-			basepath: '@file'
-		}))
-		.pipe(tap(function (file, t) {
-			if ( /\.md|\.markdown/.test(file.path) ) {
-				return t.through(markdown);
-			}
-		}))
-		.pipe(header(fs.readFileSync(paths.docs.templates + '/_header.html', 'utf8')))
-		.pipe(footer(fs.readFileSync(paths.docs.templates + '/_footer.html', 'utf8')))
-		.pipe(gulp.dest(paths.docs.output));
-});
+	// Make sure this feature is activated before running
+	if (!settings.reload) return done();
 
-// Copy distribution files to docs
-gulp.task('copy:dist', ['compile', 'clean:docs'], function() {
-	if ( !settings.docs ) return;
-
-	return gulp.src(paths.output + '/**')
-		.pipe(plumber())
-		.pipe(gulp.dest(paths.docs.output + '/dist'));
-});
-
-// Copy documentation assets to docs
-gulp.task('copy:assets', ['clean:docs'], function() {
-	if ( !settings.docs ) return;
-
-	return gulp.src(paths.docs.assets)
-		.pipe(plumber())
-		.pipe(gulp.dest(paths.docs.output + '/assets'));
-});
-
-// Remove prexisting content from docs folder
-gulp.task('clean:docs', function () {
-	if ( !settings.docs ) return;
-	return del.sync(paths.docs.output);
-});
-
-// Spin up livereload server and listen for file changes
-gulp.task('listen', function () {
-	livereload.listen();
-	gulp.watch(paths.input).on('change', function(file) {
-		gulp.start('default');
-		gulp.start('refresh');
+	// Initialize BrowserSync
+	browserSync.init({
+		server: {
+			baseDir: paths.reload
+		}
 	});
-});
 
-// Run livereload after file change
-gulp.task('refresh', ['compile', 'docs'], function () {
-	livereload.changed();
-});
+	// Signal completion
+	done();
+
+};
+
+// Reload the browser when files change
+var reloadBrowser = function (done) {
+	if (!settings.reload) return done();
+	browserSync.reload();
+	done();
+};
+
+// Watch for changes
+var watchSource = function (done) {
+	watch(paths.input, series(exports.default, reloadBrowser));
+	done();
+};
 
 
 /**
- * Task Runners
+ * Export Tasks
  */
 
-// Compile files
-gulp.task('compile', [
-	'lint:scripts',
-	'clean:dist',
-	'build:scripts',
-	'build:polyfills',
-	'build:styles',
-	'build:images',
-	'build:static',
-	'build:svgs'
-]);
+// Default task
+// gulp
+exports.default = series(
+	cleanDist,
+	parallel(
+		buildScripts,
+		lintScripts,
+		buildStyles,
+		buildSVGs,
+		copyFiles
+	)
+);
 
-// Generate documentation
-gulp.task('docs', [
-	'clean:docs',
-	'build:docs',
-	'copy:dist',
-	'copy:assets'
-]);
-
-// Compile files and generate docs (default)
-gulp.task('default', [
-	'compile',
-	'docs'
-]);
-
-// Compile files and generate docs when something changes
-gulp.task('watch', [
-	'listen',
-	'default'
-]);
+// Watch and reload
+// gulp watch
+exports.watch = series(
+	exports.default,
+	startServer,
+	watchSource
+);

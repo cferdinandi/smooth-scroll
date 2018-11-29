@@ -99,21 +99,6 @@
 	};
 
 	/**
-	 * Decode a URI, with error check
-	 * @param  {String} hash The URI to decode
-	 * @return {String}      A decoded URI (or the original string if an error is thrown)
-	 */
-	var decode = function (hash) {
-		var decoded;
-		try {
-			decoded = decodeURIComponent(hash);
-		} catch(e) {
-			decoded = hash;
-		}
-		return decoded;
-	};
-
-	/**
 	 * Escape special characters for use with querySelector
 	 * @author Mathias Bynens
 	 * @link https://github.com/mathiasbynens/CSS.escape
@@ -189,13 +174,7 @@
 		}
 
 		// Return sanitized hash
-		var hash;
-		try {
-			hash = decodeURIComponent('#' + result);
-		} catch(e) {
-			hash = '#' + result;
-		}
-		return hash;
+		return '#' + result;
 
 	};
 
@@ -528,7 +507,7 @@
 			if (toggle.hostname !== window.location.hostname || toggle.pathname !== window.location.pathname || !/#/.test(toggle.href)) return;
 
 			// Get an escaped version of the hash
-			var hash = escapeCharacters(decode(toggle.hash));
+			var hash = escapeCharacters(toggle.hash);
 
 			// Get the anchored element
 			var anchor = settings.topOnEmptyHash && hash === '#' ? document.documentElement : document.querySelector(hash);
@@ -561,7 +540,7 @@
 			// Get the anchor
 			var anchor = history.state.anchor;
 			if (anchor && anchor !== 0) {
-				anchor = document.querySelector(escapeCharacters(decode(history.state.anchor)));
+				anchor = document.querySelector(escapeCharacters(history.state.anchor));
 				if (!anchor) return;
 			}
 
