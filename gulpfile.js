@@ -36,9 +36,9 @@ var paths = {
 	},
 	copy: {
 		input: 'src/copy/*',
-		output: 'docs/'
+		output: './'
 	},
-	reload: './docs'
+	reload: './'
 };
 
 

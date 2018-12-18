@@ -263,7 +263,7 @@
 		var speed = settings.speedAsDuration ? settings.speed : Math.abs(distance / 1000 * settings.speed);
 		if (settings.durationMax && speed > settings.durationMax) return settings.durationMax;
 		if (settings.durationMin && speed < settings.durationMin) return settings.durationMin;
-		return speed;
+		return parseInt(speed, 10);
 	};
 
 	var setHistory = function (options) {
@@ -396,6 +396,9 @@
 		 */
 		smoothScroll.animateScroll = function (anchor, toggle, options) {
 
+			// Cancel any in progress scrolls
+			smoothScroll.cancelScroll();
+
 			// Local settings
 			var _settings = extend(settings || defaults, options || {}); // Merge user options with defaults
 
@@ -454,7 +457,7 @@
 			var loopAnimateScroll = function (timestamp) {
 				if (!start) { start = timestamp; }
 				timeLapsed += timestamp - start;
-				percentage = (timeLapsed / parseInt(speed, 10));
+				percentage = speed === 0 ? 0 : (timeLapsed / speed);
 				percentage = (percentage > 1) ? 1 : percentage;
 				position = startLocation + (distance * easingPattern(_settings, percentage));
 				window.scrollTo(0, Math.floor(position));
