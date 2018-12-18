@@ -13,7 +13,7 @@
 		"url": "http://github.com/cferdinandi/smooth-scroll"
 	},
 	"devDependencies": {
-		"gulp": "next",
+		"gulp": "4.0.0",
 		"del": "3.0.0",
 		"lazypipe": "1.0.1",
 		"gulp-flatmap": "1.0.2",
