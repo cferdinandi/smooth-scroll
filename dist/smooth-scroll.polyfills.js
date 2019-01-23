@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v15.2.0
+ * smooth-scroll v15.2.1
  * Animate scrolling to anchor links
  * (c) 2019 Chris Ferdinandi
  * MIT License
@@ -351,7 +351,7 @@ if (window.Element && !Element.prototype.closest) {
 
 		// Get the hash to use
 		var hash = window.location.hash;
-		hash = hash ? hash : window.pageYOffset;
+		hash = hash ? hash : '';
 
 		// Set a default history
 		history.replaceState(
@@ -620,7 +620,7 @@ if (window.Element && !Element.prototype.closest) {
 
 			// Get the anchor
 			var anchor = history.state.anchor;
-			if (anchor && anchor !== 0) {
+			if (typeof anchor === 'string' && anchor) {
 				anchor = document.querySelector(escapeCharacters(history.state.anchor));
 				if (!anchor) return;
 			}
