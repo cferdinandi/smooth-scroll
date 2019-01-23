@@ -269,18 +269,24 @@
 	var setHistory = function (options) {
 
 		// Make sure this should run
-		if (!history.replaceState || !options.updateURL || history.state) return;
+		if (!history.replaceState || !options.updateURL || (history.state && history.state.smoothScroll)) return;
 
 		// Get the hash to use
 		var hash = window.location.hash;
 		hash = hash ? hash : window.pageYOffset;
 
+		var historyState = {
+			smoothScroll: JSON.stringify(options),
+			anchor: hash ? hash : window.pageYOffset
+		};
+		if (history.state) {
+			for (var key in history.state) {
+				historyState[key] = history.state[key];
+			}
+		}
 		// Set a default history
 		history.replaceState(
-			{
-				smoothScroll: JSON.stringify(options),
-				anchor: hash ? hash : window.pageYOffset
-			},
+			historyState,
 			document.title,
 			hash ? hash : window.location.href
 		);
