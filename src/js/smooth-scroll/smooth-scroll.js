@@ -495,6 +495,9 @@
 			// Don't run if the user prefers reduced motion
 			if (reduceMotion(settings)) return;
 
+			// Don't run if event was canceled but still bubbled up
+			if (event.defaultPrevented) return;
+
 			// Don't run if right-click or command/control + click
 			if (event.button !== 0 || event.metaKey || event.ctrlKey) return;
 
