@@ -153,13 +153,13 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 
 
 
-## Options and Settings
+## API
 
 Smooth Scroll includes smart defaults and works right out of the box. But if you want to customize things, it also has a robust API that provides multiple ways for you to adjust the default options and settings.
 
-### Global Settings
+### Options and Settings
 
-You can pass options and callbacks into Smooth Scroll through the `init()` function:
+You can pass options and callbacks into Smooth Scroll when instantiating.
 
 ```javascript
 var scroll = new SmoothScroll('a[href*="#"]', {
@@ -246,7 +246,7 @@ document.addEventListener('scrollCancel', logScrollEvent, false);
 
 ### Methods
 
-You can also call Smooth Scroll's methods in your own scripts.
+Smooth Scroll also exposes several public methods.
 
 #### animateScroll()
 Animate scrolling to an anchor.
@@ -297,7 +297,7 @@ scroll.cancelScroll();
 ***Note:*** *This does not handle focus management. The user will stop in place, and focus will remain on the anchor link that triggered the scroll.*
 
 #### init()
-Initialize Smooth Scroll. This is called automatically when you setup your `new SmoothScroll` object, but can be used to reinitialize your instance.
+Initialize Smooth Scroll. This is called automatically when you instantiate your `new SmoothScroll` object, but can be used to reinitialize your instance.
 
 ```javascript
 var scroll = new SmoothScroll();
@@ -305,7 +305,7 @@ scroll.init('.some-selector');
 ```
 
 #### destroy()
-Destroy the current `smoothScroll.init()`. This is called automatically during the `init` function to remove any existing initializations.
+Destroy the current initialization. This is called automatically in the `init` method to remove any existing initializations.
 
 ```javascript
 var scroll = new SmoothScroll();
