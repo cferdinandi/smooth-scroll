@@ -1,7 +1,11 @@
 # Smooth Scroll [![Build Status](https://travis-ci.org/cferdinandi/smooth-scroll.svg)](https://travis-ci.org/cferdinandi/smooth-scroll)
 A lightweight script to animate scrolling to anchor links. Smooth Scroll works great with [Gumshoe](https://github.com/cferdinandi/gumshoe).
 
-[View the Demo](https://codepen.io/cferdinandi/pen/wQzrdM)
+**[View the Demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/wQzrdM)**
+
+[Getting Started](#getting-started) | [Scroll Speed](#scroll-speed) | [Easing Options](#easing-options) | [API](#api) | [What's new?](#whats-new) | [Known Issues](#known-issues) | [Browser Compatibility](#browser-compatibility) | [License](#license)
+
+*__Quick aside:__ you might not need this library. There's [a native CSS way to handle smooth scrolling](https://gomakethings.com/smooth-scrolling-links-with-only-css/) that might fit your needs.*
 
 
 <hr>
@@ -296,14 +300,6 @@ scroll.cancelScroll();
 
 ***Note:*** *This does not handle focus management. The user will stop in place, and focus will remain on the anchor link that triggered the scroll.*
 
-#### init()
-Initialize Smooth Scroll. This is called automatically when you instantiate your `new SmoothScroll` object, but can be used to reinitialize your instance.
-
-```javascript
-var scroll = new SmoothScroll();
-scroll.init('.some-selector');
-```
-
 #### destroy()
 Destroy the current initialization. This is called automatically in the `init` method to remove any existing initializations.
 
@@ -333,28 +329,7 @@ If you have multiple fixed headers, pass in the last one in the markup.
 
 
 
-## Working with the Source Files
-
-If you would prefer, you can work with the development code in the `src` directory using the included [Gulp build system](http://gulpjs.com/). This compiles, lints, and minifies code.
-
-### Dependencies
-Make sure these are installed first.
-
-* [Node.js](http://nodejs.org)
-* [Gulp](http://gulpjs.com) `sudo npm install -g gulp`
-
-### Quick Start
-
-1. In bash/terminal/command line, `cd` into your project directory.
-2. Run `npm install` to install required files.
-3. When it's done installing, run one of the task runners to get going:
-	* `gulp` manually compiles files.
-	* `gulp watch` automatically compiles files when changes are made and applies changes using [LiveReload](http://livereload.com/).
-
-
-
-
-## Migrating to Smooth Scroll 15 from Older Versions
+## What's new?
 
 Scroll duration now varies based on distance traveled. If you want to maintain the old scroll animation duration behavior, set the `speedAsDuration` option to `true`.
 

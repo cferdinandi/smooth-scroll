@@ -581,7 +581,7 @@
 		 * Initialize Smooth Scroll
 		 * @param {Object} options User settings
 		 */
-		smoothScroll.init = function (options) {
+		var init = function () {
 
 			// feature test
 			if (!supports()) throw 'Smooth Scroll: This browser does not support the required JavaScript methods and browser APIs.';
@@ -608,7 +608,7 @@
 		// Initialize plugin
 		//
 
-		smoothScroll.init(options);
+		init();
 
 
 		//

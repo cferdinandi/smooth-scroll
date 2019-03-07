@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v15.2.1
+ * smooth-scroll v16.0.0
  * Animate scrolling to anchor links
  * (c) 2019 Chris Ferdinandi
  * MIT License
@@ -589,7 +589,7 @@
 		 * Initialize Smooth Scroll
 		 * @param {Object} options User settings
 		 */
-		smoothScroll.init = function (options) {
+		var init = function () {
 
 			// feature test
 			if (!supports()) throw 'Smooth Scroll: This browser does not support the required JavaScript methods and browser APIs.';
@@ -616,7 +616,7 @@
 		// Initialize plugin
 		//
 
-		smoothScroll.init(options);
+		init();
 
 
 		//
