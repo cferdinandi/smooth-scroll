@@ -52,6 +52,14 @@ You can also use the [jsDelivr CDN](https://cdn.jsdelivr.net/gh/cferdinandi/smoo
 <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14.0.0/dist/smooth-scroll.polyfills.min.js"></script>
 ```
 
+**NPM**
+
+You can also use NPM (or your favorite package manager).
+
+```bash
+npm install smooth-scroll
+```
+
 ### 2. Add the markup to your HTML.
 
 No special markup needed&mdash;just standard anchor links. Give the anchor location an ID just like you normally would.
