@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v16.0.1
+ * smooth-scroll v16.0.2
  * Animate scrolling to anchor links
  * (c) 2019 Chris Ferdinandi
  * MIT License
@@ -572,6 +572,10 @@ if (window.Element && !Element.prototype.closest) {
 
 			// Don't run if the user prefers reduced motion
 			if (reduceMotion(settings)) return;
+
+			// Don't run if event was canceled but still bubbled up
+			// By @mgreter - https://github.com/cferdinandi/smooth-scroll/pull/462/
+			if (event.defaultPrevented) return;
 
 			// Don't run if right-click or command/control + click or shift + click
 			if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) return;
