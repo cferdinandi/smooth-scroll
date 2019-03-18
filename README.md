@@ -345,6 +345,14 @@ Scroll duration now varies based on distance traveled. If you want to maintain t
 
 ## Known Issues
 
+### Reduce Motion Settings
+
+This isn't really an "issue" so-much as a question I get a lot.
+
+Smooth Scroll respects [the `Reduce Motion` setting](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) available in certain operating systems. In browsers that surface that setting, Smooth Scroll will not run and will revert to the default "jump to location" anchor link behavior.
+
+I've decided to respect user preferences of developer desires here. This is *not* a configurable setting.
+
 ### `<body>` styling
 
 If the `<body>` element has been assigned a height of `100%` or `overflow: hidden`, Smooth Scroll is unable to properly calculate page distances and will not scroll to the right location. The `<body>` element can have a fixed, non-percentage based height (ex. `500px`), or a height of `auto`, and an `overflow` of `visible`.
