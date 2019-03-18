@@ -375,7 +375,7 @@ Smooth Scroll works in all modern browsers, and IE 9 and above.
 
 Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhancement. If the JavaScript file fails to load, or if your site is viewed on older and less capable browsers, anchor links will jump the way they normally would.
 
-*__Note:__ Smooth Scroll will not run&mdash;even in supported browsers&mdash;if users have `Reduce Motion` endabled. [Learn more...](#reduce-motion-settings)*
+*__Note:__ Smooth Scroll will not run&mdash;even in supported browsers&mdash;if users have `Reduce Motion` enabled. [Learn more in the "Known Issues" section.](#reduce-motion-settings)*
 
 ### Polyfills
 
