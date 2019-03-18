@@ -496,6 +496,7 @@
 			if (reduceMotion(settings)) return;
 
 			// Don't run if event was canceled but still bubbled up
+			// By @mgreter - https://github.com/cferdinandi/smooth-scroll/pull/462/
 			if (event.defaultPrevented) return;
 
 			// Don't run if right-click or command/control + click or shift + click
