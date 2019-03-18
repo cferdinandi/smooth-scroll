@@ -1,9 +1,10 @@
-workflow "Release" {
-  on = "release"
-  resolves = ["Publish to NPM"]
+workflow "publish on release" {
+  on = "push"
+  resolves = ["publish"]
 }
 
-action "Publish to NPM" {
-  uses = "actions/npm@e7aaefed7c9f2e83d493ff810f17fa5ccd7ed437"
-  runs = "npm publish"
+action "publish" {
+  uses = "actions/npm@master"
+  args = "publish"
+  secrets = ["NPM_AUTH_TOKEN"]
 }

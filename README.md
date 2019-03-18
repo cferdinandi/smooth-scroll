@@ -1,7 +1,11 @@
 # Smooth Scroll [![Build Status](https://travis-ci.org/cferdinandi/smooth-scroll.svg)](https://travis-ci.org/cferdinandi/smooth-scroll)
 A lightweight script to animate scrolling to anchor links. Smooth Scroll works great with [Gumshoe](https://github.com/cferdinandi/gumshoe).
 
-[View the Demo](https://codepen.io/cferdinandi/pen/wQzrdM)
+**[View the Demo on CodePen &rarr;](https://codepen.io/cferdinandi/pen/wQzrdM)**
+
+[Getting Started](#getting-started) | [Scroll Speed](#scroll-speed) | [Easing Options](#easing-options) | [API](#api) | [What's new?](#whats-new) | [Known Issues](#known-issues) | [Browser Compatibility](#browser-compatibility) | [License](#license)
+
+*__Quick aside:__ you might not need this library. There's [a native CSS way to handle smooth scrolling](https://gomakethings.com/smooth-scrolling-links-with-only-css/) that might fit your needs.*
 
 
 <hr>
@@ -39,13 +43,21 @@ You can also use the [jsDelivr CDN](https://cdn.jsdelivr.net/gh/cferdinandi/smoo
 <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
 
 <!-- Get minor updates and patch fixes within a major version -->
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15/dist/smooth-scroll.polyfills.min.js"></script>
 
 <!-- Get patch fixes within a minor version -->
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14.0/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0/dist/smooth-scroll.polyfills.min.js"></script>
 
 <!-- Get a specific version -->
-<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@14.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll@15.0.0/dist/smooth-scroll.polyfills.min.js"></script>
+```
+
+**NPM**
+
+You can also use NPM (or your favorite package manager).
+
+```bash
+npm install smooth-scroll
 ```
 
 ### 2. Add the markup to your HTML.
@@ -153,13 +165,13 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 
 
 
-## Options and Settings
+## API
 
 Smooth Scroll includes smart defaults and works right out of the box. But if you want to customize things, it also has a robust API that provides multiple ways for you to adjust the default options and settings.
 
-### Global Settings
+### Options and Settings
 
-You can pass options and callbacks into Smooth Scroll through the `init()` function:
+You can pass options and callbacks into Smooth Scroll when instantiating.
 
 ```javascript
 var scroll = new SmoothScroll('a[href*="#"]', {
@@ -246,7 +258,7 @@ document.addEventListener('scrollCancel', logScrollEvent, false);
 
 ### Methods
 
-You can also call Smooth Scroll's methods in your own scripts.
+Smooth Scroll also exposes several public methods.
 
 #### animateScroll()
 Animate scrolling to an anchor.
@@ -296,16 +308,8 @@ scroll.cancelScroll();
 
 ***Note:*** *This does not handle focus management. The user will stop in place, and focus will remain on the anchor link that triggered the scroll.*
 
-#### init()
-Initialize Smooth Scroll. This is called automatically when you setup your `new SmoothScroll` object, but can be used to reinitialize your instance.
-
-```javascript
-var scroll = new SmoothScroll();
-scroll.init('.some-selector');
-```
-
 #### destroy()
-Destroy the current `smoothScroll.init()`. This is called automatically during the `init` function to remove any existing initializations.
+Destroy the current initialization. This is called automatically in the `init` method to remove any existing initializations.
 
 ```javascript
 var scroll = new SmoothScroll();
@@ -333,34 +337,21 @@ If you have multiple fixed headers, pass in the last one in the markup.
 
 
 
-## Working with the Source Files
-
-If you would prefer, you can work with the development code in the `src` directory using the included [Gulp build system](http://gulpjs.com/). This compiles, lints, and minifies code.
-
-### Dependencies
-Make sure these are installed first.
-
-* [Node.js](http://nodejs.org)
-* [Gulp](http://gulpjs.com) `sudo npm install -g gulp`
-
-### Quick Start
-
-1. In bash/terminal/command line, `cd` into your project directory.
-2. Run `npm install` to install required files.
-3. When it's done installing, run one of the task runners to get going:
-	* `gulp` manually compiles files.
-	* `gulp watch` automatically compiles files when changes are made and applies changes using [LiveReload](http://livereload.com/).
-
-
-
-
-## Migrating to Smooth Scroll 15 from Older Versions
+## What's new?
 
 Scroll duration now varies based on distance traveled. If you want to maintain the old scroll animation duration behavior, set the `speedAsDuration` option to `true`.
 
 
 
 ## Known Issues
+
+### Reduce Motion Settings
+
+This isn't really an "issue" so-much as a question I get a lot.
+
+Smooth Scroll respects [the `Reduce Motion` setting](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion) available in certain operating systems. In browsers that surface that setting, Smooth Scroll will not run and will revert to the default "jump to location" anchor link behavior.
+
+I've decided to respect user preferences of developer desires here. This is *not* a configurable setting.
 
 ### `<body>` styling
 
@@ -383,6 +374,8 @@ Most browsers instantly jump you to the anchor location when you load a page. Yo
 Smooth Scroll works in all modern browsers, and IE 9 and above.
 
 Smooth Scroll is built with modern JavaScript APIs, and uses progressive enhancement. If the JavaScript file fails to load, or if your site is viewed on older and less capable browsers, anchor links will jump the way they normally would.
+
+*__Note:__ Smooth Scroll will not run&mdash;even in supported browsers&mdash;if users have `Reduce Motion` enabled. [Learn more in the "Known Issues" section.](#reduce-motion-settings)*
 
 ### Polyfills
 

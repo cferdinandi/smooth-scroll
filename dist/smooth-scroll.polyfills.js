@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v15.2.1
+ * smooth-scroll v16.0.1
  * Animate scrolling to anchor links
  * (c) 2019 Chris Ferdinandi
  * MIT License
@@ -573,8 +573,8 @@ if (window.Element && !Element.prototype.closest) {
 			// Don't run if the user prefers reduced motion
 			if (reduceMotion(settings)) return;
 
-			// Don't run if right-click or command/control + click
-			if (event.button !== 0 || event.metaKey || event.ctrlKey) return;
+			// Don't run if right-click or command/control + click or shift + click
+			if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) return;
 
 			// Check if event.target has closest() method
 			// By @totegi - https://github.com/cferdinandi/smooth-scroll/pull/401/
@@ -659,7 +659,7 @@ if (window.Element && !Element.prototype.closest) {
 		 * Initialize Smooth Scroll
 		 * @param {Object} options User settings
 		 */
-		smoothScroll.init = function (options) {
+		var init = function () {
 
 			// feature test
 			if (!supports()) throw 'Smooth Scroll: This browser does not support the required JavaScript methods and browser APIs.';
@@ -686,7 +686,7 @@ if (window.Element && !Element.prototype.closest) {
 		// Initialize plugin
 		//
 
-		smoothScroll.init(options);
+		init();
 
 
 		//

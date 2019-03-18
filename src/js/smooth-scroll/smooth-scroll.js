@@ -498,8 +498,8 @@
 			// Don't run if event was canceled but still bubbled up
 			if (event.defaultPrevented) return;
 
-			// Don't run if right-click or command/control + click
-			if (event.button !== 0 || event.metaKey || event.ctrlKey) return;
+			// Don't run if right-click or command/control + click or shift + click
+			if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) return;
 
 			// Check if event.target has closest() method
 			// By @totegi - https://github.com/cferdinandi/smooth-scroll/pull/401/
@@ -584,7 +584,7 @@
 		 * Initialize Smooth Scroll
 		 * @param {Object} options User settings
 		 */
-		smoothScroll.init = function (options) {
+		var init = function () {
 
 			// feature test
 			if (!supports()) throw 'Smooth Scroll: This browser does not support the required JavaScript methods and browser APIs.';
@@ -611,7 +611,7 @@
 		// Initialize plugin
 		//
 
-		smoothScroll.init(options);
+		init();
 
 
 		//
