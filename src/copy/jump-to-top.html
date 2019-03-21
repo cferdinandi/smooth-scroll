@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Smooth Scroll</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- stylesheets -->
+		<style type="text/css">
+			body {
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+				font-size: 112.5%;
+				margin-left: auto;
+				margin-right: auto;
+				max-width: 40em;
+				width: 88%;
+			}
+		</style>
+	</head>
+
+	<body>
+
+		<main id="top">
+
+			<nav>
+				<h1>Smooth Scroll</h1>
+				<p><a href="https://github.com/cferdinandi/smooth-scroll">GitHub</a></p>
+				<hr>
+			</nav>
+
+			<section>
+
+				<p>
+				    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+				    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+				    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+				    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+				    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+				    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+				    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>
+				    .<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.<br>.
+				</p>
+
+				<p><a href="#">Back to the top</a></p>
+			</section>
+		</main>
+
+		<!-- Javascript -->
+		<script src="dist/smooth-scroll.polyfills.js"></script>
+		<script>
+			// Instantiate Scrolls
+			var scroll = new SmoothScroll('a[href*="#"]', {
+				topOnEmptyHash: false
+			});
+		</script>
+
+
+	</body>
+</html>

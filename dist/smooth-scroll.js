@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v16.0.2
+ * smooth-scroll v16.0.3
  * Animate scrolling to anchor links
  * (c) 2019 Chris Ferdinandi
  * MIT License
@@ -525,7 +525,13 @@
 			var hash = escapeCharacters(toggle.hash);
 
 			// Get the anchored element
-			var anchor = settings.topOnEmptyHash && hash === '#' ? document.documentElement : document.querySelector(hash);
+			var anchor;
+			if (hash === '#') {
+				if (!settings.topOnEmptyHash) return;
+				anchor = document.documentElement;
+			} else {
+				anchor = document.querySelector(hash);
+			}
 			anchor = !anchor && hash === '#top' ? document.documentElement : anchor;
 
 			// If anchored element exists, scroll to it
