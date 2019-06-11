@@ -82,7 +82,7 @@
 	 * Check to see if user prefers reduced motion
 	 * @param  {Object} settings Script settings
 	 */
-	var reduceMotion = function (settings) {
+	var reduceMotion = function () {
 		if ('matchMedia' in window && window.matchMedia('(prefers-reduced-motion)').matches) {
 			return true;
 		}
@@ -478,6 +478,12 @@
 			// Update the URL
 			updateURL(anchor, isNum, _settings);
 
+			// If the user prefers reduced motion, jump to location
+			if (reduceMotion()) {
+				window.scrollTo(0, Math.floor(endLocation));
+				return;
+			}
+
 			// Emit a custom event
 			emitEvent('scrollStart', _settings, anchor, toggle);
 
@@ -492,9 +498,6 @@
 		 */
 		var clickHandler = function (event) {
 
-			// Don't run if the user prefers reduced motion
-			if (reduceMotion(settings)) return;
-
 			// Don't run if event was canceled but still bubbled up
 			// By @mgreter - https://github.com/cferdinandi/smooth-scroll/pull/462/
 			if (event.defaultPrevented) return;
@@ -504,7 +507,7 @@
 
 			// Check if event.target has closest() method
 			// By @totegi - https://github.com/cferdinandi/smooth-scroll/pull/401/
-			if(!('closest' in event.target))return;
+			if (!('closest' in event.target)) return;
 
 			// Check if a smooth scroll link was clicked
 			toggle = event.target.closest(selector);
