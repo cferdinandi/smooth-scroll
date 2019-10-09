@@ -40,7 +40,10 @@
 		popstate: true,
 
 		// Custom Events
-		emitEvents: true
+		emitEvents: true,
+
+		// Focus Options
+		focusAnchor: true,
 
 	};
 
@@ -436,8 +439,11 @@
 					// Clear the animation timer
 					smoothScroll.cancelScroll(true);
 
-					// Bring the anchored element into focus
-					adjustFocus(anchor, endLocation, isNum);
+					// Bring the anchored element into focus if settings.focusAnchor is true
+					if (_settings.focusAnchor) {
+						adjustFocus(anchor, endLocation, isNum);
+					}
+
 
 					// Emit a custom event
 					emitEvent('scrollStop', _settings, anchor, toggle);

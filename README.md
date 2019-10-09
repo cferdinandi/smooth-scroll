@@ -222,6 +222,9 @@ var scroll = new SmoothScroll('a[href*="#"]', {
 	// Custom Events
 	emitEvents: true // Emit custom events
 
+	// Focus Options
+	focusAnchor: true // Focus target anchor after scrolling
+
 });
 ```
 
