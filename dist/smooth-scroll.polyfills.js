@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v16.1.0
+ * smooth-scroll v16.1.1
  * Animate scrolling to anchor links
  * (c) 2019 Chris Ferdinandi
  * MIT License
@@ -595,7 +595,13 @@ if (window.Element && !Element.prototype.closest) {
 			if (toggle.hostname !== window.location.hostname || toggle.pathname !== window.location.pathname || !/#/.test(toggle.href)) return;
 
 			// Get an escaped version of the hash
-			var hash = escapeCharacters(toggle.hash);
+			var hash;
+			try {
+				hash = escapeCharacters(decodeURIComponent(toggle.hash));
+			} catch(e) {
+				hash = escapeCharacters(toggle.hash);
+			}
+			console.log(hash);
 
 			// Get the anchored element
 			var anchor;
