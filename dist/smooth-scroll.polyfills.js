@@ -1,7 +1,7 @@
 /*!
- * smooth-scroll v16.1.1
+ * smooth-scroll v16.1.2
  * Animate scrolling to anchor links
- * (c) 2019 Chris Ferdinandi
+ * (c) 2020 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/smooth-scroll
  */
@@ -601,7 +601,6 @@ if (window.Element && !Element.prototype.closest) {
 			} catch(e) {
 				hash = escapeCharacters(toggle.hash);
 			}
-			console.log(hash);
 
 			// Get the anchored element
 			var anchor;

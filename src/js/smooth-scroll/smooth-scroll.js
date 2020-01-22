@@ -523,7 +523,6 @@
 			} catch(e) {
 				hash = escapeCharacters(toggle.hash);
 			}
-			console.log(hash);
 
 			// Get the anchored element
 			var anchor;
