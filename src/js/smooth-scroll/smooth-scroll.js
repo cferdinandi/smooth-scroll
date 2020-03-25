@@ -480,7 +480,7 @@
 
 			// If the user prefers reduced motion, jump to location
 			if (reduceMotion()) {
-				window.scrollTo(0, Math.floor(endLocation));
+				adjustFocus(anchor, Math.floor(endLocation), false);
 				return;
 			}
 
