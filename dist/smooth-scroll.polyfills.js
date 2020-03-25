@@ -1,5 +1,5 @@
 /*!
- * smooth-scroll v16.1.2
+ * smooth-scroll v16.1.3
  * Animate scrolling to anchor links
  * (c) 2020 Chris Ferdinandi
  * MIT License
@@ -558,7 +558,7 @@ if (window.Element && !Element.prototype.closest) {
 
 			// If the user prefers reduced motion, jump to location
 			if (reduceMotion()) {
-				window.scrollTo(0, Math.floor(endLocation));
+				adjustFocus(anchor, Math.floor(endLocation), false);
 				return;
 			}
 

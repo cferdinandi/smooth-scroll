@@ -1,6 +1,6 @@
 {
 	"name": "smooth-scroll",
-	"version": "16.1.2",
+	"version": "16.1.3",
 	"description": "Animate scrolling to anchor links",
 	"main": "./dist/smooth-scroll.polyfills.min.js",
 	"author": {
