@@ -545,7 +545,7 @@
 		/**
 		 * Animate scroll on popstate events
 		 */
-		var popstateHandler = function (event) {
+		var popstateHandler = function () {
 
 			// Stop if history.state doesn't exist (ex. if clicking on a broken anchor link).
 			// fixes `Cannot read property 'smoothScroll' of null` error getting thrown.
