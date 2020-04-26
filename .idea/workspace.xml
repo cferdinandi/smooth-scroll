@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f992c34-3ae6-4050-ab27-a748dfaa1c39" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/dist/smooth-scroll.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/smooth-scroll.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/smooth-scroll.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/smooth-scroll.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/smooth-scroll.polyfills.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/smooth-scroll.polyfills.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/smooth-scroll.polyfills.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/smooth-scroll.polyfills.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/smooth-scroll/smooth-scroll.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/smooth-scroll/smooth-scroll.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1b2ZnOhJniNvsmnh0ShiNuUkPnB" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="js.buildTools.gulp.gulp_package_dir" value="$PROJECT_DIR$/node_modules/gulp" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="MTCustomThemeConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/js/smooth-scroll" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.smooth-scroll.js">
+    <configuration name="smooth-scroll.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/js/smooth-scroll/smooth-scroll.js" working-dir="$PROJECT_DIR$/src/js/smooth-scroll">
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="js.build_tools.gulp">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <arguments />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="default" type="js.build_tools.gulp" temporary="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
+      <tasks>
+        <task>default</task>
+      </tasks>
+      <arguments />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="watch" type="js.build_tools.gulp" temporary="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
+      <tasks>
+        <task>watch</task>
+      </tasks>
+      <arguments />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gulp.js.default" />
+        <item itemvalue="Gulp.js.watch" />
+        <item itemvalue="Node.js.smooth-scroll.js" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f992c34-3ae6-4050-ab27-a748dfaa1c39" name="Default Changelist" comment="" />
+      <created>1587832314961</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1587832314961</updated>
+      <workItem from="1587832316273" duration="181000" />
+      <workItem from="1587832513267" duration="13958000" />
+      <workItem from="1587888386839" duration="1678000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="404" y="312" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog" timestamp="1587832499904">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="404" y="312" key="#com.intellij.ide.actions.ChooseComponentsToExportDialog/0.23.1440.877@0.23.1440.877" timestamp="1587832499904" />
+    <state x="100" y="123" width="1240" height="677" key="DiffContextDialog" timestamp="1587835670183">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="100" y="123" width="1240" height="677" key="DiffContextDialog/0.23.1440.877@0.23.1440.877" timestamp="1587835670183" />
+    <state width="1415" height="213" key="GridCell.Tab.0.bottom" timestamp="1587888383414">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1415" height="213" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1587888383414" />
+    <state width="1415" height="213" key="GridCell.Tab.0.center" timestamp="1587888383413">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1415" height="213" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1587888383413" />
+    <state width="1415" height="213" key="GridCell.Tab.0.left" timestamp="1587888383412">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1415" height="213" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1587888383412" />
+    <state width="1415" height="213" key="GridCell.Tab.0.right" timestamp="1587888383414">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state width="1415" height="213" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1587888383414" />
+    <state x="480" y="23" key="RollbackChangesDialog" timestamp="1587842752574">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="480" y="23" key="RollbackChangesDialog/0.23.1440.877@0.23.1440.877" timestamp="1587842752574" />
+    <state x="0" y="23" width="1216" height="877" key="SettingsEditor" timestamp="1587832711974">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="0" y="23" width="1216" height="877" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1587832711974" />
+  </component>
+</project>

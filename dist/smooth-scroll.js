@@ -189,31 +189,61 @@
 	/**
 	 * Calculate the easing pattern
 	 * @link https://gist.github.com/gre/1650294
-	 * @param {String} type Easing pattern
+	 * @param {Object} settings Easing pattern
 	 * @param {Number} time Time animation should take to complete
 	 * @returns {Number}
 	 */
 	var easingPattern = function (settings, time) {
-		var pattern;
+    var pattern;
 
-		// Default Easing Patterns
-		if (settings.easing === 'easeInQuad') pattern = time * time; // accelerating from zero velocity
-		if (settings.easing === 'easeOutQuad') pattern = time * (2 - time); // decelerating to zero velocity
-		if (settings.easing === 'easeInOutQuad') pattern = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
-		if (settings.easing === 'easeInCubic') pattern = time * time * time; // accelerating from zero velocity
-		if (settings.easing === 'easeOutCubic') pattern = (--time) * time * time + 1; // decelerating to zero velocity
-		if (settings.easing === 'easeInOutCubic') pattern = time < 0.5 ? 4 * time * time * time : (time - 1) * (2 * time - 2) * (2 * time - 2) + 1; // acceleration until halfway, then deceleration
-		if (settings.easing === 'easeInQuart') pattern = time * time * time * time; // accelerating from zero velocity
-		if (settings.easing === 'easeOutQuart') pattern = 1 - (--time) * time * time * time; // decelerating to zero velocity
-		if (settings.easing === 'easeInOutQuart') pattern = time < 0.5 ? 8 * time * time * time * time : 1 - 8 * (--time) * time * time * time; // acceleration until halfway, then deceleration
-		if (settings.easing === 'easeInQuint') pattern = time * time * time * time * time; // accelerating from zero velocity
-		if (settings.easing === 'easeOutQuint') pattern = 1 + (--time) * time * time * time * time; // decelerating to zero velocity
-		if (settings.easing === 'easeInOutQuint') pattern = time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
+    // Custom Easing Patterns
+    if (settings.customEasing) {
+      pattern = settings.customEasing(time);
+    } else {
+      // Default Easing Patterns
+      switch (settings.easing) {
+        case 'easeInQuad':
+          pattern = time * time; // accelerating from zero velocity
+          break;
+        case 'easeOutQuad':
+          pattern = time * (2 - time); // decelerating to zero velocity
+          break;
+        case 'easeInOutQuad':
+          pattern = time < 0.5 ? 2 * time * time : -1 + (4 - 2 * time) * time; // acceleration until halfway, then deceleration
+          break;
+        case 'easeInCubic':
+          pattern = time * time * time; // accelerating from zero velocity
+          break;
+        case 'easeOutCubic':
+          pattern = (--time) * time * time + 1; // decelerating to zero velocity
+          break;
+        case 'easeInOutCubic':
+          pattern = time < 0.5 ? 4 * time * time * time : (time - 1) * (2 * time - 2) * (2 * time - 2) + 1; // acceleration until halfway, then deceleration
+          break;
+        case 'easeInQuart':
+          pattern = time * time * time * time; // accelerating from zero velocity
+          break;
+        case 'easeOutQuart':
+          pattern = 1 - (--time) * time * time * time; // decelerating to zero velocity
+          break;
+        case 'easeInOutQuart':
+          pattern = time < 0.5 ? 8 * time * time * time * time : 1 - 8 * (--time) * time * time * time; // acceleration until halfway, then deceleration
+          break;
+        case 'easeInQuint':
+          pattern = time * time * time * time * time; // accelerating from zero velocity
+          break;
+        case 'easeOutQuint':
+          pattern = 1 + (--time) * time * time * time * time;  // decelerating to zero velocity
+          break;
+        case 'easeInOutQuint':
+          pattern = time < 0.5 ? 16 * time * time * time * time * time : 1 + 16 * (--time) * time * time * time * time; // acceleration until halfway, then deceleration
+          break;
+        default:
+          pattern = time;
+      }
+    }
 
-		// Custom Easing Patterns
-		if (!!settings.customEasing) pattern = settings.customEasing(time);
-
-		return pattern || time; // no easing, no acceleration
+    return pattern;
 	};
 
 	/**
@@ -280,17 +310,16 @@
 		if (!history.replaceState || !options.updateURL || history.state) return;
 
 		// Get the hash to use
-		var hash = window.location.hash;
-		hash = hash ? hash : '';
+		var hash = window.location.hash || '';
 
 		// Set a default history
 		history.replaceState(
 			{
 				smoothScroll: JSON.stringify(options),
-				anchor: hash ? hash : window.pageYOffset
+				anchor: hash
 			},
 			document.title,
-			hash ? hash : window.location.href
+			 hash
 		);
 
 	};
@@ -309,6 +338,7 @@
 		// Verify that pushState is supported and the updateURL option is enabled
 		if (!history.pushState || !options.updateURL) return;
 
+		var url = (anchor === document.documentElement) ? '#top' : '#' + anchor.id;
 		// Update URL
 		history.pushState(
 			{
@@ -316,7 +346,7 @@
 				anchor: anchor.id
 			},
 			document.title,
-			anchor === document.documentElement ? '#top' : '#' + anchor.id
+      url
 		);
 
 	};
@@ -392,8 +422,9 @@
 		smoothScroll.cancelScroll = function (noEvent) {
 			cancelAnimationFrame(animationInterval);
 			animationInterval = null;
-			if (noEvent) return;
-			emitEvent('scrollCancel', settings);
+			if (!noEvent) {
+        emitEvent('scrollCancel', settings);
+      }
 		};
 
 		/**
@@ -411,7 +442,7 @@
 			var _settings = extend(settings || defaults, options || {}); // Merge user options with defaults
 
 			// Selectors and variables
-			var isNum = Object.prototype.toString.call(anchor) === '[object Number]' ? true : false;
+			var isNum = (Object.prototype.toString.call(anchor) === '[object Number]');
 			var anchorElem = isNum || !anchor.tagName ? null : anchor;
 			if (!isNum && !anchorElem) return;
 			var startLocation = window.pageYOffset; // Current location on the page
@@ -465,7 +496,7 @@
 			var loopAnimateScroll = function (timestamp) {
 				if (!start) { start = timestamp; }
 				timeLapsed += timestamp - start;
-				percentage = speed === 0 ? 0 : (timeLapsed / speed);
+				percentage = (speed === 0) ? 0 : (timeLapsed / speed);
 				percentage = (percentage > 1) ? 1 : percentage;
 				position = startLocation + (distance * easingPattern(_settings, percentage));
 				window.scrollTo(0, Math.floor(position));
@@ -488,7 +519,7 @@
 
 			// If the user prefers reduced motion, jump to location
 			if (reduceMotion()) {
-				window.scrollTo(0, Math.floor(endLocation));
+				adjustFocus(anchor, Math.floor(endLocation), false);
 				return;
 			}
 
@@ -553,7 +584,7 @@
 		/**
 		 * Animate scroll on popstate events
 		 */
-		var popstateHandler = function (event) {
+		var popstateHandler = function () {
 
 			// Stop if history.state doesn't exist (ex. if clicking on a broken anchor link).
 			// fixes `Cannot read property 'smoothScroll' of null` error getting thrown.
