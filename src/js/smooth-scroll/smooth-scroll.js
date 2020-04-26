@@ -181,8 +181,8 @@
 	/**
 	 * Calculate the easing pattern
 	 * @link https://gist.github.com/gre/1650294
-	 * @param {String} type Easing pattern
-	 * @param {Number} time Time animation should take to complete
+	 * @param   {Object} settings Easing pattern
+	 * @param   {Number} time     Time animation should take to complete
 	 * @returns {Number}
 	 */
 	var easingPattern = function (settings, time) {
@@ -545,7 +545,7 @@
 		/**
 		 * Animate scroll on popstate events
 		 */
-		var popstateHandler = function (event) {
+		var popstateHandler = function () {
 
 			// Stop if history.state doesn't exist (ex. if clicking on a broken anchor link).
 			// fixes `Cannot read property 'smoothScroll' of null` error getting thrown.
@@ -553,10 +553,6 @@
 
 			// Only run if state is a popstate record for this instantiation
 			if (!history.state.smoothScroll || history.state.smoothScroll !== JSON.stringify(settings)) return;
-
-			// Only run if state includes an anchor
-
-			// if (!history.state.anchor && history.state.anchor !== 0) return;
 
 			// Get the anchor
 			var anchor = history.state.anchor;
