@@ -8,3 +8,5 @@ test/coverage
 ._*
 .Spotlight-V100
 .Trashes
+.idea
+yarn.lock
