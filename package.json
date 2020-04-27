@@ -1,34 +1,30 @@
 {
-	"name": "smooth-scroll",
-	"version": "16.1.4",
-	"description": "Animate scrolling to anchor links",
-	"main": "./dist/smooth-scroll.polyfills.min.js",
-	"author": {
-		"name": "Chris Ferdinandi",
-		"url": "http://gomakethings.com"
-	},
-	"license": "MIT",
-	"repository": {
-		"type": "git",
-		"url": "http://github.com/cferdinandi/smooth-scroll"
-	},
-	"devDependencies": {
-		"gulp": "4.0.0",
-		"del": "3.0.0",
-		"lazypipe": "1.0.1",
-		"gulp-flatmap": "1.0.2",
-		"gulp-header": "2.0.5",
-		"gulp-rename": "1.4.0",
-		"jshint": "2.9.6",
-		"gulp-jshint": "2.1.0",
-		"jshint-stylish": "2.2.1",
-		"gulp-concat": "2.6.1",
-		"gulp-uglify": "3.0.1",
-		"gulp-optimize-js": "1.1.0",
-		"gulp-sass": "4.0.2",
-		"gulp-cssnano": "2.1.3",
-		"gulp-autoprefixer": "6.0.0",
-		"gulp-svgmin": "2.1.0",
-		"browser-sync": "2.26.3"
-	}
+    "name": "smooth-scroll",
+    "version": "16.1.4",
+    "description": "Animate scrolling to anchor links",
+    "main": "./dist/smooth-scroll.polyfills.min.js",
+    "author": {
+        "name": "Chris Ferdinandi",
+        "url": "http://gomakethings.com"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/cferdinandi/smooth-scroll"
+    },
+    "scripts": {
+        "js": "rollup --config",
+        "build": "npm run js"
+    },
+    "devDependencies": {
+        "rollup": "^2.6.1",
+        "rollup-plugin-terser": "^5.3.0",
+        "sass": "^1.26.5",
+        "imagemin-cli": "^5.1.0",
+        "imagemin-mozjpeg": "^8.0.0",
+        "imagemin-pngcrush": "^6.0.0",
+        "imagemin-pngquant": "^8.0.0",
+        "imagemin-zopfli": "^6.0.0",
+        "svgo": "^1.3.2"
+    }
 }
