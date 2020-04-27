@@ -1,3 +1,19 @@
+**DEPRECATION NOTICE:**
+
+Smooth Scroll is, without a doubt, my most popular and widely used plugin.
+
+But in the time since I created it, a CSS-only method for smooth scrolling has emerged, and now has fantastic browser support. It can do things this plugin can't (like scrolling to anchor links from another page), and addresses bugs and limitations in the plugin that I have never gotten around to fixing.
+
+This plugin has run its course, and the browser now offers a better, more feature rich and resilient solution out-of-the-box.
+
+Learn [how to animate scrolling to anchor links with one line of CSS](https://gomakethings.com/how-to-animate-scrolling-to-anchor-links-with-one-line-of-css/), and [how to prevent anchor links from scrolling behind fixed or sticky headers](https://gomakethings.com/how-to-prevent-anchor-links-from-scrolling-behind-a-sticky-header-with-one-line-of-css/).
+
+Thanks for the years of support!
+
+- Chris
+
+---
+
 # Smooth Scroll [![Build Status](https://travis-ci.org/cferdinandi/smooth-scroll.svg)](https://travis-ci.org/cferdinandi/smooth-scroll)
 A lightweight script to animate scrolling to anchor links. Smooth Scroll works great with [Gumshoe](https://github.com/cferdinandi/gumshoe).
 
