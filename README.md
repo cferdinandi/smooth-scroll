@@ -10,8 +10,6 @@ Learn [how to animate scrolling to anchor links with one line of CSS](https://go
 
 Thanks for the years of support!
 
-- Chris
-
 ---
 
 # Smooth Scroll [![Build Status](https://travis-ci.org/cferdinandi/smooth-scroll.svg)](https://travis-ci.org/cferdinandi/smooth-scroll)
